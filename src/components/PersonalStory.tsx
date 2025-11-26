@@ -1,8 +1,10 @@
 import { useEffect, useRef } from "react";
 import heroImage from "@/assets/hero-captain.jpg";
+
 const PersonalStory = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
     const handleScroll = () => {
       if (imageRef.current && sectionRef.current) {
@@ -17,136 +19,130 @@ const PersonalStory = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  return <section ref={sectionRef} className="py-32 md:py-48 bg-muted relative overflow-hidden">
+
+  return (
+    <section ref={sectionRef} className="py-32 md:py-48 bg-muted relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl animate-pulse-slow" style={{
-        animationDelay: '2s'
-      }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-8xl opacity-5 animate-rotate-slow">
-          🌏
-        </div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16 animate-slide-up">
-            <div className="flex items-center justify-center gap-4 mb-8">
-              <div className="h-[3px] w-24 bg-gradient-to-r from-transparent via-secondary to-accent rounded-full"></div>
-              <div className="w-3 h-3 rounded-full bg-secondary animate-pulse"></div>
-              <div className="h-[3px] w-24 bg-gradient-to-l from-transparent via-secondary to-accent rounded-full"></div>
-            </div>
-            <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
-              <span className="text-primary">Gặp gỡ</span>{" "}
-              <span className="text-gradient">Road Captain</span>
-              <br />
-              <span className="text-primary">của bạn</span>
-            </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground font-light italic">
-              Người đưa bạn đi du lịch như "người nhà"
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Portrait */}
-            <div className="order-2 md:order-1">
-              <div ref={imageRef} className="relative rounded-3xl overflow-hidden shadow-elegant hover-lift group parallax">
-                <div className="absolute inset-0 bg-gradient-to-tr from-secondary/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 z-10"></div>
-                <img alt="Vinh Around - Your trusted road captain" className="w-full h-[500px] md:h-[600px] object-cover transform group-hover:scale-110 transition-transform duration-700" src="/lovable-uploads/576f0773-8f19-4601-901e-115efd9c4874.jpg" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent opacity-80"></div>
+        <div className="max-w-7xl mx-auto">
+          {/* Magazine Layout: Large Photo Left, Text Right */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            {/* Large Portrait Photo */}
+            <div className="order-2 lg:order-1">
+              <div ref={imageRef} className="sticky top-32 rounded-3xl overflow-hidden shadow-float parallax">
+                <img 
+                  alt="Vinh Around - Your trusted road captain" 
+                  className="w-full h-[500px] lg:h-[700px] object-cover" 
+                  src="/lovable-uploads/576f0773-8f19-4601-901e-115efd9c4874.jpg" 
+                />
                 
-                {/* Floating Badges */}
-                <div className="absolute top-6 right-6 space-y-3">
-                  <div className="glass-effect px-6 py-3 rounded-full border-2 border-secondary/50 animate-float shadow-gold">
-                    <span className="text-primary-foreground font-bold text-base md:text-lg">10+ Năm</span>
-                  </div>
-                  <div className="glass-effect px-6 py-3 rounded-full border-2 border-accent/50 animate-float shadow-gold" style={{
-                  animationDelay: '1s'
-                }}>
-                    <span className="text-primary-foreground font-bold text-base md:text-lg">100+ Tours</span>
-                  </div>
-                </div>
+                {/* Subtle Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent"></div>
                 
-                {/* Bottom Info Card */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                  <div className="glass-effect p-6 md:p-8 rounded-2xl border-2 border-secondary/40 shadow-gold">
-                    <h3 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground mb-2">
+                {/* Floating Info Badge */}
+                <div className="absolute bottom-8 left-8 right-8">
+                  <div className="glass-effect p-6 rounded-2xl border border-white/10">
+                    <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-1">
                       Vinh Around
                     </h3>
-                    <p className="text-sm md:text-base text-primary-foreground/95">
-                      Your Road Captain with Passion
+                    <p className="text-base text-white/90">
+                      Road Captain with 10+ Years Experience
                     </p>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Story Content */}
-            <div className="order-1 md:order-2 space-y-6 animate-slide-up">
-              <div className="relative">
-                <span className="absolute -top-6 -left-6 text-8xl opacity-10">"</span>
-                <div className="space-y-6 relative z-10">
-                  <p className="text-2xl md:text-3xl leading-relaxed text-foreground">
-                    <span className="font-display text-4xl md:text-5xl font-bold text-primary block mb-6">
-                      Chào bạn, tôi là Vinh Around.
-                    </span>
+            {/* Editorial Text Content */}
+            <div className="order-1 lg:order-2 space-y-8 animate-slide-up">
+              {/* Small Heading */}
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-px w-16 bg-secondary"></div>
+                  <p className="text-sm uppercase tracking-wider text-muted-foreground font-semibold">
+                    Meet Your Guide
                   </p>
-                  
-                  <p className="text-xl md:text-2xl leading-relaxed text-foreground">
-                    <span className="font-bold text-secondary text-2xl">10 năm cầm lái</span> trên những cung đường Mỹ, Úc, Âu, tôi nhận ra điều này:
+                </div>
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
+                  Chào bạn, tôi là Vinh Around.
+                </h2>
+              </div>
+              
+              <div className="space-y-6">
+                <p className="text-lg md:text-xl text-foreground leading-relaxed">
+                  <span className="font-bold text-secondary">10 năm cầm lái</span> trên những cung đường Mỹ, Úc, Âu, tôi nhận ra điều này:
+                </p>
+                
+                {/* Editorial Headline - Large Serif Quote */}
+                <div className="relative py-8 my-8">
+                  <div className="absolute -left-4 top-0 text-9xl text-secondary/10 font-display leading-none">"</div>
+                  <blockquote className="relative z-10">
+                    <p className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground mb-6">
+                      Người Việt mình đi du lịch{" "}
+                      <span className="text-destructive italic">KHỔ</span>{" "}
+                      quá!
+                    </p>
+                  </blockquote>
+                  <div className="absolute -right-4 bottom-0 text-9xl text-secondary/10 font-display leading-none">"</div>
+                </div>
+                
+                <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                  Khổ vì phải dậy sớm chạy tour, khổ vì ăn uống không hợp, khổ vì lo lắng thủ tục...
+                </p>
+                
+                {/* Mission Statement Box */}
+                <div className="bg-gradient-to-br from-secondary/10 via-accent/5 to-background p-8 md:p-10 rounded-3xl border-2 border-secondary/20 shadow-float">
+                  <p className="text-lg md:text-xl text-foreground leading-relaxed mb-4">
+                    Tôi lập ra <span className="font-display font-bold text-secondary text-2xl">Passport Lounge</span> không phải để bán tour đại trà.
                   </p>
-                  
-                  <div className="relative overflow-hidden rounded-2xl p-1">
-                    <div className="absolute inset-0 bg-gradient-to-r from-accent via-secondary to-accent animate-shimmer"></div>
-                    <div className="relative bg-card rounded-2xl p-8">
-                      <p className="text-xl md:text-2xl leading-relaxed text-foreground font-bold text-center">
-                        Người Việt mình đi du lịch <span className="text-destructive text-3xl">'KHỔ'</span> quá!
+                  <p className="text-lg md:text-xl text-foreground font-bold leading-relaxed">
+                    Tôi muốn trở thành <span className="text-gradient text-2xl italic">'Người bạn đường thổ địa'</span> của gia đình bạn.
+                  </p>
+                </div>
+                
+                {/* Value Props */}
+                <div className="space-y-4 pt-4">
+                  {[
+                    { text: "lái xe", desc: "để bạn rảnh tay ngắm cảnh" },
+                    { text: "lo vé máy bay", desc: "để bạn thảnh thơi ngủ ngon" },
+                    { text: "chọn quán ăn", desc: "để bạn ấm bụng như ở nhà" }
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-4 group transition-all">
+                      <div className="w-2 h-2 rounded-full bg-secondary mt-2 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <p className="text-base md:text-lg text-foreground leading-relaxed">
+                          Tôi <span className="font-bold text-secondary">{item.text}</span>{" "}
+                          <span className="text-muted-foreground">{item.desc}</span>
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Handwritten Signature Placeholder */}
+                <div className="pt-8 mt-8 border-t border-secondary/20">
+                  <div className="flex items-end gap-4">
+                    <div className="flex-1">
+                      {/* Placeholder for handwritten signature image */}
+                      <div className="h-20 flex items-center">
+                        <p 
+                          className="font-display text-4xl md:text-5xl text-primary italic font-bold" 
+                          style={{ fontFamily: "'Brush Script MT', cursive" }}
+                        >
+                          Vinh Around
+                        </p>
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        Founder & Road Captain
                       </p>
                     </div>
-                  </div>
-                  
-                  <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
-                    Khổ vì phải dậy sớm chạy tour, khổ vì ăn uống không hợp, khổ vì lo lắng thủ tục...
-                  </p>
-                  
-                  <div className="bg-gradient-to-br from-secondary/20 via-accent/10 to-primary/10 p-8 md:p-10 rounded-3xl border-2 border-secondary/30 shadow-elegant hover-lift">
-                    <p className="text-xl md:text-2xl leading-relaxed text-foreground mb-6">
-                      Tôi lập ra <span className="font-display font-bold text-secondary text-3xl">Passport Lounge</span> không phải để bán tour đại trà.
-                    </p>
-                    <p className="text-xl md:text-2xl leading-relaxed text-foreground font-bold">
-                      Tôi muốn trở thành <span className="text-gradient text-3xl italic">'Người bạn đường thổ địa'</span> của gia đình bạn.
-                    </p>
-                  </div>
-                  
-                  {/* Value Props */}
-                  <div className="space-y-4 pt-6">
-                    {[{
-                    text: "lái xe",
-                    desc: "để bạn rảnh tay ngắm cảnh"
-                  }, {
-                    text: "lo vé máy bay",
-                    desc: "để bạn thảnh thơi ngủ ngon"
-                  }, {
-                    text: "chọn quán ăn",
-                    desc: "để bạn ấm bụng như ở nhà"
-                  }].map((item, i) => <div key={i} className="flex items-start gap-4 group hover-lift transition-all">
-                        <div className="w-2 h-2 rounded-full bg-secondary mt-2 flex-shrink-0"></div>
-                        <div className="flex-1 bg-card/50 backdrop-blur-sm p-5 rounded-2xl border border-secondary/20">
-                          <p className="text-lg md:text-xl font-bold text-foreground">
-                            Tôi <span className="text-secondary text-2xl">{item.text}</span>
-                          </p>
-                          <p className="text-muted-foreground mt-2">{item.desc}</p>
-                        </div>
-                      </div>)}
-                  </div>
-                  
-                  <div className="mt-10 pt-8 border-t-2 border-secondary/30">
-                    <p className="font-display text-3xl md:text-4xl text-primary italic font-bold mb-3">
-                      Vinh Around
-                    </p>
-                    <div className="flex items-center gap-3 mt-4">
-                      <div className="h-2 w-32 gradient-sunset rounded-full animate-pulse-slow"></div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-px w-12 bg-secondary"></div>
                       <div className="w-2 h-2 rounded-full bg-secondary"></div>
                     </div>
                   </div>
@@ -156,6 +152,8 @@ const PersonalStory = () => {
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default PersonalStory;
