@@ -9,49 +9,52 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 215 25% 15%;
+    --foreground: 180 8% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 15%;
+    --card-foreground: 180 8% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 15%;
+    --popover-foreground: 180 8% 15%;
 
-    /* Premium Navy Blue */
-    --primary: 215 45% 20%;
-    --primary-foreground: 0 0% 98%;
+    /* Premium Deep Teal */
+    --primary: 185 65% 25%;
+    --primary-foreground: 0 0% 100%;
     
-    /* Warm Gold */
-    --secondary: 42 85% 55%;
-    --secondary-foreground: 215 45% 20%;
+    /* Luxe Gold/Amber */
+    --secondary: 38 92% 50%;
+    --secondary-foreground: 185 65% 15%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 215 15% 45%;
+    --muted: 180 15% 95%;
+    --muted-foreground: 180 8% 45%;
 
-    /* Warm Orange for CTAs */
-    --accent: 25 95% 53%;
+    /* Vibrant Coral for CTAs */
+    --accent: 14 88% 58%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 215 20% 88%;
-    --input: 215 20% 88%;
-    --ring: 215 45% 20%;
+    --border: 180 15% 90%;
+    --input: 180 15% 90%;
+    --ring: 185 65% 25%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* Premium gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(215 45% 20%) 0%, hsl(215 40% 30%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(42 85% 55%) 0%, hsl(42 80% 65%) 100%);
-    --gradient-hero: linear-gradient(180deg, hsla(215 45% 20% / 0.7) 0%, hsla(215 45% 20% / 0.9) 100%);
+    /* Luxury gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(185 65% 25%) 0%, hsl(190 70% 35%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(38 92% 50%) 0%, hsl(42 95% 60%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsla(185 65% 20% / 0.85) 0%, hsla(195 60% 30% / 0.75) 50%, hsla(38 92% 40% / 0.6) 100%);
+    --gradient-sunset: linear-gradient(135deg, hsl(14 88% 58%) 0%, hsl(28 95% 60%) 50%, hsl(38 92% 50%) 100%);
     
-    /* Shadows */
-    --shadow-elegant: 0 10px 40px -10px hsl(215 45% 20% / 0.2);
-    --shadow-gold: 0 8px 30px -8px hsl(42 85% 55% / 0.3);
+    /* Luxury Shadows */
+    --shadow-elegant: 0 20px 60px -15px hsl(185 65% 25% / 0.3);
+    --shadow-gold: 0 15px 50px -10px hsl(38 92% 50% / 0.4);
+    --shadow-glow: 0 0 80px hsl(38 92% 50% / 0.3);
     
-    /* Transitions */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Smooth Transitions */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -111,6 +114,8 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   html {
@@ -119,6 +124,8 @@ All colors MUST be HSL.
   
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -173,10 +180,59 @@ All colors MUST be HSL.
   
   @keyframes float {
     0%, 100% {
-      transform: translateY(0px);
+      transform: translateY(0px) rotate(0deg);
     }
     50% {
-      transform: translateY(-20px);
+      transform: translateY(-20px) rotate(5deg);
+    }
+  }
+  
+  .animate-plane-fly {
+    animation: planeFly 20s linear infinite;
+  }
+  
+  @keyframes planeFly {
+    0% {
+      transform: translateX(-100%) translateY(0) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(100vw) translateY(-50px) rotate(15deg);
+      opacity: 0;
+    }
+  }
+  
+  .animate-wave {
+    animation: wave 3s ease-in-out infinite;
+  }
+  
+  @keyframes wave {
+    0%, 100% {
+      transform: translateX(0) scale(1);
+    }
+    50% {
+      transform: translateX(10px) scale(1.1);
+    }
+  }
+  
+  .animate-pulse-slow {
+    animation: pulseSlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulseSlow {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.05);
     }
   }
   
@@ -228,6 +284,34 @@ All colors MUST be HSL.
     }
     100% {
       background-position: 200% 0;
+    }
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--accent)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .gradient-sunset {
+    background: var(--gradient-sunset);
+  }
+  
+  .animate-rotate-slow {
+    animation: rotateSlow 20s linear infinite;
+  }
+  
+  @keyframes rotateSlow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
     }
   }
 }

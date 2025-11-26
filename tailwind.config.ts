@@ -66,6 +66,7 @@ export default {
         'gradient-primary': 'var(--gradient-primary)',
         'gradient-gold': 'var(--gradient-gold)',
         'gradient-hero': 'var(--gradient-hero)',
+        'gradient-sunset': 'var(--gradient-sunset)',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -97,6 +98,10 @@ export default {
         "slide-up": "slideUp 0.8s ease-out forwards",
         "zoom-in": "zoomIn 1s ease-out forwards",
         "shimmer": "shimmer 3s infinite",
+        "plane-fly": "planeFly 20s linear infinite",
+        "wave": "wave 3s ease-in-out infinite",
+        "pulse-slow": "pulseSlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "rotate-slow": "rotateSlow 20s linear infinite",
       },
     },
   },
