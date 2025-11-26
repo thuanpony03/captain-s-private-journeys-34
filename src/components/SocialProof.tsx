@@ -46,7 +46,7 @@ const SocialProof = () => {
     highlight: "Quá đáng tiền",
     emoji: "😍"
   }];
-  return <section className="py-20 md:py-32 bg-background relative overflow-hidden">
+  return <section className="py-32 md:py-48 bg-background relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
@@ -77,7 +77,7 @@ const SocialProof = () => {
           
 
           {/* Trust Indicators */}
-          <div className="grid md:grid-cols-3 gap-8 mb-16 animate-slide-up">
+          <div className="grid md:grid-cols-3 gap-12 mb-20 animate-slide-up">
             {[{
             number: "100+",
             title: "Gia đình hài lòng",

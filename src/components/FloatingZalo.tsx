@@ -9,7 +9,7 @@ const FloatingZalo = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 animate-slide-up">
+    <div className="fixed bottom-8 right-8 z-50 animate-slide-up">
       <div 
         className="relative"
         onMouseEnter={() => setShowTooltip(true)}
@@ -17,12 +17,12 @@ const FloatingZalo = () => {
       >
         {/* Tooltip */}
         <div 
-          className={`absolute -top-16 md:-top-20 right-0 glass-effect px-4 md:px-6 py-2 md:py-3 rounded-xl shadow-elegant whitespace-nowrap border border-secondary/30 transition-all duration-300 ${
+          className={`absolute -top-20 md:-top-24 right-0 glass-effect px-6 md:px-8 py-3 md:py-4 rounded-2xl shadow-float whitespace-nowrap border border-white/10 transition-all duration-300 ${
             showTooltip ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
           }`}
         >
           <p className="font-semibold text-foreground text-sm md:text-base">Chat với Vinh Around</p>
-          <div className="absolute -bottom-2 right-6 w-4 h-4 glass-effect rotate-45 border-r border-b border-secondary/30"></div>
+          <div className="absolute -bottom-2 right-8 w-4 h-4 glass-effect rotate-45 border-r border-b border-white/10"></div>
         </div>
 
         {/* Button with Pulse Ring */}
@@ -38,13 +38,13 @@ const FloatingZalo = () => {
           <Button
             size="lg"
             onClick={handleZaloClick}
-            className="relative bg-[#0068FF] hover:bg-[#0068FF]/90 text-white rounded-full w-14 h-14 md:w-16 md:h-16 shadow-2xl hover-lift flex items-center justify-center group font-bold text-base md:text-lg"
+            className="relative bg-[#0068FF] hover:bg-[#0068FF]/90 text-white rounded-full w-16 h-16 md:w-20 md:h-20 shadow-float hover-lift flex items-center justify-center group font-bold text-lg md:text-xl"
             aria-label="Chat qua Zalo"
           >
             Z
             
             {/* Badge */}
-            <div className="absolute -top-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-red-500 rounded-full animate-pulse"></div>
+            <div className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-red-500 rounded-full animate-pulse shadow-float"></div>
           </Button>
         </div>
       </div>

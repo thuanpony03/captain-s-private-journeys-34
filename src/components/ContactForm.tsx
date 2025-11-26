@@ -37,7 +37,7 @@ const ContactForm = () => {
       contact: ""
     });
   };
-  return <section id="contact-form" className="py-20 md:py-32 bg-background relative overflow-hidden">
+  return <section id="contact-form" className="py-32 md:py-48 bg-background relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float"></div>
@@ -75,12 +75,12 @@ const ContactForm = () => {
             </Card>
           </div>
 
-          <Card className="p-8 md:p-12 shadow-elegant relative overflow-hidden animate-zoom-in">
+          <Card className="p-10 md:p-16 shadow-float relative overflow-hidden animate-zoom-in border-2 border-border/50">
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
             
-            <form onSubmit={handleSubmit} className="space-y-10 relative z-10">
+            <form onSubmit={handleSubmit} className="space-y-12 relative z-10">
               {/* Question 1 */}
               <div className="space-y-4 hover-lift transition-all">
                 <Label className="font-display text-xl md:text-2xl font-bold text-foreground flex items-center gap-3">
