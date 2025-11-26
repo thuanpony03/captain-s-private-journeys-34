@@ -76,18 +76,16 @@ const TourPackages = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 animate-slide-up">
             <div className="flex items-center justify-center gap-4 mb-8">
-              <span className="text-5xl animate-float">🗺️</span>
               <div className="h-[3px] w-24 bg-gradient-to-r from-transparent via-secondary to-accent rounded-full"></div>
-              <span className="text-5xl animate-float" style={{ animationDelay: '1s' }}>🗺️</span>
+              <div className="w-3 h-3 rounded-full bg-secondary animate-pulse"></div>
+              <div className="h-[3px] w-24 bg-gradient-to-l from-transparent via-secondary to-accent rounded-full"></div>
             </div>
             <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
               Các hành trình{" "}
               <span className="text-gradient text-5xl md:text-7xl lg:text-8xl italic">Signature</span>
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground font-light max-w-3xl mx-auto flex items-center justify-center gap-3">
-              <span className="text-3xl">🎨</span>
+            <p className="text-xl md:text-2xl text-muted-foreground font-light max-w-3xl mx-auto">
               Trải nghiệm được thiết kế riêng, chất lượng tối đa
-              <span className="text-3xl">🎨</span>
             </p>
           </div>
 
@@ -105,27 +103,26 @@ const TourPackages = () => {
                   <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
                   
                   <div className="relative z-10">
-                    {/* Badge & Icon */}
+                    {/* Badge */}
                     <div className="flex items-start justify-between mb-6">
-                      <div className="flex items-center gap-3">
-                        <span className="text-7xl animate-float">{pkg.icon}</span>
-                        <span className="text-6xl animate-wave">{pkg.emoji}</span>
+                      <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                        <div className="w-8 h-8 rounded-lg bg-white/40"></div>
                       </div>
                       <div className="glass-effect px-4 py-2 rounded-full border-2 border-white/40">
-                        <span className="text-base font-bold">{pkg.badge}</span>
+                        <span className="text-sm font-bold">{pkg.badge}</span>
                       </div>
                     </div>
                     
                     <h3 className="font-display text-3xl md:text-4xl font-bold mb-3">{pkg.title}</h3>
                     <p className="text-white/95 text-lg md:text-xl font-light mb-6">{pkg.subtitle}</p>
                     
-                    <div className="flex flex-wrap items-center gap-3 text-base">
+                    <div className="flex flex-wrap items-center gap-3 text-sm">
                       <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
-                        <span className="text-2xl">📅</span>
+                        <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
                         <span className="font-semibold">{pkg.season}</span>
                       </div>
                       <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
-                        <span className="text-2xl">👥</span>
+                        <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
                         <span className="font-semibold">{pkg.group}</span>
                       </div>
                     </div>
@@ -134,20 +131,18 @@ const TourPackages = () => {
 
                 {/* Content */}
                 <div className="p-8 md:p-10 space-y-6 bg-card">
-                  <p className="text-muted-foreground font-medium text-base flex items-center gap-2">
-                    <span className="text-2xl">🛣️</span>
-                    {pkg.description}
-                  </p>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                    <p className="text-muted-foreground font-medium text-base">{pkg.description}</p>
+                  </div>
 
                   <div className="space-y-3">
                     {pkg.highlights.map((highlight, i) => (
                       <div 
                         key={i} 
-                        className="flex items-start gap-3 group/item hover:translate-x-2 transition-all p-3 rounded-xl hover:bg-secondary/5"
+                        className="flex items-start gap-3 group/item hover:translate-x-1 transition-all p-3 rounded-xl hover:bg-secondary/5"
                       >
-                        <span className="text-2xl flex-shrink-0 animate-wave" style={{ animationDelay: `${i * 0.3}s` }}>
-                          ✨
-                        </span>
+                        <div className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 flex-shrink-0"></div>
                         <span className="text-base md:text-lg text-foreground leading-relaxed">{highlight}</span>
                       </div>
                     ))}
@@ -156,8 +151,8 @@ const TourPackages = () => {
                   <div className="pt-6 border-t-2 border-secondary/20">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-2">
-                        <span className="text-3xl">⏱️</span>
-                        <span className="text-muted-foreground font-semibold">{pkg.duration}</span>
+                        <div className="w-2 h-2 rounded-full bg-muted-foreground"></div>
+                        <span className="text-muted-foreground font-semibold text-sm">{pkg.duration}</span>
                       </div>
                       <div className="text-right">
                         <p className="text-2xl md:text-3xl font-bold text-secondary">{pkg.price}</p>
@@ -166,16 +161,12 @@ const TourPackages = () => {
                   </div>
 
                   <Button 
-                    className="w-full gradient-sunset hover:shadow-glow text-white font-bold text-lg py-7 rounded-2xl group/btn relative overflow-hidden border-2 border-white/20"
+                    className="w-full gradient-sunset hover:shadow-glow text-white font-bold text-base md:text-lg py-6 md:py-7 rounded-xl group/btn relative overflow-hidden"
                     onClick={() => {
                       document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                   >
-                    <span className="relative z-10 flex items-center justify-center gap-3 font-display text-xl">
-                      <span className="text-3xl">📋</span>
-                      Xem lịch trình chi tiết
-                      <span className="text-3xl">✨</span>
-                    </span>
+                    <span className="relative z-10 font-display">Xem lịch trình chi tiết</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-accent/30 to-secondary/30 opacity-0 group-hover/btn:opacity-100 transition-opacity animate-shimmer"></div>
                   </Button>
                 </div>
@@ -189,17 +180,17 @@ const TourPackages = () => {
           <div className="mt-16 text-center animate-zoom-in">
             <Card className="inline-block p-10 md:p-12 bg-card shadow-elegant hover-lift relative overflow-hidden group border-2 border-secondary/30">
               <div className="absolute inset-0 bg-gradient-to-r from-secondary/5 via-accent/5 to-secondary/5 animate-shimmer"></div>
+              <div className="absolute top-0 left-0 w-32 h-32 bg-secondary/10 rounded-full blur-3xl"></div>
               <div className="relative flex flex-col md:flex-row items-center gap-6">
-                <div className="flex gap-3">
-                  <span className="text-6xl md:text-7xl animate-float">🌎</span>
-                  <span className="text-6xl md:text-7xl animate-float" style={{ animationDelay: '1s' }}>❓</span>
+                <div className="w-16 h-16 rounded-2xl bg-secondary/10 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-lg bg-secondary/20"></div>
                 </div>
                 <div className="text-center md:text-left">
-                  <p className="font-display font-bold text-3xl md:text-4xl text-foreground mb-3">
+                  <p className="font-display font-bold text-2xl md:text-3xl text-foreground mb-2">
                     Chưa thấy điểm đến mình muốn?
                   </p>
-                  <p className="text-xl md:text-2xl text-muted-foreground">
-                    Hãy để <span className="font-bold text-gradient text-3xl">Vinh thiết kế hành trình riêng</span> cho bạn! 
+                  <p className="text-lg md:text-xl text-muted-foreground">
+                    Hãy để <span className="font-bold text-secondary">Vinh thiết kế hành trình riêng</span> cho bạn! 
                   </p>
                 </div>
               </div>
