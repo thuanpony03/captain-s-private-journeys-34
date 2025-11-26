@@ -1,161 +1,147 @@
 import { Card } from "@/components/ui/card";
+import { X, Check } from "lucide-react";
 
 const ComparisonTable = () => {
   const comparisons = [
     {
       category: "Di chuyển",
-      icon: "🚌",
       traditional: "Xe bus 45 chỗ, ồn ào, chờ đợi mệt mỏi",
-      premium: "Xe riêng Mercedes/SUV cao cấp, êm ái, riêng tư, thoải mái",
-      iconPremium: "🚙",
-      emojiReaction: "😫",
-      emojiPremium: "😌"
+      premium: "Xe riêng Mercedes/SUV cao cấp, êm ái, riêng tư, thoải mái"
     },
     {
       category: "Giờ giấc",
-      icon: "⏰",
       traditional: "6h sáng dậy, check-in như chạy giặc, mệt lử",
-      premium: "Tự do hoàn toàn, ngủ nướng tùy thích, dừng chân bất cứ lúc nào",
-      iconPremium: "☕",
-      emojiReaction: "😴",
-      emojiPremium: "😎"
+      premium: "Tự do hoàn toàn, ngủ nướng tùy thích, dừng chân bất cứ lúc nào"
     },
     {
       category: "Lo toan",
-      icon: "📋",
       traditional: "Tự lo vé bay giờ xấu, transit lâu, thủ tục rối",
-      premium: "Vinh lo trọn gói từ A-Z: Vé đẹp, Visa, Bảo hiểm, tất cả!",
-      iconPremium: "✨",
-      emojiReaction: "😰",
-      emojiPremium: "🤗"
+      premium: "Vinh lo trọn gói từ A-Z: Vé đẹp, Visa, Bảo hiểm, tất cả!"
     },
     {
       category: "Ăn uống",
-      icon: "🍱",
       traditional: "Cơm đoàn nguội ngắt, nhà hàng công nghiệp, vô vị",
-      premium: "A-la-carte sang trọng, món Âu + Việt nóng sốt, ngon miệng",
-      iconPremium: "🍽️",
-      emojiReaction: "😒",
-      emojiPremium: "🤤"
+      premium: "A-la-carte sang trọng, món Âu + Việt nóng sốt, ngon miệng"
     },
     {
       category: "Người dẫn",
-      icon: "🚩",
       traditional: "HDV cầm cờ, nói theo bài vở, xa lạ",
-      premium: "Vinh Around - Người thổ địa, rành đường, thân thiện như người nhà",
-      iconPremium: "👨‍✈️",
-      emojiReaction: "😐",
-      emojiPremium: "🥰"
+      premium: "Vinh Around - Người thổ địa, rành đường, thân thiện như người nhà"
     }
   ];
 
   return (
-    <section className="py-20 md:py-32 bg-background relative overflow-hidden">
-      {/* Animated Background */}
+    <section className="py-16 md:py-24 bg-background relative overflow-hidden">
+      {/* Subtle Background */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-accent/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-20 text-9xl opacity-5 animate-float">⚖️</div>
+        <div className="absolute top-20 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16 animate-slide-up">
-            <div className="flex items-center justify-center gap-4 mb-8">
-              <span className="text-5xl animate-float">⚡</span>
-              <div className="h-[3px] w-24 bg-gradient-to-r from-transparent via-secondary to-accent rounded-full"></div>
-              <span className="text-5xl animate-float" style={{ animationDelay: '1s' }}>⚡</span>
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-flex items-center gap-3 mb-6">
+              <div className="h-px w-12 bg-gradient-to-r from-transparent to-secondary"></div>
+              <div className="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+              <div className="h-px w-12 bg-gradient-to-l from-transparent to-secondary"></div>
             </div>
-            <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
+            <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold mb-4">
               <span className="text-destructive">Đi Hành Xác</span>
               {" "}vs{" "}
               <span className="text-gradient">Đi Hưởng Thụ</span>
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground font-light flex items-center justify-center gap-3">
-              <span className="text-3xl">🤔</span>
+            <p className="text-lg md:text-xl text-muted-foreground font-light">
               Tại sao nên chọn Private Tour cùng Vinh Around?
             </p>
           </div>
 
-          <div className="overflow-x-auto">
-            <div className="min-w-[768px]">
-              {/* Header */}
-              <div className="grid grid-cols-3 gap-6 mb-8">
-                <div className="text-center font-display font-bold text-2xl md:text-3xl text-foreground flex items-center justify-center">
-                  <span className="text-4xl mr-3">📋</span>
-                  Tiêu chí
+          {/* Comparison Grid */}
+          <div className="space-y-6">
+            {/* Column Headers - Hidden on Mobile */}
+            <div className="hidden md:grid md:grid-cols-2 gap-6 mb-4">
+              <Card className="p-6 bg-destructive/5 border-destructive/20">
+                <div className="flex items-center justify-center gap-3">
+                  <X className="w-6 h-6 text-destructive" />
+                  <span className="font-display font-bold text-xl text-destructive">Tour Đoàn</span>
                 </div>
-                <Card className="p-6 md:p-8 bg-gradient-to-br from-muted to-muted/50 hover-lift relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-destructive/5"></div>
-                  <div className="relative flex flex-col items-center justify-center gap-3">
-                    <span className="text-5xl">😫</span>
-                    <span className="font-display font-bold text-xl md:text-2xl text-destructive">Tour Đoàn</span>
-                  </div>
-                </Card>
-                <Card className="p-6 md:p-8 gradient-sunset border-2 border-secondary hover-lift relative overflow-hidden group shadow-glow">
-                  <div className="absolute inset-0 animate-shimmer"></div>
-                  <div className="relative flex flex-col items-center justify-center gap-3">
-                    <span className="text-5xl">😎</span>
-                    <span className="font-display font-bold text-xl md:text-2xl text-white">Private với Vinh</span>
-                  </div>
-                </Card>
-              </div>
-
-              {/* Comparison Rows */}
-              {comparisons.map((item, index) => (
-                <div 
-                  key={index} 
-                  className="grid grid-cols-3 gap-6 mb-6 animate-slide-up"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <Card className="p-6 md:p-8 flex flex-col items-center justify-center gradient-primary text-primary-foreground font-semibold hover-lift group relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-transparent to-secondary/10 group-hover:to-secondary/20 transition-all"></div>
-                    <span className="text-6xl mb-4 transform group-hover:scale-125 transition-transform animate-float">{item.icon}</span>
-                    <span className="font-display text-xl md:text-2xl relative z-10">{item.category}</span>
-                  </Card>
-                  
-                  <Card className="p-6 md:p-8 bg-muted/50 hover:bg-muted transition-all hover-lift relative group overflow-hidden">
-                    <div className="absolute top-3 right-3">
-                      <span className="text-4xl">{item.emojiReaction}</span>
-                    </div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-5xl">{item.icon}</span>
-                    </div>
-                    <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                      {item.traditional}
-                    </p>
-                  </Card>
-                  
-                  <Card className="p-6 md:p-8 bg-gradient-to-br from-secondary/20 via-accent/10 to-primary/10 border-2 border-secondary/40 hover-lift relative group overflow-hidden shadow-elegant">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-secondary/10 group-hover:to-secondary/20 transition-all"></div>
-                    <div className="absolute top-3 right-3">
-                      <span className="text-4xl animate-wave">{item.emojiPremium}</span>
-                    </div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-5xl">{item.iconPremium}</span>
-                    </div>
-                    <p className="text-base md:text-lg font-semibold text-foreground leading-relaxed relative z-10">
-                      {item.premium}
-                    </p>
-                  </Card>
+              </Card>
+              <Card className="p-6 gradient-sunset border-secondary/40">
+                <div className="flex items-center justify-center gap-3">
+                  <Check className="w-6 h-6 text-white" />
+                  <span className="font-display font-bold text-xl text-white">Private với Vinh</span>
                 </div>
-              ))}
+              </Card>
             </div>
+
+            {/* Comparison Items */}
+            {comparisons.map((item, index) => (
+              <div key={index} className="space-y-3 md:space-y-0">
+                {/* Category Label */}
+                <div className="flex items-center gap-3 mb-3 md:mb-4">
+                  <div className="w-1 h-6 bg-gradient-to-b from-secondary to-accent rounded-full"></div>
+                  <h3 className="font-display font-bold text-xl md:text-2xl text-foreground">
+                    {item.category}
+                  </h3>
+                  <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
+                </div>
+
+                {/* Comparison Cards */}
+                <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                  {/* Traditional Tour */}
+                  <Card className="p-5 md:p-6 bg-muted/30 hover:bg-muted/50 transition-colors border-muted">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-1 flex-shrink-0">
+                        <X className="w-5 h-5 text-destructive/70" />
+                      </div>
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                        {item.traditional}
+                      </p>
+                    </div>
+                    <div className="md:hidden mt-2 text-xs font-semibold text-destructive/70 uppercase tracking-wide">
+                      Tour Đoàn
+                    </div>
+                  </Card>
+
+                  {/* Premium Tour */}
+                  <Card className="p-5 md:p-6 bg-gradient-to-br from-secondary/10 via-accent/5 to-primary/5 hover:from-secondary/15 hover:via-accent/10 hover:to-primary/10 transition-all border-secondary/30 shadow-sm">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-1 flex-shrink-0">
+                        <Check className="w-5 h-5 text-secondary" />
+                      </div>
+                      <p className="text-sm md:text-base font-medium text-foreground leading-relaxed">
+                        {item.premium}
+                      </p>
+                    </div>
+                    <div className="md:hidden mt-2 text-xs font-semibold text-secondary uppercase tracking-wide">
+                      Private với Vinh
+                    </div>
+                  </Card>
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="mt-16 text-center animate-zoom-in">
-            <Card className="inline-block p-10 md:p-12 gradient-sunset shadow-glow hover-lift relative overflow-hidden group border-2 border-white/20">
-              <div className="absolute inset-0 animate-shimmer"></div>
-              <div className="relative flex flex-col md:flex-row items-center gap-6">
-                <div className="text-7xl md:text-8xl animate-float">💎</div>
-                <div className="text-white">
-                  <p className="font-display text-3xl md:text-4xl font-bold mb-3 flex items-center justify-center md:justify-start gap-3">
-                    <span className="text-5xl">🚢</span>
+          {/* Bottom CTA */}
+          <div className="mt-12 md:mt-16 text-center">
+            <Card className="inline-block p-8 md:p-10 gradient-sunset shadow-lg hover:shadow-xl transition-shadow border border-white/20">
+              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-white">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
+                  <div className="w-1 h-1 rounded-full bg-white/70"></div>
+                </div>
+                <div>
+                  <p className="font-display text-2xl md:text-3xl font-bold mb-1">
                     Du thuyền trên mặt đất
                   </p>
-                  <p className="text-xl md:text-2xl opacity-95 font-light italic">
+                  <p className="text-base md:text-lg opacity-90 font-light italic">
                     Xứng đáng với từng đồng tiền bạn đầu tư
                   </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 rounded-full bg-white/70"></div>
+                  <div className="w-2 h-2 rounded-full bg-white animate-pulse" style={{ animationDelay: '1s' }}></div>
                 </div>
               </div>
             </Card>
