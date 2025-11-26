@@ -58,69 +58,84 @@ const ScrollytellingRoadmap = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-32 md:py-48 bg-background relative overflow-hidden">
-      {/* Decorative background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl"></div>
+    <section ref={containerRef} className="py-16 md:py-24 bg-gradient-to-b from-background via-muted/30 to-background relative overflow-hidden">
+      {/* Subtle background elements */}
+      <div className="absolute inset-0 opacity-40">
+        <div className="absolute top-1/4 left-0 w-48 h-48 md:w-96 md:h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-0 w-48 h-48 md:w-96 md:h-96 bg-accent/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-20">
-          <h2 className="font-display text-5xl md:text-7xl font-bold mb-6">
-            <span className="text-primary">Hành trình của bạn</span>
+        {/* Header Section */}
+        <div className="text-center mb-12 md:mb-16">
+          <div className="inline-flex items-center gap-3 mb-6">
+            <div className="h-px w-8 md:w-12 bg-gradient-to-r from-transparent to-secondary"></div>
+            <div className="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+            <div className="h-px w-8 md:w-12 bg-gradient-to-l from-transparent to-secondary"></div>
+          </div>
+          
+          <h2 className="font-display text-3xl sm:text-4xl md:text-6xl font-bold mb-4">
+            <span className="text-foreground">Hành trình của bạn</span>
             <br />
-            <span className="text-gradient text-6xl md:text-8xl italic">từ A đến Z</span>
+            <span className="text-gradient text-4xl sm:text-5xl md:text-7xl">từ A đến Z</span>
           </h2>
-          <p className="text-xl md:text-2xl text-muted-foreground">
-            <span className="text-3xl">🗺️</span> Cuộn xuống để theo dõi hành trình
+          <p className="text-base md:text-lg text-muted-foreground mt-4">
+            Vinh Around lo toan mọi chi tiết cho chuyến đi của bạn
           </p>
         </div>
 
-        {/* Road Path with SVG */}
-        <div className="relative h-[2000px]">
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 800 2000" preserveAspectRatio="none">
-            <path
-              ref={pathRef}
-              d="M 100 100 Q 600 300 200 500 T 600 900 Q 200 1100 400 1400 T 500 1800"
-              fill="none"
-              stroke="hsl(var(--secondary))"
-              strokeWidth="4"
-              strokeDasharray="10 10"
-              opacity="0.3"
-            />
-          </svg>
-
-          {/* Animated Car */}
-          <div
-            ref={carRef}
-            className="absolute w-20 h-20 text-6xl"
-            style={{ left: '100px', top: '100px' }}
-          >
-            🚙
-          </div>
-
-          {/* Milestones */}
-          {milestones.map((milestone, index) => (
-            <div
-              key={index}
-              className={`milestone-${index} absolute`}
-              style={{
-                left: `${50 + (index % 2 === 0 ? -20 : 20)}%`,
-                top: `${100 + index * 250}px`,
-              }}
-            >
-              <div className="glass-effect p-8 rounded-3xl border-2 border-secondary/30 shadow-elegant hover-lift max-w-xs">
-                <div className="text-6xl mb-4 text-center animate-float">
-                  {milestone.icon}
+        {/* Mobile-First Vertical Timeline */}
+        <div className="max-w-4xl mx-auto">
+          <div className="relative">
+            {/* Vertical line */}
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-secondary via-accent to-secondary opacity-30 md:-ml-px"></div>
+            
+            {/* Milestones */}
+            <div className="space-y-8 md:space-y-12">
+              {milestones.map((milestone, index) => (
+                <div
+                  key={index}
+                  className={`milestone-${index} relative flex items-start gap-4 md:gap-8 ${
+                    index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+                  }`}
+                >
+                  {/* Timeline dot */}
+                  <div className="absolute left-4 md:left-1/2 w-8 h-8 md:w-10 md:h-10 md:-ml-5 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center shadow-lg z-10">
+                    <div className="text-xl">{milestone.icon}</div>
+                  </div>
+                  
+                  {/* Content card - Mobile first */}
+                  <div className={`ml-16 md:ml-0 flex-1 ${index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:pl-12'}`}>
+                    <div className="inline-block">
+                      <div className="bg-card border border-border rounded-2xl p-5 md:p-6 shadow-sm hover:shadow-elegant transition-all hover:-translate-y-1">
+                        <h3 className="font-display text-xl md:text-2xl font-bold text-foreground mb-2">
+                          {milestone.title}
+                        </h3>
+                        <p className="text-sm md:text-base text-muted-foreground">
+                          {milestone.desc}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Spacer for desktop layout */}
+                  <div className="hidden md:block flex-1"></div>
                 </div>
-                <h3 className="font-display text-2xl font-bold text-foreground mb-2 text-center">
-                  {milestone.title}
-                </h3>
-                <p className="text-muted-foreground text-center">{milestone.desc}</p>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-12 md:mt-16">
+          <div className="inline-block bg-gradient-to-r from-secondary/10 via-accent/10 to-secondary/10 p-6 md:p-8 rounded-3xl border border-secondary/20">
+            <p className="font-display text-lg md:text-2xl font-bold text-foreground mb-2">
+              Mọi thứ đã được lo trọn gói
+            </p>
+            <p className="text-sm md:text-base text-muted-foreground">
+              Bạn chỉ cần tận hưởng hành trình
+            </p>
+          </div>
         </div>
       </div>
     </section>
