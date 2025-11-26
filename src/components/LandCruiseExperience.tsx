@@ -69,9 +69,9 @@ const LandCruiseExperience = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 animate-slide-up">
             <div className="flex items-center justify-center gap-4 mb-8">
-              <div className="h-[3px] w-20 bg-gradient-to-r from-transparent to-secondary rounded-full"></div>
-              <span className="text-6xl animate-float">🚢</span>
-              <div className="h-[3px] w-20 bg-gradient-to-l from-transparent to-secondary rounded-full"></div>
+              <div className="h-[3px] w-24 bg-gradient-to-r from-transparent via-secondary to-accent rounded-full"></div>
+              <div className="w-3 h-3 rounded-full bg-secondary animate-pulse"></div>
+              <div className="h-[3px] w-24 bg-gradient-to-l from-transparent via-secondary to-accent rounded-full"></div>
             </div>
             <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
               Tiêu chuẩn{" "}
@@ -80,11 +80,9 @@ const LandCruiseExperience = () => {
                 "Du thuyền trên mặt đất"
               </span>
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground font-light max-w-3xl mx-auto flex items-center justify-center gap-3 flex-wrap">
-              <span className="text-3xl">💎</span>
+            <p className="text-xl md:text-2xl text-muted-foreground font-light max-w-3xl mx-auto">
               Mỗi chi tiết được chăm chút để mang đến trải nghiệm{" "}
               <span className="font-bold text-secondary">xa hoa nhất</span>
-              <span className="text-3xl">💎</span>
             </p>
           </div>
 
@@ -108,22 +106,17 @@ const LandCruiseExperience = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent opacity-70"></div>
                     
-                    {/* Floating Icon Badge */}
+                    {/* Icon Badge */}
                     <div className="absolute top-6 right-6">
-                      <div className="glass-effect p-5 rounded-2xl border-2 border-secondary/60 shadow-glow animate-float">
-                        <span className="text-5xl">{exp.icon}</span>
+                      <div className="glass-effect p-4 md:p-5 rounded-2xl border-2 border-secondary/60 shadow-glow">
+                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-secondary/40"></div>
                       </div>
-                    </div>
-                    
-                    {/* Emoji Reaction */}
-                    <div className="absolute top-6 left-6">
-                      <span className="text-6xl animate-wave">{exp.emoji}</span>
                     </div>
                     
                     {/* Title Overlay */}
                     <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                      <div className="glass-effect p-6 rounded-2xl border-2 border-secondary/40 shadow-gold">
-                        <h3 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground">
+                      <div className="glass-effect p-5 md:p-6 rounded-2xl border-2 border-secondary/40 shadow-gold">
+                        <h3 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground">
                           {exp.title}
                         </h3>
                       </div>
@@ -146,7 +139,7 @@ const LandCruiseExperience = () => {
                           className="bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full border border-secondary/20 hover:border-secondary/50 transition-all hover-lift"
                         >
                           <span className="text-sm font-semibold text-foreground flex items-center gap-2">
-                            <span className="text-lg">✓</span>
+                            <div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
                             {feature}
                           </span>
                         </div>
@@ -165,15 +158,14 @@ const LandCruiseExperience = () => {
             <div className="inline-block relative">
               <div className="absolute inset-0 gradient-sunset blur-2xl opacity-40 animate-pulse-slow"></div>
               <Card className="relative p-10 md:p-12 bg-card border-2 border-secondary shadow-glow hover-lift">
-                <div className="flex flex-col md:flex-row items-center gap-6">
-                  <div className="flex gap-3">
-                    <span className="text-6xl md:text-7xl animate-float">✨</span>
-                    <span className="text-6xl md:text-7xl animate-float" style={{ animationDelay: '1s' }}>💫</span>
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-20 h-20 rounded-2xl bg-secondary/10 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-lg bg-secondary/20"></div>
                   </div>
-                  <p className="font-display text-2xl md:text-4xl font-bold text-foreground">
+                  <p className="font-display text-2xl md:text-3xl font-bold text-foreground text-center">
                     Sang trọng từng chi tiết
                     <br />
-                    <span className="text-gradient text-3xl md:text-5xl italic">
+                    <span className="text-gradient text-3xl md:text-4xl italic">
                       Tận hưởng từng khoảnh khắc
                     </span>
                   </p>

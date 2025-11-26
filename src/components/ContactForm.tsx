@@ -53,10 +53,10 @@ const ContactForm = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 animate-slide-up">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <span className="text-2xl md:text-3xl">✨</span>
-              <div className="h-[2px] w-16 md:w-20 bg-gradient-to-r from-transparent via-secondary to-transparent"></div>
-              <span className="text-2xl md:text-3xl">✨</span>
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="h-[3px] w-20 md:w-32 bg-gradient-to-r from-transparent via-secondary to-accent rounded-full"></div>
+              <div className="w-3 h-3 rounded-full bg-secondary animate-pulse"></div>
+              <div className="h-[3px] w-20 md:w-32 bg-gradient-to-l from-transparent via-secondary to-accent rounded-full"></div>
             </div>
             
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-primary">
@@ -67,11 +67,9 @@ const ContactForm = () => {
             
             <Card className="inline-block p-6 md:p-8 bg-gradient-to-br from-secondary/20 via-primary/10 to-secondary/20 border-2 border-secondary shadow-gold hover-lift relative overflow-hidden">
               <div className="absolute inset-0 animate-shimmer"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/20 rounded-full blur-3xl"></div>
               <div className="relative flex flex-col md:flex-row items-center gap-4">
-                <div className="flex gap-2 flex-shrink-0">
-                  <span className="text-3xl md:text-4xl animate-float">⏰</span>
-                  <span className="text-2xl md:text-3xl animate-float" style={{ animationDelay: '1s' }}>✨</span>
-                </div>
+                <div className="w-2 h-2 rounded-full bg-secondary animate-pulse flex-shrink-0"></div>
                 <p className="text-base md:text-lg text-foreground leading-relaxed">
                   <span className="font-display font-bold text-xl md:text-2xl text-secondary block md:inline">Tháng này Vinh chỉ nhận giới hạn 02 đoàn</span>
                   {" "}để đảm bảo chất lượng phục vụ tốt nhất. 
@@ -99,19 +97,20 @@ const ContactForm = () => {
                   className="space-y-3"
                 >
                   {[
-                    { value: "usa", label: "🇺🇸 Mỹ (US West Coast)", desc: "San Francisco, LA, San Diego" },
-                    { value: "australia", label: "🇦🇺 Úc (Australia Grand Road)", desc: "Sydney, Melbourne, Gold Coast" },
-                    { value: "europe", label: "🇪🇺 Âu (Custom Tour)", desc: "Pháp, Ý, Thụy Sĩ" },
-                    { value: "other", label: "🌍 Khác (Để Vinh tư vấn)", desc: "Địa điểm khác theo yêu cầu" }
+                    { value: "usa", label: "Mỹ (US West Coast)", desc: "San Francisco, LA, San Diego", color: "from-orange-500/20 to-red-500/20" },
+                    { value: "australia", label: "Úc (Australia Grand Road)", desc: "Sydney, Melbourne, Gold Coast", color: "from-blue-500/20 to-teal-500/20" },
+                    { value: "europe", label: "Âu (Custom Tour)", desc: "Pháp, Ý, Thụy Sĩ", color: "from-purple-500/20 to-pink-500/20" },
+                    { value: "other", label: "Khác (Để Vinh tư vấn)", desc: "Địa điểm khác theo yêu cầu", color: "from-emerald-500/20 to-cyan-500/20" }
                   ].map((option) => (
                     <div key={option.value} className="relative group">
-                      <div className={`flex items-center space-x-4 p-5 rounded-xl border-2 transition-all cursor-pointer ${
+                      <div className={`flex items-center space-x-4 p-5 rounded-xl border-2 transition-all cursor-pointer relative overflow-hidden ${
                         formData.destination === option.value 
                           ? 'border-secondary bg-secondary/10 shadow-md' 
                           : 'border-border hover:border-secondary/50 hover:bg-muted'
                       }`}>
+                        <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${option.color} rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity`}></div>
                         <RadioGroupItem value={option.value} id={option.value} className="peer" />
-                        <Label htmlFor={option.value} className="cursor-pointer flex-1">
+                        <Label htmlFor={option.value} className="cursor-pointer flex-1 relative z-10">
                           <p className="font-semibold text-base md:text-lg">{option.label}</p>
                           <p className="text-sm text-muted-foreground mt-1">{option.desc}</p>
                         </Label>
@@ -133,9 +132,9 @@ const ContactForm = () => {
                   className="space-y-3"
                 >
                   {[
-                    { value: "2-4", label: "2-4 người", desc: "Gia đình nhỏ, ấm cúng", icon: "👨‍👩‍👧" },
-                    { value: "4-6", label: "4-6 người", desc: "Lý tưởng nhất ⭐", icon: "👨‍👩‍👧‍👦" },
-                    { value: "6+", label: "Trên 6 người", desc: "Nhóm lớn, vui vẻ", icon: "👨‍👩‍👧‍👦👨‍👩‍👧" }
+                    { value: "2-4", label: "2-4 người", desc: "Gia đình nhỏ, ấm cúng" },
+                    { value: "4-6", label: "4-6 người", desc: "Lý tưởng nhất ⭐" },
+                    { value: "6+", label: "Trên 6 người", desc: "Nhóm lớn, vui vẻ" }
                   ].map((option) => (
                     <div key={option.value} className="relative group">
                       <div className={`flex items-center space-x-4 p-5 rounded-xl border-2 transition-all cursor-pointer ${
@@ -144,7 +143,6 @@ const ContactForm = () => {
                           : 'border-border hover:border-secondary/50 hover:bg-muted'
                       }`}>
                         <RadioGroupItem value={option.value} id={option.value} />
-                        <span className="text-3xl">{option.icon}</span>
                         <Label htmlFor={option.value} className="cursor-pointer flex-1">
                           <p className="font-semibold text-base md:text-lg">{option.label}</p>
                           <p className="text-sm text-muted-foreground mt-1">{option.desc}</p>
@@ -167,9 +165,9 @@ const ContactForm = () => {
                   className="space-y-3"
                 >
                   {[
-                    { value: "health", icon: "💪", label: "Sức khỏe", desc: "Lịch nhẹ nhàng, thoải mái, phù hợp người lớn tuổi" },
-                    { value: "experience", icon: "🎭", label: "Trải nghiệm độc lạ", desc: "Khám phá văn hóa, ẩm thực, gặp gỡ người bản địa" },
-                    { value: "luxury", icon: "📸", label: "Check-in sang chảnh", desc: "Ảnh đẹp, địa điểm hot, sang trọng đẳng cấp" }
+                    { value: "health", label: "Sức khỏe", desc: "Lịch nhẹ nhàng, thoải mái, phù hợp người lớn tuổi" },
+                    { value: "experience", label: "Trải nghiệm độc lạ", desc: "Khám phá văn hóa, ẩm thực, gặp gỡ người bản địa" },
+                    { value: "luxury", label: "Check-in sang chảnh", desc: "Ảnh đẹp, địa điểm hot, sang trọng đẳng cấp" }
                   ].map((option) => (
                     <div key={option.value} className="relative group">
                       <div className={`flex items-center space-x-4 p-5 rounded-xl border-2 transition-all cursor-pointer ${
@@ -178,7 +176,6 @@ const ContactForm = () => {
                           : 'border-border hover:border-secondary/50 hover:bg-muted'
                       }`}>
                         <RadioGroupItem value={option.value} id={option.value} />
-                        <span className="text-3xl">{option.icon}</span>
                         <Label htmlFor={option.value} className="cursor-pointer flex-1">
                           <p className="font-semibold text-base md:text-lg">{option.label}</p>
                           <p className="text-sm text-muted-foreground mt-1">{option.desc}</p>
@@ -211,19 +208,16 @@ const ContactForm = () => {
                 size="lg"
                 className="w-full bg-gradient-to-r from-accent via-secondary to-accent hover:from-accent/90 hover:via-secondary/90 hover:to-accent/90 text-accent-foreground text-lg md:text-xl py-7 md:py-8 shadow-gold hover-lift font-bold rounded-xl relative overflow-hidden group"
               >
-                <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
-                  <span className="text-2xl">📮</span>
-                  <span className="text-base md:text-lg">GỬI YÊU CẦU CHO VINH AROUND</span>
-                  <span className="text-2xl">✨</span>
-                </span>
+                <span className="relative z-10">GỬI YÊU CẦU CHO VINH AROUND</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-secondary via-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity animate-shimmer"></div>
               </Button>
 
-              <div className="flex items-center justify-center gap-2 md:gap-3 pt-4">
-                <span className="text-xl md:text-2xl">🔒</span>
+              <div className="flex items-center justify-center gap-3 pt-4">
+                <div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
                 <p className="text-center text-xs md:text-sm text-muted-foreground">
                   Thông tin của bạn được <span className="font-bold text-secondary">bảo mật tuyệt đối</span> và chỉ được sử dụng để tư vấn tour
                 </p>
+                <div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
               </div>
             </form>
           </Card>

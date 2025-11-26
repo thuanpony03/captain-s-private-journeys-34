@@ -37,9 +37,9 @@ const PersonalStory = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 animate-slide-up">
             <div className="flex items-center justify-center gap-4 mb-8">
-              <div className="h-[3px] w-20 bg-gradient-to-r from-transparent to-secondary rounded-full"></div>
-              <span className="text-5xl animate-float">👨‍✈️</span>
-              <div className="h-[3px] w-20 bg-gradient-to-l from-transparent to-secondary rounded-full"></div>
+              <div className="h-[3px] w-24 bg-gradient-to-r from-transparent via-secondary to-accent rounded-full"></div>
+              <div className="w-3 h-3 rounded-full bg-secondary animate-pulse"></div>
+              <div className="h-[3px] w-24 bg-gradient-to-l from-transparent via-secondary to-accent rounded-full"></div>
             </div>
             <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
               <span className="text-primary">Gặp gỡ</span>{" "}
@@ -47,8 +47,7 @@ const PersonalStory = () => {
               <br />
               <span className="text-primary">của bạn</span>
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground font-light italic flex items-center justify-center gap-3">
-              <span className="text-3xl">🤝</span>
+            <p className="text-xl md:text-2xl text-muted-foreground font-light italic">
               Người đưa bạn đi du lịch như "người nhà"
             </p>
           </div>
@@ -68,29 +67,21 @@ const PersonalStory = () => {
                 {/* Floating Badges */}
                 <div className="absolute top-6 right-6 space-y-3">
                   <div className="glass-effect px-6 py-3 rounded-full border-2 border-secondary/50 animate-float shadow-gold">
-                    <div className="flex items-center gap-2">
-                      <span className="text-2xl">🏆</span>
-                      <span className="text-primary-foreground font-bold text-lg">10+ Năm</span>
-                    </div>
+                    <span className="text-primary-foreground font-bold text-base md:text-lg">10+ Năm</span>
                   </div>
                   <div className="glass-effect px-6 py-3 rounded-full border-2 border-accent/50 animate-float shadow-gold" style={{ animationDelay: '1s' }}>
-                    <div className="flex items-center gap-2">
-                      <span className="text-2xl">⭐</span>
-                      <span className="text-primary-foreground font-bold text-lg">100+ Tours</span>
-                    </div>
+                    <span className="text-primary-foreground font-bold text-base md:text-lg">100+ Tours</span>
                   </div>
                 </div>
                 
                 {/* Bottom Info Card */}
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="glass-effect p-8 rounded-2xl border-2 border-secondary/40 shadow-gold">
-                    <h3 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground mb-3 flex items-center gap-3">
-                      <span className="text-3xl">👨‍✈️</span>
+                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                  <div className="glass-effect p-6 md:p-8 rounded-2xl border-2 border-secondary/40 shadow-gold">
+                    <h3 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground mb-2">
                       Vinh Around
                     </h3>
-                    <p className="text-base md:text-lg text-primary-foreground/95 flex items-center gap-3">
-                      <span className="text-xl">❤️</span>
-                      <span>Your Road Captain with Passion</span>
+                    <p className="text-sm md:text-base text-primary-foreground/95">
+                      Your Road Captain with Passion
                     </p>
                   </div>
                 </div>
@@ -137,14 +128,12 @@ const PersonalStory = () => {
                   {/* Value Props */}
                   <div className="space-y-4 pt-6">
                     {[
-                      { icon: "🚗", text: "lái xe", desc: "để bạn rảnh tay ngắm cảnh" },
-                      { icon: "✈️", text: "lo vé máy bay", desc: "để bạn thảnh thơi ngủ ngon" },
-                      { icon: "🍜", text: "chọn quán ăn", desc: "để bạn ấm bụng như ở nhà" }
+                      { text: "lái xe", desc: "để bạn rảnh tay ngắm cảnh" },
+                      { text: "lo vé máy bay", desc: "để bạn thảnh thơi ngủ ngon" },
+                      { text: "chọn quán ăn", desc: "để bạn ấm bụng như ở nhà" }
                     ].map((item, i) => (
                       <div key={i} className="flex items-start gap-4 group hover-lift transition-all">
-                        <span className="text-5xl animate-wave" style={{ animationDelay: `${i * 0.5}s` }}>
-                          {item.icon}
-                        </span>
+                        <div className="w-2 h-2 rounded-full bg-secondary mt-2 flex-shrink-0"></div>
                         <div className="flex-1 bg-card/50 backdrop-blur-sm p-5 rounded-2xl border border-secondary/20">
                           <p className="text-lg md:text-xl font-bold text-foreground">
                             Tôi <span className="text-secondary text-2xl">{item.text}</span>
@@ -156,12 +145,12 @@ const PersonalStory = () => {
                   </div>
                   
                   <div className="mt-10 pt-8 border-t-2 border-secondary/30">
-                    <p className="font-display text-4xl md:text-5xl text-primary italic font-bold mb-3">
+                    <p className="font-display text-3xl md:text-4xl text-primary italic font-bold mb-3">
                       Vinh Around
                     </p>
                     <div className="flex items-center gap-3 mt-4">
                       <div className="h-2 w-32 gradient-sunset rounded-full animate-pulse-slow"></div>
-                      <span className="text-3xl animate-float">❤️</span>
+                      <div className="w-2 h-2 rounded-full bg-secondary"></div>
                     </div>
                   </div>
                 </div>

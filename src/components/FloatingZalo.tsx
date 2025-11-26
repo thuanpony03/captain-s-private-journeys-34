@@ -38,15 +38,13 @@ const FloatingZalo = () => {
           <Button
             size="lg"
             onClick={handleZaloClick}
-            className="relative bg-[#0068FF] hover:bg-[#0068FF]/90 text-white rounded-full w-14 h-14 md:w-16 md:h-16 shadow-2xl hover-lift flex items-center justify-center group"
+            className="relative bg-[#0068FF] hover:bg-[#0068FF]/90 text-white rounded-full w-14 h-14 md:w-16 md:h-16 shadow-2xl hover-lift flex items-center justify-center group font-bold text-base md:text-lg"
             aria-label="Chat qua Zalo"
           >
-            <span className="text-3xl md:text-4xl group-hover:scale-110 transition-transform">💬</span>
+            Z
             
             {/* Badge */}
-            <div className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold animate-bounce">
-              !
-            </div>
+            <div className="absolute -top-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-red-500 rounded-full animate-pulse"></div>
           </Button>
         </div>
       </div>

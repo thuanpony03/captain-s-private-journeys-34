@@ -68,17 +68,16 @@ const SocialProof = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 animate-slide-up">
             <div className="flex items-center justify-center gap-4 mb-8">
-              <span className="text-5xl animate-float">❤️</span>
               <div className="h-[3px] w-24 bg-gradient-to-r from-transparent via-secondary to-accent rounded-full"></div>
-              <span className="text-5xl animate-float" style={{ animationDelay: '1s' }}>❤️</span>
+              <div className="w-3 h-3 rounded-full bg-secondary animate-pulse"></div>
+              <div className="h-[3px] w-24 bg-gradient-to-l from-transparent via-secondary to-accent rounded-full"></div>
             </div>
             <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
               Những gia đình đã đồng hành
               <br />
               <span className="text-gradient text-4xl md:text-6xl lg:text-7xl italic">cùng Vinh Around</span>
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground font-light flex items-center justify-center gap-3">
-              <span className="text-3xl">🏆</span>
+            <p className="text-xl md:text-2xl text-muted-foreground font-light">
               Hơn <span className="font-bold text-secondary">100+ gia đình</span> đã trải nghiệm và tin tưởng
             </p>
           </div>
@@ -102,13 +101,12 @@ const SocialProof = () => {
                   
                   {/* Avatar & Name */}
                   <div className="mb-6 flex items-center gap-4">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-secondary/30 to-accent/30 flex items-center justify-center text-5xl animate-float border-2 border-secondary/20">
-                      {testimonial.avatar}
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-secondary/30 to-accent/30 flex items-center justify-center border-2 border-secondary/20">
+                      <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-secondary/40"></div>
                     </div>
                     <div>
-                      <p className="font-display font-bold text-2xl text-primary">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground flex items-center gap-2">
-                        <span className="text-lg">📍</span>
+                      <p className="font-display font-bold text-xl md:text-2xl text-primary">{testimonial.name}</p>
+                      <p className="text-sm text-muted-foreground">
                         {testimonial.location}
                       </p>
                     </div>
@@ -117,13 +115,10 @@ const SocialProof = () => {
                   {/* Rating Stars */}
                   <div className="flex gap-1 mb-6">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <span 
+                      <div 
                         key={i} 
-                        className="text-3xl animate-wave" 
-                        style={{ animationDelay: `${i * 100}ms` }}
-                      >
-                        ⭐
-                      </span>
+                        className="w-6 h-6 rounded-full bg-secondary/80"
+                      />
                     ))}
                   </div>
 
@@ -133,18 +128,15 @@ const SocialProof = () => {
                   </p>
 
                   {/* Highlight Quote */}
-                  <div className="mb-6 p-5 bg-gradient-to-r from-secondary/20 to-accent/10 rounded-2xl border-l-4 border-secondary shadow-md">
-                    <div className="flex items-center gap-3">
-                      <span className="text-4xl animate-wave">{testimonial.emoji}</span>
-                      <p className="font-bold text-secondary italic text-xl">"{testimonial.highlight}"</p>
-                    </div>
+                  <div className="mb-6 p-4 md:p-5 bg-gradient-to-r from-secondary/20 to-accent/10 rounded-2xl border-l-4 border-secondary shadow-md">
+                    <p className="font-bold text-secondary italic text-lg md:text-xl">"{testimonial.highlight}"</p>
                   </div>
 
                   {/* Tour Badge */}
                   <div className="border-t-2 border-secondary/20 pt-6">
-                    <div className="inline-flex items-center gap-3 gradient-sunset px-6 py-3 rounded-full text-white shadow-gold">
-                      <span className="text-2xl">🎫</span>
-                      <p className="text-base font-bold">{testimonial.tour}</p>
+                    <div className="inline-flex items-center gap-2 gradient-sunset px-5 md:px-6 py-2 md:py-3 rounded-full text-white shadow-gold">
+                      <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
+                      <p className="text-sm md:text-base font-bold">{testimonial.tour}</p>
                     </div>
                   </div>
 
@@ -158,9 +150,9 @@ const SocialProof = () => {
           {/* Trust Indicators */}
           <div className="grid md:grid-cols-3 gap-8 mb-16 animate-slide-up">
             {[
-              { icon: "💯", number: "100+", title: "Gia đình hài lòng", desc: "Trải nghiệm tuyệt vời" },
-              { icon: "🏆", number: "10+", title: "Năm kinh nghiệm", desc: "Chuyên gia du lịch" },
-              { icon: "✅", number: "100%", title: "Cam kết chất lượng", desc: "Hoàn tiền nếu không hài lòng" }
+              { number: "100+", title: "Gia đình hài lòng", desc: "Trải nghiệm tuyệt vời" },
+              { number: "10+", title: "Năm kinh nghiệm", desc: "Chuyên gia du lịch" },
+              { number: "100%", title: "Cam kết chất lượng", desc: "Hoàn tiền nếu không hài lòng" }
             ].map((stat, index) => (
               <Card 
                 key={index}
@@ -168,10 +160,10 @@ const SocialProof = () => {
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent group-hover:from-secondary/10 transition-all"></div>
                 <div className="relative z-10">
-                  <div className="text-7xl mb-4 animate-float" style={{ animationDelay: `${index}s` }}>
-                    {stat.icon}
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-secondary/10 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-lg bg-secondary/20"></div>
                   </div>
-                  <p className="font-display text-5xl md:text-6xl font-bold text-gradient mb-3">{stat.number}</p>
+                  <p className="font-display text-4xl md:text-5xl font-bold text-gradient mb-3">{stat.number}</p>
                   <p className="font-display font-bold text-xl md:text-2xl text-primary mb-2">{stat.title}</p>
                   <p className="text-sm text-muted-foreground">{stat.desc}</p>
                 </div>
@@ -183,19 +175,14 @@ const SocialProof = () => {
           <div className="text-center animate-zoom-in">
             <Card className="inline-block p-10 md:p-14 gradient-sunset shadow-glow hover-lift relative overflow-hidden group border-2 border-white/20">
               <div className="absolute inset-0 animate-shimmer"></div>
-              <div className="relative flex flex-col md:flex-row items-center gap-6">
-                <div className="flex gap-3">
-                  <span className="text-7xl md:text-8xl animate-float">🤝</span>
-                  <span className="text-7xl md:text-8xl animate-float" style={{ animationDelay: '1s' }}>💯</span>
-                </div>
-                <div className="text-white">
-                  <p className="font-display text-3xl md:text-5xl font-bold mb-3">
-                    100% Khách hàng hài lòng
-                  </p>
-                  <p className="text-xl md:text-2xl opacity-95 font-light italic">
-                    Cam kết hoàn tiền nếu không hài lòng về dịch vụ
-                  </p>
-                </div>
+              <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+              <div className="relative text-white">
+                <p className="font-display text-2xl md:text-4xl font-bold mb-3">
+                  100% Khách hàng hài lòng
+                </p>
+                <p className="text-lg md:text-xl opacity-95 font-light italic">
+                  Cam kết hoàn tiền nếu không hài lòng về dịch vụ
+                </p>
               </div>
             </Card>
           </div>
