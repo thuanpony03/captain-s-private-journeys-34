@@ -17,7 +17,7 @@ const PersonalStory = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  return <section ref={sectionRef} className="py-20 md:py-32 bg-muted relative overflow-hidden">
+  return <section ref={sectionRef} className="py-32 md:py-48 bg-muted relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>

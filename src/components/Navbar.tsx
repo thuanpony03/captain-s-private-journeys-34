@@ -20,12 +20,12 @@ const Navbar = () => {
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'bg-background/95 backdrop-blur-lg shadow-elegant' 
+          ? 'glass-effect shadow-float border-b border-white/10' 
           : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      <div className="container mx-auto px-6 sm:px-8">
+        <div className="flex items-center justify-between h-20 md:h-24">
           {/* Logo/Brand */}
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 md:w-10 md:h-10 rounded-full gradient-sunset flex items-center justify-center">

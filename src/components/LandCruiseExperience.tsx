@@ -46,7 +46,7 @@ const LandCruiseExperience = () => {
     gradient: "from-orange-500/30 via-red-500/20 to-amber-500/30",
     features: ["Món Việt nóng sốt", "Món Âu tinh tế", "Phục vụ tận tâm"]
   }];
-  return <section className="py-20 md:py-32 bg-muted relative overflow-hidden">
+  return <section className="py-32 md:py-48 bg-muted relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
@@ -78,7 +78,7 @@ const LandCruiseExperience = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 md:gap-10">
+          <div className="grid md:grid-cols-3 gap-12 md:gap-16">
             {experiences.map((exp, index) => <div key={index} ref={el => cardsRef.current[index] = el} className="parallax">
                 <Card className="overflow-hidden hover-lift group relative h-full" style={{
               animationDelay: `${index * 150}ms`

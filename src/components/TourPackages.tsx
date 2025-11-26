@@ -63,7 +63,7 @@ const TourPackages = () => {
   ];
 
   return (
-    <section className="py-20 md:py-32 bg-muted relative overflow-hidden">
+    <section className="py-32 md:py-48 bg-muted relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
@@ -89,7 +89,7 @@ const TourPackages = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8 md:gap-10">
+          <div className="grid lg:grid-cols-3 gap-12 md:gap-16">
             {packages.map((pkg, index) => (
               <Card 
                 key={index}
