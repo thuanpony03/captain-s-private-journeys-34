@@ -1,5 +1,6 @@
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
+import Navbar from "@/components/Navbar";
 import HeroVideoMask from "@/components/HeroVideoMask";
 import PersonalStory from "@/components/PersonalStory";
 import ScrollytellingRoadmap from "@/components/ScrollytellingRoadmap";
@@ -17,6 +18,7 @@ const Index = () => {
   return (
     <SmoothScroll>
       <CustomCursor />
+      <Navbar />
       <main className="min-h-screen">
         <HeroVideoMask />
         <PersonalStory />

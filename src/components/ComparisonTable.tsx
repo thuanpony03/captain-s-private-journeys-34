@@ -31,11 +31,11 @@ const ComparisonTable = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-background relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-muted/30 via-background to-muted/20 relative overflow-hidden">
       {/* Subtle Background */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-20 right-10 w-64 h-64 md:w-96 md:h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-10 w-64 h-64 md:w-96 md:h-96 bg-accent/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -43,79 +43,80 @@ const ComparisonTable = () => {
           {/* Header */}
           <div className="text-center mb-12 md:mb-16">
             <div className="inline-flex items-center gap-3 mb-6">
-              <div className="h-px w-12 bg-gradient-to-r from-transparent to-secondary"></div>
+              <div className="h-px w-8 md:w-12 bg-gradient-to-r from-transparent to-secondary"></div>
               <div className="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
-              <div className="h-px w-12 bg-gradient-to-l from-transparent to-secondary"></div>
+              <div className="h-px w-8 md:w-12 bg-gradient-to-l from-transparent to-secondary"></div>
             </div>
-            <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold mb-4">
-              <span className="text-destructive">Đi Hành Xác</span>
-              {" "}vs{" "}
-              <span className="text-gradient">Đi Hưởng Thụ</span>
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+              <span className="text-destructive block md:inline">Đi Hành Xác</span>
+              <span className="text-muted-foreground mx-2 hidden md:inline">vs</span>
+              <span className="text-gradient block md:inline mt-2 md:mt-0">Đi Hưởng Thụ</span>
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground font-light">
+            <p className="text-base md:text-xl text-muted-foreground font-light mt-4">
               Tại sao nên chọn Private Tour cùng Vinh Around?
             </p>
           </div>
 
-          {/* Comparison Grid */}
-          <div className="space-y-6">
-            {/* Column Headers - Hidden on Mobile */}
-            <div className="hidden md:grid md:grid-cols-2 gap-6 mb-4">
-              <Card className="p-6 bg-destructive/5 border-destructive/20">
-                <div className="flex items-center justify-center gap-3">
-                  <X className="w-6 h-6 text-destructive" />
-                  <span className="font-display font-bold text-xl text-destructive">Tour Đoàn</span>
-                </div>
-              </Card>
-              <Card className="p-6 gradient-sunset border-secondary/40">
-                <div className="flex items-center justify-center gap-3">
-                  <Check className="w-6 h-6 text-white" />
-                  <span className="font-display font-bold text-xl text-white">Private với Vinh</span>
-                </div>
-              </Card>
+          {/* Mobile: Toggle Headers */}
+          <div className="grid grid-cols-2 gap-3 mb-8 md:hidden">
+            <div className="p-4 bg-destructive/10 border border-destructive/30 rounded-2xl">
+              <div className="flex items-center justify-center gap-2">
+                <X className="w-5 h-5 text-destructive" />
+                <span className="font-display font-bold text-sm text-destructive">Tour Đoàn</span>
+              </div>
             </div>
+            <div className="p-4 gradient-sunset border border-white/20 rounded-2xl">
+              <div className="flex items-center justify-center gap-2">
+                <Check className="w-5 h-5 text-white" />
+                <span className="font-display font-bold text-sm text-white">Private Vinh</span>
+              </div>
+            </div>
+          </div>
 
-            {/* Comparison Items */}
+          {/* Comparison Items */}
+          <div className="space-y-6 md:space-y-8">
             {comparisons.map((item, index) => (
-              <div key={index} className="space-y-3 md:space-y-0">
+              <div key={index}>
                 {/* Category Label */}
-                <div className="flex items-center gap-3 mb-3 md:mb-4">
-                  <div className="w-1 h-6 bg-gradient-to-b from-secondary to-accent rounded-full"></div>
-                  <h3 className="font-display font-bold text-xl md:text-2xl text-foreground">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-1 h-8 bg-gradient-to-b from-secondary to-accent rounded-full"></div>
+                  <h3 className="font-display font-bold text-lg md:text-2xl text-foreground">
                     {item.category}
                   </h3>
                   <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent"></div>
                 </div>
 
-                {/* Comparison Cards */}
-                <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                {/* Comparison Cards - Mobile Optimized Stack */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                   {/* Traditional Tour */}
-                  <Card className="p-5 md:p-6 bg-muted/30 hover:bg-muted/50 transition-colors border-muted">
+                  <Card className="p-4 md:p-6 bg-muted/40 border-muted hover:border-destructive/20 transition-all">
                     <div className="flex items-start gap-3">
-                      <div className="mt-1 flex-shrink-0">
-                        <X className="w-5 h-5 text-destructive/70" />
+                      <div className="mt-0.5 flex-shrink-0">
+                        <div className="w-6 h-6 rounded-full bg-destructive/10 flex items-center justify-center">
+                          <X className="w-4 h-4 text-destructive" />
+                        </div>
                       </div>
-                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                        {item.traditional}
-                      </p>
-                    </div>
-                    <div className="md:hidden mt-2 text-xs font-semibold text-destructive/70 uppercase tracking-wide">
-                      Tour Đoàn
+                      <div className="flex-1">
+                        <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                          {item.traditional}
+                        </p>
+                      </div>
                     </div>
                   </Card>
 
                   {/* Premium Tour */}
-                  <Card className="p-5 md:p-6 bg-gradient-to-br from-secondary/10 via-accent/5 to-primary/5 hover:from-secondary/15 hover:via-accent/10 hover:to-primary/10 transition-all border-secondary/30 shadow-sm">
+                  <Card className="p-4 md:p-6 bg-gradient-to-br from-secondary/5 via-accent/5 to-background border-secondary/20 hover:border-secondary/40 transition-all shadow-sm">
                     <div className="flex items-start gap-3">
-                      <div className="mt-1 flex-shrink-0">
-                        <Check className="w-5 h-5 text-secondary" />
+                      <div className="mt-0.5 flex-shrink-0">
+                        <div className="w-6 h-6 rounded-full bg-secondary/20 flex items-center justify-center">
+                          <Check className="w-4 h-4 text-secondary" />
+                        </div>
                       </div>
-                      <p className="text-sm md:text-base font-medium text-foreground leading-relaxed">
-                        {item.premium}
-                      </p>
-                    </div>
-                    <div className="md:hidden mt-2 text-xs font-semibold text-secondary uppercase tracking-wide">
-                      Private với Vinh
+                      <div className="flex-1">
+                        <p className="text-sm md:text-base font-medium text-foreground leading-relaxed">
+                          {item.premium}
+                        </p>
+                      </div>
                     </div>
                   </Card>
                 </div>
@@ -125,26 +126,23 @@ const ComparisonTable = () => {
 
           {/* Bottom CTA */}
           <div className="mt-12 md:mt-16 text-center">
-            <Card className="inline-block p-8 md:p-10 gradient-sunset shadow-lg hover:shadow-xl transition-shadow border border-white/20">
-              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-white">
+            <div className="inline-block gradient-sunset p-6 md:p-8 rounded-3xl shadow-lg border border-white/20">
+              <div className="flex flex-col items-center gap-3 text-white max-w-md mx-auto">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
-                  <div className="w-1 h-1 rounded-full bg-white/70"></div>
+                  <div className="h-px w-12 bg-white/40"></div>
+                  <div className="w-2 h-2 rounded-full bg-white animate-pulse" style={{ animationDelay: '1s' }}></div>
                 </div>
                 <div>
-                  <p className="font-display text-2xl md:text-3xl font-bold mb-1">
+                  <p className="font-display text-xl md:text-3xl font-bold mb-2">
                     Du thuyền trên mặt đất
                   </p>
-                  <p className="text-base md:text-lg opacity-90 font-light italic">
+                  <p className="text-sm md:text-lg opacity-90 font-light">
                     Xứng đáng với từng đồng tiền bạn đầu tư
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-1 h-1 rounded-full bg-white/70"></div>
-                  <div className="w-2 h-2 rounded-full bg-white animate-pulse" style={{ animationDelay: '1s' }}></div>
-                </div>
               </div>
-            </Card>
+            </div>
           </div>
         </div>
       </div>
