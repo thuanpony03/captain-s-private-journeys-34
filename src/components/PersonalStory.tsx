@@ -1,33 +1,29 @@
 import { useEffect, useRef } from "react";
 import heroImage from "@/assets/hero-captain.jpg";
-
 const PersonalStory = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const handleScroll = () => {
       if (imageRef.current && sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect();
         const scrolled = window.scrollY - sectionRef.current.offsetTop;
         const parallaxSpeed = 0.3;
-        
         if (rect.top < window.innerHeight && rect.bottom > 0) {
           imageRef.current.style.transform = `translateY(${scrolled * parallaxSpeed}px)`;
         }
       }
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  return (
-    <section ref={sectionRef} className="py-20 md:py-32 bg-muted relative overflow-hidden">
+  return <section ref={sectionRef} className="py-20 md:py-32 bg-muted relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl animate-pulse-slow" style={{
+        animationDelay: '2s'
+      }}></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-8xl opacity-5 animate-rotate-slow">
           🌏
         </div>
@@ -57,11 +53,7 @@ const PersonalStory = () => {
             <div className="order-2 md:order-1">
               <div ref={imageRef} className="relative rounded-3xl overflow-hidden shadow-elegant hover-lift group parallax">
                 <div className="absolute inset-0 bg-gradient-to-tr from-secondary/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 z-10"></div>
-                <img 
-                  src={heroImage} 
-                  alt="Vinh Around - Your trusted road captain" 
-                  className="w-full h-[500px] md:h-[600px] object-cover transform group-hover:scale-110 transition-transform duration-700"
-                />
+                <img alt="Vinh Around - Your trusted road captain" className="w-full h-[500px] md:h-[600px] object-cover transform group-hover:scale-110 transition-transform duration-700" src="/lovable-uploads/576f0773-8f19-4601-901e-115efd9c4874.jpg" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent opacity-80"></div>
                 
                 {/* Floating Badges */}
@@ -69,7 +61,9 @@ const PersonalStory = () => {
                   <div className="glass-effect px-6 py-3 rounded-full border-2 border-secondary/50 animate-float shadow-gold">
                     <span className="text-primary-foreground font-bold text-base md:text-lg">10+ Năm</span>
                   </div>
-                  <div className="glass-effect px-6 py-3 rounded-full border-2 border-accent/50 animate-float shadow-gold" style={{ animationDelay: '1s' }}>
+                  <div className="glass-effect px-6 py-3 rounded-full border-2 border-accent/50 animate-float shadow-gold" style={{
+                  animationDelay: '1s'
+                }}>
                     <span className="text-primary-foreground font-bold text-base md:text-lg">100+ Tours</span>
                   </div>
                 </div>
@@ -127,12 +121,16 @@ const PersonalStory = () => {
                   
                   {/* Value Props */}
                   <div className="space-y-4 pt-6">
-                    {[
-                      { text: "lái xe", desc: "để bạn rảnh tay ngắm cảnh" },
-                      { text: "lo vé máy bay", desc: "để bạn thảnh thơi ngủ ngon" },
-                      { text: "chọn quán ăn", desc: "để bạn ấm bụng như ở nhà" }
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-start gap-4 group hover-lift transition-all">
+                    {[{
+                    text: "lái xe",
+                    desc: "để bạn rảnh tay ngắm cảnh"
+                  }, {
+                    text: "lo vé máy bay",
+                    desc: "để bạn thảnh thơi ngủ ngon"
+                  }, {
+                    text: "chọn quán ăn",
+                    desc: "để bạn ấm bụng như ở nhà"
+                  }].map((item, i) => <div key={i} className="flex items-start gap-4 group hover-lift transition-all">
                         <div className="w-2 h-2 rounded-full bg-secondary mt-2 flex-shrink-0"></div>
                         <div className="flex-1 bg-card/50 backdrop-blur-sm p-5 rounded-2xl border border-secondary/20">
                           <p className="text-lg md:text-xl font-bold text-foreground">
@@ -140,8 +138,7 @@ const PersonalStory = () => {
                           </p>
                           <p className="text-muted-foreground mt-2">{item.desc}</p>
                         </div>
-                      </div>
-                    ))}
+                      </div>)}
                   </div>
                   
                   <div className="mt-10 pt-8 border-t-2 border-secondary/30">
@@ -159,8 +156,6 @@ const PersonalStory = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default PersonalStory;
