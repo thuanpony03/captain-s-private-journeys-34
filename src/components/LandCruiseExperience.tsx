@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { Card } from "@/components/ui/card";
-import { Sparkles } from "lucide-react";
 import vehicleImage from "@/assets/luxury-vehicle.jpg";
 import hotelImage from "@/assets/luxury-hotel.jpg";
 import foodImage from "@/assets/gourmet-food.jpg";
@@ -30,23 +29,29 @@ const LandCruiseExperience = () => {
     {
       title: "Đội xe thượng hạng",
       image: vehicleImage,
-      description: "Mercedes/SUV cao cấp. Ghế da, tủ lạnh, WiFi. Duỗi chân thoải mái suốt hành trình.",
-      icon: "🚗",
-      color: "from-blue-500/20 to-cyan-500/20"
+      description: "Mercedes/SUV cao cấp với ghế da, tủ lạnh, WiFi. Duỗi chân thoải mái suốt hành trình dài.",
+      icon: "🚙",
+      emoji: "😌",
+      gradient: "from-blue-500/30 via-cyan-500/20 to-teal-500/30",
+      features: ["Ghế da cao cấp", "WiFi & Tủ lạnh", "Không gian rộng rãi"]
     },
     {
       title: "Giấc ngủ 5 sao",
       image: hotelImage,
-      description: "Khách sạn ngay trung tâm, view đẹp. Phòng rộng rãi, tiện nghi hiện đại.",
+      description: "Khách sạn ngay trung tâm với view đẹp, phòng rộng rãi, tiện nghi hiện đại đầy đủ.",
       icon: "🏨",
-      color: "from-purple-500/20 to-pink-500/20"
+      emoji: "😴",
+      gradient: "from-purple-500/30 via-pink-500/20 to-rose-500/30",
+      features: ["View đẹp trung tâm", "Phòng rộng rãi", "Tiện nghi 5 sao"]
     },
     {
       title: "Ẩm thực nuông chiều",
       image: foodImage,
-      description: "A-la-carte cao cấp. Món Việt nóng sốt, món Âu tinh tế. Ấm bụng như ở nhà.",
+      description: "A-la-carte cao cấp với món Việt nóng sốt, món Âu tinh tế. Ấm bụng như ở nhà.",
       icon: "🍽️",
-      color: "from-orange-500/20 to-red-500/20"
+      emoji: "🤤",
+      gradient: "from-orange-500/30 via-red-500/20 to-amber-500/30",
+      features: ["Món Việt nóng sốt", "Món Âu tinh tế", "Phục vụ tận tâm"]
     }
   ];
 
@@ -54,25 +59,32 @@ const LandCruiseExperience = () => {
     <section className="py-20 md:py-32 bg-muted relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute top-40 right-20 text-9xl opacity-5 animate-float">🚢</div>
+        <div className="absolute bottom-40 left-20 text-8xl opacity-5 animate-wave">🌊</div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 animate-slide-up">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="h-[2px] w-16 bg-gradient-to-r from-transparent to-secondary"></div>
-              <Sparkles className="w-6 h-6 text-secondary fill-secondary" />
-              <div className="h-[2px] w-16 bg-gradient-to-l from-transparent to-secondary"></div>
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <div className="h-[3px] w-20 bg-gradient-to-r from-transparent to-secondary rounded-full"></div>
+              <span className="text-6xl animate-float">🚢</span>
+              <div className="h-[3px] w-20 bg-gradient-to-l from-transparent to-secondary rounded-full"></div>
             </div>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-primary">
+            <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
               Tiêu chuẩn{" "}
-              <span className="text-secondary italic">"Du thuyền mặt đất"</span>
+              <br className="md:hidden" />
+              <span className="text-gradient text-5xl md:text-7xl lg:text-8xl italic">
+                "Du thuyền trên mặt đất"
+              </span>
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground font-light max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-muted-foreground font-light max-w-3xl mx-auto flex items-center justify-center gap-3 flex-wrap">
+              <span className="text-3xl">💎</span>
               Mỗi chi tiết được chăm chút để mang đến trải nghiệm{" "}
-              <span className="font-semibold text-secondary">xa hoa và thoải mái nhất</span>
+              <span className="font-bold text-secondary">xa hoa nhất</span>
+              <span className="text-3xl">💎</span>
             </p>
           </div>
 
@@ -84,29 +96,34 @@ const LandCruiseExperience = () => {
                 className="parallax"
               >
                 <Card 
-                  className="overflow-hidden hover-lift group relative"
+                  className="overflow-hidden hover-lift group relative h-full"
                   style={{ animationDelay: `${index * 150}ms` }}
                 >
                   {/* Image Section */}
-                  <div className="relative h-72 md:h-80 overflow-hidden">
+                  <div className="relative h-80 md:h-96 overflow-hidden">
                     <img 
                       src={exp.image} 
                       alt={exp.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-125"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent opacity-80"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent opacity-70"></div>
                     
-                    {/* Floating Icon */}
+                    {/* Floating Icon Badge */}
                     <div className="absolute top-6 right-6">
-                      <div className="glass-effect p-4 rounded-2xl border-2 border-secondary/50 animate-float">
-                        <span className="text-4xl">{exp.icon}</span>
+                      <div className="glass-effect p-5 rounded-2xl border-2 border-secondary/60 shadow-glow animate-float">
+                        <span className="text-5xl">{exp.icon}</span>
                       </div>
                     </div>
                     
+                    {/* Emoji Reaction */}
+                    <div className="absolute top-6 left-6">
+                      <span className="text-6xl animate-wave">{exp.emoji}</span>
+                    </div>
+                    
                     {/* Title Overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <div className="glass-effect p-4 rounded-xl border-secondary/30">
-                        <h3 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground">
+                    <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                      <div className="glass-effect p-6 rounded-2xl border-2 border-secondary/40 shadow-gold">
+                        <h3 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground">
                           {exp.title}
                         </h3>
                       </div>
@@ -114,14 +131,30 @@ const LandCruiseExperience = () => {
                   </div>
                   
                   {/* Content Section */}
-                  <div className={`p-6 md:p-8 bg-gradient-to-br ${exp.color} relative overflow-hidden`}>
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/10 rounded-full blur-2xl"></div>
-                    <p className="text-card-foreground leading-relaxed text-base md:text-lg relative z-10 font-medium">
+                  <div className={`p-8 md:p-10 bg-gradient-to-br ${exp.gradient} relative overflow-hidden`}>
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-secondary/10 rounded-full blur-2xl group-hover:scale-150 transition-transform"></div>
+                    
+                    <p className="text-foreground leading-relaxed text-base md:text-lg mb-6 relative z-10 font-medium">
                       {exp.description}
                     </p>
+
+                    {/* Feature Tags */}
+                    <div className="flex flex-wrap gap-2 relative z-10">
+                      {exp.features.map((feature, i) => (
+                        <div 
+                          key={i} 
+                          className="bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full border border-secondary/20 hover:border-secondary/50 transition-all hover-lift"
+                        >
+                          <span className="text-sm font-semibold text-foreground flex items-center gap-2">
+                            <span className="text-lg">✓</span>
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
-                  {/* Hover Effect Border */}
+                  {/* Hover Border Effect */}
                   <div className="absolute inset-0 border-2 border-transparent group-hover:border-secondary/50 rounded-xl transition-all duration-500 pointer-events-none"></div>
                 </Card>
               </div>
@@ -130,14 +163,22 @@ const LandCruiseExperience = () => {
 
           <div className="mt-16 text-center animate-zoom-in">
             <div className="inline-block relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-secondary via-primary to-secondary blur-xl opacity-50 animate-pulse"></div>
-              <div className="relative flex items-center gap-4 bg-card px-10 py-6 rounded-full border-4 border-secondary shadow-gold">
-                <span className="text-4xl animate-float">✨</span>
-                <p className="font-display text-xl md:text-2xl font-bold text-foreground">
-                  Sang trọng từng chi tiết - Tận hưởng từng khoảnh khắc
-                </p>
-                <span className="text-4xl animate-float" style={{ animationDelay: '2s' }}>✨</span>
-              </div>
+              <div className="absolute inset-0 gradient-sunset blur-2xl opacity-40 animate-pulse-slow"></div>
+              <Card className="relative p-10 md:p-12 bg-card border-2 border-secondary shadow-glow hover-lift">
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                  <div className="flex gap-3">
+                    <span className="text-6xl md:text-7xl animate-float">✨</span>
+                    <span className="text-6xl md:text-7xl animate-float" style={{ animationDelay: '1s' }}>💫</span>
+                  </div>
+                  <p className="font-display text-2xl md:text-4xl font-bold text-foreground">
+                    Sang trọng từng chi tiết
+                    <br />
+                    <span className="text-gradient text-3xl md:text-5xl italic">
+                      Tận hưởng từng khoảnh khắc
+                    </span>
+                  </p>
+                </div>
+              </Card>
             </div>
           </div>
         </div>

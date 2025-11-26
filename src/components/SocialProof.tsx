@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { Card } from "@/components/ui/card";
-import { Star, Quote, Heart, Award, TrendingUp } from "lucide-react";
 
 const SocialProof = () => {
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -31,7 +30,8 @@ const SocialProof = () => {
       rating: 5,
       tour: "US West Coast",
       avatar: "👩‍👧‍👦",
-      highlight: "Tour tuyệt vời"
+      highlight: "Quá tuyệt vời",
+      emoji: "🥰"
     },
     {
       name: "Anh Tuấn & Gia đình",
@@ -40,7 +40,8 @@ const SocialProof = () => {
       rating: 5,
       tour: "Australia Grand Road",
       avatar: "👨‍👩‍👧",
-      highlight: "Dịch vụ 10/10"
+      highlight: "Dịch vụ 10/10",
+      emoji: "🤩"
     },
     {
       name: "Chị Hương",
@@ -49,7 +50,8 @@ const SocialProof = () => {
       rating: 5,
       tour: "Custom Tour",
       avatar: "👩",
-      highlight: "Quá đáng tiền"
+      highlight: "Quá đáng tiền",
+      emoji: "😍"
     }
   ];
 
@@ -57,24 +59,26 @@ const SocialProof = () => {
     <section className="py-20 md:py-32 bg-background relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-10 w-72 h-72 bg-secondary/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/4 left-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-1/4 right-10 w-[500px] h-[500px] bg-accent/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/3 text-9xl opacity-5 animate-float">💬</div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 animate-slide-up">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <Heart className="w-6 h-6 text-secondary fill-secondary" />
-              <div className="h-[2px] w-20 bg-gradient-to-r from-transparent via-secondary to-transparent"></div>
-              <Heart className="w-6 h-6 text-secondary fill-secondary" />
+            <div className="flex items-center justify-center gap-4 mb-8">
+              <span className="text-5xl animate-float">❤️</span>
+              <div className="h-[3px] w-24 bg-gradient-to-r from-transparent via-secondary to-accent rounded-full"></div>
+              <span className="text-5xl animate-float" style={{ animationDelay: '1s' }}>❤️</span>
             </div>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-primary">
+            <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
               Những gia đình đã đồng hành
               <br />
-              <span className="text-secondary italic">cùng Vinh</span>
+              <span className="text-gradient text-5xl md:text-7xl lg:text-8xl italic">cùng Captain Vinh</span>
             </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground font-light">
+            <p className="text-xl md:text-2xl text-muted-foreground font-light flex items-center justify-center gap-3">
+              <span className="text-3xl">🏆</span>
               Hơn <span className="font-bold text-secondary">100+ gia đình</span> đã trải nghiệm và tin tưởng
             </p>
           </div>
@@ -87,36 +91,39 @@ const SocialProof = () => {
                 className="parallax"
               >
                 <Card 
-                  className="p-8 hover-lift relative overflow-hidden group h-full"
+                  className="p-8 md:p-10 hover-lift relative overflow-hidden group h-full bg-gradient-to-br from-card to-muted/20"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   {/* Background Decoration */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-full blur-2xl group-hover:bg-secondary/10 transition-all duration-500"></div>
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-secondary/10 rounded-full blur-2xl group-hover:scale-150 transition-transform"></div>
                   
                   {/* Quote Icon */}
-                  <Quote className="absolute top-6 right-6 w-16 h-16 text-secondary/10 group-hover:text-secondary/20 transition-colors" />
+                  <span className="absolute top-6 right-6 text-7xl opacity-10 group-hover:opacity-20 transition-opacity">"</span>
                   
-                  {/* Avatar */}
+                  {/* Avatar & Name */}
                   <div className="mb-6 flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-secondary/20 to-primary/20 flex items-center justify-center text-3xl animate-float">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-secondary/30 to-accent/30 flex items-center justify-center text-5xl animate-float border-2 border-secondary/20">
                       {testimonial.avatar}
                     </div>
                     <div>
-                      <p className="font-display font-bold text-xl text-primary">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground flex items-center gap-1">
-                        📍 {testimonial.location}
+                      <p className="font-display font-bold text-2xl text-primary">{testimonial.name}</p>
+                      <p className="text-sm text-muted-foreground flex items-center gap-2">
+                        <span className="text-lg">📍</span>
+                        {testimonial.location}
                       </p>
                     </div>
                   </div>
 
-                  {/* Rating */}
+                  {/* Rating Stars */}
                   <div className="flex gap-1 mb-6">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star 
+                      <span 
                         key={i} 
-                        className="w-6 h-6 fill-secondary text-secondary transform group-hover:scale-110 transition-transform" 
-                        style={{ transitionDelay: `${i * 50}ms` }}
-                      />
+                        className="text-3xl animate-wave" 
+                        style={{ animationDelay: `${i * 100}ms` }}
+                      >
+                        ⭐
+                      </span>
                     ))}
                   </div>
 
@@ -126,58 +133,66 @@ const SocialProof = () => {
                   </p>
 
                   {/* Highlight Quote */}
-                  <div className="mb-6 p-4 bg-gradient-to-r from-secondary/10 to-transparent rounded-lg border-l-4 border-secondary">
-                    <p className="font-bold text-secondary italic">"{testimonial.highlight}"</p>
-                  </div>
-
-                  {/* Tour Badge */}
-                  <div className="border-t pt-6">
-                    <div className="inline-flex items-center gap-2 bg-gradient-to-r from-secondary/20 to-primary/20 px-4 py-2 rounded-full">
-                      <Award className="w-4 h-4 text-secondary" />
-                      <p className="text-sm font-bold text-foreground">{testimonial.tour}</p>
+                  <div className="mb-6 p-5 bg-gradient-to-r from-secondary/20 to-accent/10 rounded-2xl border-l-4 border-secondary shadow-md">
+                    <div className="flex items-center gap-3">
+                      <span className="text-4xl animate-wave">{testimonial.emoji}</span>
+                      <p className="font-bold text-secondary italic text-xl">"{testimonial.highlight}"</p>
                     </div>
                   </div>
 
-                  {/* Hover Border Effect */}
-                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-secondary/30 rounded-xl transition-all duration-500 pointer-events-none"></div>
+                  {/* Tour Badge */}
+                  <div className="border-t-2 border-secondary/20 pt-6">
+                    <div className="inline-flex items-center gap-3 gradient-sunset px-6 py-3 rounded-full text-white shadow-gold">
+                      <span className="text-2xl">🎫</span>
+                      <p className="text-base font-bold">{testimonial.tour}</p>
+                    </div>
+                  </div>
+
+                  {/* Hover Border */}
+                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-secondary/40 rounded-xl transition-all duration-500 pointer-events-none"></div>
                 </Card>
               </div>
             ))}
           </div>
 
           {/* Trust Indicators */}
-          <div className="grid md:grid-cols-3 gap-6 mb-16 animate-slide-up">
-            <Card className="p-6 text-center hover-lift group bg-gradient-to-br from-secondary/5 to-transparent">
-              <div className="text-5xl mb-3 animate-float">100+</div>
-              <p className="font-display font-bold text-xl text-primary mb-2">Gia đình hài lòng</p>
-              <p className="text-sm text-muted-foreground">Trải nghiệm tuyệt vời</p>
-            </Card>
-            <Card className="p-6 text-center hover-lift group bg-gradient-to-br from-primary/5 to-transparent">
-              <div className="text-5xl mb-3 animate-float" style={{ animationDelay: '1s' }}>10+</div>
-              <p className="font-display font-bold text-xl text-primary mb-2">Năm kinh nghiệm</p>
-              <p className="text-sm text-muted-foreground">Chuyên gia du lịch</p>
-            </Card>
-            <Card className="p-6 text-center hover-lift group bg-gradient-to-br from-secondary/5 to-transparent">
-              <div className="text-5xl mb-3 animate-float" style={{ animationDelay: '2s' }}>100%</div>
-              <p className="font-display font-bold text-xl text-primary mb-2">Cam kết chất lượng</p>
-              <p className="text-sm text-muted-foreground">Hoàn tiền nếu không hài lòng</p>
-            </Card>
+          <div className="grid md:grid-cols-3 gap-8 mb-16 animate-slide-up">
+            {[
+              { icon: "💯", number: "100+", title: "Gia đình hài lòng", desc: "Trải nghiệm tuyệt vời" },
+              { icon: "🏆", number: "10+", title: "Năm kinh nghiệm", desc: "Chuyên gia du lịch" },
+              { icon: "✅", number: "100%", title: "Cam kết chất lượng", desc: "Hoàn tiền nếu không hài lòng" }
+            ].map((stat, index) => (
+              <Card 
+                key={index}
+                className="p-8 md:p-10 text-center hover-lift group bg-gradient-to-br from-card to-muted/20 relative overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent group-hover:from-secondary/10 transition-all"></div>
+                <div className="relative z-10">
+                  <div className="text-7xl mb-4 animate-float" style={{ animationDelay: `${index}s` }}>
+                    {stat.icon}
+                  </div>
+                  <p className="font-display text-5xl md:text-6xl font-bold text-gradient mb-3">{stat.number}</p>
+                  <p className="font-display font-bold text-xl md:text-2xl text-primary mb-2">{stat.title}</p>
+                  <p className="text-sm text-muted-foreground">{stat.desc}</p>
+                </div>
+              </Card>
+            ))}
           </div>
 
           {/* Final CTA */}
           <div className="text-center animate-zoom-in">
-            <Card className="inline-block p-10 bg-gradient-to-br from-secondary via-primary to-secondary shadow-gold hover-lift relative overflow-hidden group">
+            <Card className="inline-block p-10 md:p-14 gradient-sunset shadow-glow hover-lift relative overflow-hidden group border-2 border-white/20">
               <div className="absolute inset-0 animate-shimmer"></div>
               <div className="relative flex flex-col md:flex-row items-center gap-6">
-                <div className="flex gap-2">
-                  <div className="text-5xl md:text-6xl animate-float">🤝</div>
-                  <div className="text-5xl md:text-6xl animate-float" style={{ animationDelay: '1s' }}>💯</div>
+                <div className="flex gap-3">
+                  <span className="text-7xl md:text-8xl animate-float">🤝</span>
+                  <span className="text-7xl md:text-8xl animate-float" style={{ animationDelay: '1s' }}>💯</span>
                 </div>
-                <div className="text-primary-foreground">
-                  <p className="font-display text-2xl md:text-3xl font-bold mb-2">
+                <div className="text-white">
+                  <p className="font-display text-3xl md:text-5xl font-bold mb-3">
                     100% Khách hàng hài lòng
                   </p>
-                  <p className="text-lg md:text-xl opacity-90 font-light">
+                  <p className="text-xl md:text-2xl opacity-95 font-light italic">
                     Cam kết hoàn tiền nếu không hài lòng về dịch vụ
                   </p>
                 </div>
