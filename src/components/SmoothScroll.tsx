@@ -13,14 +13,22 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Initialize Lenis
+    // Only enable smooth scroll on desktop for better mobile performance
+    const isMobile = window.innerWidth < 768;
+    
+    if (isMobile) {
+      return; // Skip smooth scroll on mobile
+    }
+
+    // Initialize Lenis with optimized settings
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 2,
+      touchMultiplier: 1.5,
+      infinite: false,
     });
 
     lenisRef.current = lenis;

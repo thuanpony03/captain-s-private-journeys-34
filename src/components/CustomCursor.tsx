@@ -33,28 +33,62 @@ const CustomCursor = () => {
       });
     };
 
-    const handleMouseEnter = () => {
+    const handleMouseEnter = (e: Event) => {
+      const target = e.currentTarget as HTMLElement;
+      
       gsap.to([cursor, follower], {
-        scale: 1.5,
+        scale: 2,
         duration: 0.3,
         ease: "power2.out"
       });
+
+      // Magnetic pull effect
+      const handleMagneticMove = (moveEvent: MouseEvent) => {
+        const rect = target.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const deltaX = (moveEvent.clientX - centerX) * 0.3;
+        const deltaY = (moveEvent.clientY - centerY) * 0.3;
+        
+        gsap.to(target, {
+          x: deltaX,
+          y: deltaY,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      };
+
+      target.addEventListener('mousemove', handleMagneticMove);
+      (target as any).__magneticMove = handleMagneticMove;
     };
 
-    const handleMouseLeave = () => {
+    const handleMouseLeave = (e: Event) => {
+      const target = e.currentTarget as HTMLElement;
+      
       gsap.to([cursor, follower], {
         scale: 1,
         duration: 0.3,
         ease: "power2.out"
       });
+
+      gsap.to(target, {
+        x: 0,
+        y: 0,
+        duration: 0.5,
+        ease: "elastic.out(1, 0.5)"
+      });
+
+      if ((target as any).__magneticMove) {
+        target.removeEventListener('mousemove', (target as any).__magneticMove);
+      }
     };
 
-    // Magnetic effect for buttons
-    const magneticElements = document.querySelectorAll('button, a, .magnetic');
+    // Magnetic effect for buttons and links
+    const magneticElements = document.querySelectorAll('button, a[href], .magnetic');
     
     magneticElements.forEach((el) => {
-      el.addEventListener('mouseenter', handleMouseEnter);
-      el.addEventListener('mouseleave', handleMouseLeave);
+      el.addEventListener('mouseenter', handleMouseEnter as EventListener);
+      el.addEventListener('mouseleave', handleMouseLeave as EventListener);
     });
 
     window.addEventListener('mousemove', moveCursor);
@@ -62,8 +96,11 @@ const CustomCursor = () => {
     return () => {
       window.removeEventListener('mousemove', moveCursor);
       magneticElements.forEach((el) => {
-        el.removeEventListener('mouseenter', handleMouseEnter);
-        el.removeEventListener('mouseleave', handleMouseLeave);
+        el.removeEventListener('mouseenter', handleMouseEnter as EventListener);
+        el.removeEventListener('mouseleave', handleMouseLeave as EventListener);
+        if ((el as any).__magneticMove) {
+          el.removeEventListener('mousemove', (el as any).__magneticMove);
+        }
       });
     };
   }, []);
@@ -73,14 +110,14 @@ const CustomCursor = () => {
       {/* Inner cursor dot */}
       <div
         ref={cursorRef}
-        className="fixed w-2 h-2 bg-secondary rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        style={{ left: '-4px', top: '-4px' }}
+        className="hidden md:block fixed w-3 h-3 bg-secondary rounded-full pointer-events-none z-[9999] mix-blend-difference shadow-glow"
+        style={{ left: '-6px', top: '-6px' }}
       />
       {/* Outer cursor ring */}
       <div
         ref={followerRef}
-        className="fixed w-10 h-10 border-2 border-secondary/50 rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        style={{ left: '-20px', top: '-20px' }}
+        className="hidden md:block fixed w-12 h-12 border-2 border-secondary/60 rounded-full pointer-events-none z-[9999] mix-blend-difference transition-all duration-100"
+        style={{ left: '-24px', top: '-24px' }}
       />
     </>
   );

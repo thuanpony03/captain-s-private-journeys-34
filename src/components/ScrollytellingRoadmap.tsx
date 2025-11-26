@@ -21,36 +21,33 @@ const ScrollytellingRoadmap = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate car along the path
-      gsap.to(carRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top center",
-          end: "bottom center",
-          scrub: 1,
-        },
-        motionPath: {
-          path: pathRef.current,
-          align: pathRef.current,
-          autoRotate: true,
-          alignOrigin: [0.5, 0.5],
-        },
-        ease: "none"
-      });
-
-      // Animate milestones appearance
+      // Animate milestones appearance with stagger
       milestones.forEach((_, index) => {
         gsap.from(`.milestone-${index}`, {
           scrollTrigger: {
             trigger: `.milestone-${index}`,
-            start: "top 80%",
-            end: "top 50%",
+            start: "top 85%",
+            end: "top 60%",
             scrub: 1,
           },
-          scale: 0,
+          scale: 0.5,
           opacity: 0,
+          y: 50,
           ease: "back.out(1.7)"
         });
+      });
+
+      // Animate the connecting line
+      gsap.from(".roadmap-line", {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+          end: "bottom 20%",
+          scrub: 1,
+        },
+        scaleY: 0,
+        transformOrigin: "top",
+        ease: "none"
       });
     });
 
@@ -87,8 +84,8 @@ const ScrollytellingRoadmap = () => {
         {/* Mobile-First Vertical Timeline */}
         <div className="max-w-4xl mx-auto">
           <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-secondary via-accent to-secondary opacity-30 md:-ml-px"></div>
+            {/* Animated Vertical line */}
+            <div className="roadmap-line absolute left-4 md:left-1/2 top-0 bottom-0 w-1 md:w-1.5 bg-gradient-to-b from-secondary via-accent to-secondary md:-ml-1 rounded-full shadow-glow"></div>
             
             {/* Milestones */}
             <div className="space-y-8 md:space-y-12">
@@ -99,9 +96,10 @@ const ScrollytellingRoadmap = () => {
                     index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                   }`}
                 >
-                  {/* Timeline dot */}
-                  <div className="absolute left-4 md:left-1/2 w-8 h-8 md:w-10 md:h-10 md:-ml-5 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center shadow-lg z-10">
-                    <div className="text-xl">{milestone.icon}</div>
+                  {/* Timeline dot with pulse */}
+                  <div className="absolute left-4 md:left-1/2 w-10 h-10 md:w-12 md:h-12 md:-ml-6 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center shadow-glow z-10 animate-pulse-slow">
+                    <div className="text-2xl md:text-3xl">{milestone.icon}</div>
+                    <div className="absolute inset-0 rounded-full bg-secondary/30 animate-ping"></div>
                   </div>
                   
                   {/* Content card - Mobile first */}

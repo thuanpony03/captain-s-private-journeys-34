@@ -12,37 +12,53 @@ const HeroVideoMask = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title animation
-      gsap.from(titleRef.current, {
-        scale: 0.8,
-        opacity: 0,
-        duration: 1.5,
-        ease: "power3.out"
-      });
+      // Title entrance animation - more dramatic
+      const timeline = gsap.timeline();
+      
+      timeline
+        .from(titleRef.current, {
+          scale: 0.5,
+          opacity: 0,
+          duration: 1.5,
+          ease: "power4.out"
+        })
+        .from(".hero-subtitle", {
+          y: 30,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out"
+        }, "-=0.8")
+        .from(".hero-props", {
+          y: 20,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: "back.out(1.5)"
+        }, "-=0.5");
 
-      // Scroll-triggered zoom out
+      // Scroll-triggered zoom out - smoother
       gsap.to(titleRef.current, {
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 1,
+          scrub: 1.5,
         },
-        scale: 1.5,
+        scale: 1.8,
         opacity: 0,
-        y: -200,
-        ease: "none"
+        y: -150,
+        ease: "power1.inOut"
       });
 
-      // Video reveal on scroll
+      // Video scale on scroll
       gsap.to(videoRef.current, {
         scrollTrigger: {
           trigger: heroRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 1,
+          scrub: 2,
         },
-        scale: 1.1,
+        scale: 1.2,
         ease: "none"
       });
     });
@@ -95,30 +111,36 @@ const HeroVideoMask = () => {
             <div className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-white leading-tight mb-2">
               Đừng đi du lịch
             </div>
-            <div className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl leading-tight">
-              <span className="text-gradient inline-block">
+            <div className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl leading-tight hero-subtitle">
+              <span className="text-gradient inline-block animate-shimmer bg-clip-text">
                 như khách
               </span>
             </div>
-            <div className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white/95 leading-tight mt-4 font-light">
-              Đi như <span className="text-secondary font-bold">người nhà</span> cùng Vinh Around
+            <div className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white/95 leading-tight mt-4 font-light hero-subtitle">
+              Đi như <span className="text-secondary font-bold animate-pulse-slow">người nhà</span> cùng Vinh Around
             </div>
           </h1>
         </div>
 
-        {/* Value Props - Mobile First */}
+        {/* Value Props - Mobile First with stagger animation */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-10 md:mb-12 max-w-3xl mx-auto">
-          <div className="glass-effect p-4 rounded-2xl border border-white/20">
-            <div className="text-2xl mb-2">🚙</div>
-            <div className="text-sm md:text-base text-white font-medium">Xe riêng sang trọng</div>
+          <div className="hero-props glass-effect p-4 md:p-5 rounded-2xl border-2 border-white/20 hover:border-secondary/50 transition-all hover-lift">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-3 mx-auto">
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-secondary/40"></div>
+            </div>
+            <div className="text-sm md:text-base text-white font-bold">Xe riêng sang trọng</div>
           </div>
-          <div className="glass-effect p-4 rounded-2xl border border-white/20">
-            <div className="text-2xl mb-2">⭐</div>
-            <div className="text-sm md:text-base text-white font-medium">Khách sạn 5 sao</div>
+          <div className="hero-props glass-effect p-4 md:p-5 rounded-2xl border-2 border-white/20 hover:border-secondary/50 transition-all hover-lift">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-3 mx-auto">
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-secondary/40"></div>
+            </div>
+            <div className="text-sm md:text-base text-white font-bold">Khách sạn 5 sao</div>
           </div>
-          <div className="glass-effect p-4 rounded-2xl border border-white/20">
-            <div className="text-2xl mb-2">👨‍✈️</div>
-            <div className="text-sm md:text-base text-white font-medium">Hướng dẫn địa phương</div>
+          <div className="hero-props glass-effect p-4 md:p-5 rounded-2xl border-2 border-white/20 hover:border-secondary/50 transition-all hover-lift">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-3 mx-auto">
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-secondary/40"></div>
+            </div>
+            <div className="text-sm md:text-base text-white font-bold">Hướng dẫn địa phương</div>
           </div>
         </div>
         
