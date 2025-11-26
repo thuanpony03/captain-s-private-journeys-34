@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
 import { useEffect, useRef } from "react";
 
 const HeroSection = () => {
@@ -100,7 +99,7 @@ const HeroSection = () => {
               </h2>
               <p className="text-2xl md:text-3xl text-primary-foreground/95 font-light flex items-center justify-center gap-3">
                 <span className="text-3xl">👨‍✈️</span>
-                cùng Captain Vinh
+                cùng Vinh Around
               </p>
             </div>
           </div>
@@ -152,7 +151,7 @@ const HeroSection = () => {
       {/* Scroll Indicator */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce">
         <div className="glass-effect p-4 rounded-full border-2 border-secondary/50 shadow-gold">
-          <ChevronDown className="w-10 h-10 text-secondary" />
+          <span className="text-3xl">👇</span>
         </div>
       </div>
     </section>
