@@ -124,21 +124,21 @@ const HeroVideoMask = () => {
 
         {/* Value Props - Mobile First with stagger animation */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-10 md:mb-12 max-w-3xl mx-auto">
-          <div className="hero-props glass-effect p-4 md:p-5 rounded-2xl border-2 border-white/20 hover:border-secondary/50 transition-all hover-lift">
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-3 mx-auto">
-              <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-secondary/40"></div>
+          <div className="hero-props glass-effect p-4 md:p-5 rounded-2xl border-2 border-primary/30 hover:border-secondary/60 transition-all hover-lift group">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/30 group-hover:bg-secondary/30 flex items-center justify-center mb-3 mx-auto transition-colors">
+              <div className="w-2 h-2 rounded-full bg-white"></div>
             </div>
             <div className="text-sm md:text-base text-white font-bold">Xe riêng sang trọng</div>
           </div>
-          <div className="hero-props glass-effect p-4 md:p-5 rounded-2xl border-2 border-white/20 hover:border-secondary/50 transition-all hover-lift">
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-3 mx-auto">
-              <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-secondary/40"></div>
+          <div className="hero-props glass-effect p-4 md:p-5 rounded-2xl border-2 border-primary/30 hover:border-secondary/60 transition-all hover-lift group">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/30 group-hover:bg-secondary/30 flex items-center justify-center mb-3 mx-auto transition-colors">
+              <div className="w-2 h-2 rounded-full bg-white"></div>
             </div>
             <div className="text-sm md:text-base text-white font-bold">Khách sạn 5 sao</div>
           </div>
-          <div className="hero-props glass-effect p-4 md:p-5 rounded-2xl border-2 border-white/20 hover:border-secondary/50 transition-all hover-lift">
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-secondary/20 flex items-center justify-center mb-3 mx-auto">
-              <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-secondary/40"></div>
+          <div className="hero-props glass-effect p-4 md:p-5 rounded-2xl border-2 border-primary/30 hover:border-secondary/60 transition-all hover-lift group">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/30 group-hover:bg-secondary/30 flex items-center justify-center mb-3 mx-auto transition-colors">
+              <div className="w-2 h-2 rounded-full bg-white"></div>
             </div>
             <div className="text-sm md:text-base text-white font-bold">Hướng dẫn địa phương</div>
           </div>
@@ -148,12 +148,10 @@ const HeroVideoMask = () => {
         <Button 
           size="lg"
           onClick={scrollToForm}
-          className="gradient-sunset text-base sm:text-lg md:text-xl px-8 sm:px-12 md:px-16 py-6 md:py-8 rounded-full font-bold shadow-glow hover-lift border-2 border-white/30 w-full sm:w-auto"
+          className="bg-gradient-to-r from-primary via-primary/90 to-secondary text-base sm:text-lg md:text-xl px-8 sm:px-12 md:px-16 py-6 md:py-8 rounded-full font-bold shadow-elegant hover:shadow-gold hover-lift border-2 border-white/30 w-full sm:w-auto transition-all"
         >
-          <span className="flex items-center justify-center gap-2 md:gap-3">
-            <span className="text-xl md:text-2xl">🎯</span>
-            <span>BẮT ĐẦU HÀNH TRÌNH</span>
-            <span className="text-xl md:text-2xl">✨</span>
+          <span className="flex items-center justify-center gap-2 md:gap-3 text-white">
+            BẮT ĐẦU HÀNH TRÌNH
           </span>
         </Button>
       </div>

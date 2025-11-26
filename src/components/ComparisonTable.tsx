@@ -97,7 +97,7 @@ const ComparisonTable = () => {
               </div>
             </div>
             <div className="text-center">
-              <div className="inline-flex items-center gap-3 p-6 gradient-sunset border-2 border-white/20 rounded-3xl shadow-glow">
+              <div className="inline-flex items-center gap-3 p-6 bg-gradient-to-r from-primary via-primary/90 to-secondary border-2 border-primary/40 rounded-3xl shadow-elegant">
                 <Check className="w-7 h-7 text-white" />
                 <span className="font-display font-bold text-2xl text-white">Private Vinh</span>
               </div>
@@ -152,10 +152,10 @@ const ComparisonTable = () => {
 
                   {/* Private Vinh - Vibrant & Scaled */}
                   <Card 
-                    className="p-8 md:p-10 gradient-sunset border-2 border-white/20 shadow-glow transition-all transform md:scale-105 hover:scale-110 relative overflow-hidden group"
+                    className="p-8 md:p-10 bg-gradient-to-br from-primary via-primary/90 to-secondary border-2 border-primary/40 shadow-elegant transition-all transform md:scale-105 hover:scale-110 relative overflow-hidden group"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-accent/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity animate-shimmer"></div>
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity animate-shimmer"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/10 rounded-full blur-3xl"></div>
                     
                     <div className="relative z-10 flex items-start gap-4">
                       <div className="mt-1 flex-shrink-0">
@@ -186,9 +186,9 @@ const ComparisonTable = () => {
               transitionDelay: `${comparisons.length * 150}ms`
             }}
           >
-            <Card className="inline-block gradient-sunset p-8 md:p-12 rounded-3xl shadow-glow border-2 border-white/20 relative overflow-hidden group">
+            <Card className="inline-block bg-gradient-to-br from-primary via-primary/90 to-secondary p-8 md:p-12 rounded-3xl shadow-elegant border-2 border-primary/40 relative overflow-hidden group">
               <div className="absolute inset-0 animate-shimmer"></div>
-              <div className="absolute top-0 left-0 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+              <div className="absolute top-0 left-0 w-40 h-40 bg-secondary/10 rounded-full blur-3xl"></div>
               <div className="relative text-white">
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>

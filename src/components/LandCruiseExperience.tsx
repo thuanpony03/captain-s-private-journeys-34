@@ -27,7 +27,7 @@ const LandCruiseExperience = () => {
     description: "Mercedes/SUV cao cấp với ghế da, tủ lạnh, WiFi. Duỗi chân thoải mái suốt hành trình dài.",
     icon: "🚙",
     emoji: "😌",
-    gradient: "from-blue-500/30 via-cyan-500/20 to-teal-500/30",
+    gradient: "from-primary/20 via-primary/10 to-secondary/20",
     features: ["Ghế da cao cấp", "WiFi & Tủ lạnh", "Không gian rộng rãi"]
   }, {
     title: "Giấc ngủ 5 sao",
@@ -35,7 +35,7 @@ const LandCruiseExperience = () => {
     description: "Khách sạn ngay trung tâm với view đẹp, phòng rộng rãi, tiện nghi hiện đại đầy đủ.",
     icon: "🏨",
     emoji: "😴",
-    gradient: "from-purple-500/30 via-pink-500/20 to-rose-500/30",
+    gradient: "from-primary/15 via-secondary/10 to-primary/15",
     features: ["View đẹp trung tâm", "Phòng rộng rãi", "Tiện nghi 5 sao"]
   }, {
     title: "Ẩm thực nuông chiều",
@@ -43,7 +43,7 @@ const LandCruiseExperience = () => {
     description: "A-la-carte cao cấp với món Việt nóng sốt, món Âu tinh tế. Ấm bụng như ở nhà.",
     icon: "🍽️",
     emoji: "🤤",
-    gradient: "from-orange-500/30 via-red-500/20 to-amber-500/30",
+    gradient: "from-secondary/20 via-primary/10 to-secondary/15",
     features: ["Món Việt nóng sốt", "Món Âu tinh tế", "Phục vụ tận tâm"]
   }];
   return <section className="py-32 md:py-48 bg-muted relative overflow-hidden">
@@ -90,15 +90,15 @@ const LandCruiseExperience = () => {
                     
                     {/* Icon Badge */}
                     <div className="absolute top-6 right-6">
-                      <div className="glass-effect p-4 md:p-5 rounded-2xl border-2 border-secondary/60 shadow-glow">
-                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-secondary/40"></div>
+                      <div className="glass-effect p-4 md:p-5 rounded-2xl border-2 border-primary/60 shadow-elegant group-hover:border-secondary/60 transition-all">
+                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-primary/40 to-secondary/30"></div>
                       </div>
                     </div>
                     
                     {/* Title Overlay */}
                     <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                      <div className="glass-effect p-5 md:p-6 rounded-2xl border-2 border-secondary/40 shadow-gold">
-                        <h3 className="font-display text-2xl md:text-3xl font-bold text-primary-foreground">
+                      <div className="glass-effect p-5 md:p-6 rounded-2xl border-2 border-primary/50 shadow-elegant group-hover:border-secondary/60 transition-all">
+                        <h3 className="font-display text-2xl md:text-3xl font-bold text-white">
                           {exp.title}
                         </h3>
                       </div>
@@ -107,7 +107,7 @@ const LandCruiseExperience = () => {
                   
                   {/* Content Section */}
                   <div className={`p-8 md:p-10 bg-gradient-to-br ${exp.gradient} relative overflow-hidden`}>
-                    <div className="absolute top-0 right-0 w-40 h-40 bg-secondary/10 rounded-full blur-2xl group-hover:scale-150 transition-transform"></div>
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 rounded-full blur-2xl group-hover:scale-150 transition-transform"></div>
                     
                     <p className="text-foreground leading-relaxed text-base md:text-lg mb-6 relative z-10 font-medium">
                       {exp.description}
@@ -115,9 +115,9 @@ const LandCruiseExperience = () => {
 
                     {/* Feature Tags */}
                     <div className="flex flex-wrap gap-2 relative z-10">
-                      {exp.features.map((feature, i) => <div key={i} className="bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full border border-secondary/20 hover:border-secondary/50 transition-all hover-lift">
+                      {exp.features.map((feature, i) => <div key={i} className="bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full border border-primary/20 hover:border-primary/50 transition-all hover-lift">
                           <span className="text-sm font-semibold text-foreground flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
                             {feature}
                           </span>
                         </div>)}
@@ -125,14 +125,14 @@ const LandCruiseExperience = () => {
                   </div>
 
                   {/* Hover Border Effect */}
-                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-secondary/50 rounded-xl transition-all duration-500 pointer-events-none"></div>
+                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-primary/50 rounded-xl transition-all duration-500 pointer-events-none"></div>
                 </Card>
               </div>)}
           </div>
 
           <div className="mt-16 text-center animate-zoom-in">
             <div className="inline-block relative">
-              <div className="absolute inset-0 gradient-sunset blur-2xl opacity-40 animate-pulse-slow"></div>
+              <div className="absolute inset-0 gradient-primary blur-2xl opacity-40 animate-pulse-slow"></div>
               
             </div>
           </div>
