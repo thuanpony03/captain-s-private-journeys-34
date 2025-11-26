@@ -75,7 +75,7 @@ const SocialProof = () => {
             <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
               Những gia đình đã đồng hành
               <br />
-              <span className="text-gradient text-5xl md:text-7xl lg:text-8xl italic">cùng Captain Vinh</span>
+              <span className="text-gradient text-4xl md:text-6xl lg:text-7xl italic">cùng Vinh Around</span>
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground font-light flex items-center justify-center gap-3">
               <span className="text-3xl">🏆</span>

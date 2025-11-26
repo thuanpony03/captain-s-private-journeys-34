@@ -10,7 +10,7 @@ const ScrollytellingRoadmap = () => {
   const pathRef = useRef<SVGPathElement>(null);
 
   const milestones = [
-    { icon: "🎫", title: "Đặt tour", desc: "Liên hệ Captain Vinh" },
+    { icon: "🎫", title: "Đặt tour", desc: "Liên hệ Vinh Around" },
     { icon: "✈️", title: "Vé máy bay", desc: "Săn vé giờ đẹp" },
     { icon: "🏨", title: "Khách sạn", desc: "5 sao trung tâm" },
     { icon: "🚙", title: "Xe riêng", desc: "Mercedes sang trọng" },

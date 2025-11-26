@@ -42,7 +42,7 @@ const ComparisonTable = () => {
       category: "Người dẫn",
       icon: "🚩",
       traditional: "HDV cầm cờ, nói theo bài vở, xa lạ",
-      premium: "Captain Vinh - Người thổ địa, rành đường, thân thiện như người nhà",
+      premium: "Vinh Around - Người thổ địa, rành đường, thân thiện như người nhà",
       iconPremium: "👨‍✈️",
       emojiReaction: "😐",
       emojiPremium: "🥰"
@@ -73,7 +73,7 @@ const ComparisonTable = () => {
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground font-light flex items-center justify-center gap-3">
               <span className="text-3xl">🤔</span>
-              Tại sao nên chọn Private Tour cùng Captain Vinh?
+              Tại sao nên chọn Private Tour cùng Vinh Around?
             </p>
           </div>
 

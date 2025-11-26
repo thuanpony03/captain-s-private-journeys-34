@@ -60,8 +60,8 @@ const PersonalStory = () => {
                 <div className="absolute inset-0 bg-gradient-to-tr from-secondary/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 z-10"></div>
                 <img 
                   src={heroImage} 
-                  alt="Captain Vinh - Your trusted road captain" 
-                  className="w-full h-[600px] object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  alt="Vinh Around - Your trusted road captain" 
+                  className="w-full h-[500px] md:h-[600px] object-cover transform group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent opacity-80"></div>
                 
@@ -84,12 +84,12 @@ const PersonalStory = () => {
                 {/* Bottom Info Card */}
                 <div className="absolute bottom-0 left-0 right-0 p-8">
                   <div className="glass-effect p-8 rounded-2xl border-2 border-secondary/40 shadow-gold">
-                    <h3 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground mb-3 flex items-center gap-3">
-                      <span className="text-4xl">👨‍✈️</span>
-                      Captain Vinh
+                    <h3 className="font-display text-3xl md:text-4xl font-bold text-primary-foreground mb-3 flex items-center gap-3">
+                      <span className="text-3xl">👨‍✈️</span>
+                      Vinh Around
                     </h3>
-                    <p className="text-xl text-primary-foreground/95 flex items-center gap-3">
-                      <span className="text-2xl">❤️</span>
+                    <p className="text-base md:text-lg text-primary-foreground/95 flex items-center gap-3">
+                      <span className="text-xl">❤️</span>
                       <span>Your Road Captain with Passion</span>
                     </p>
                   </div>
@@ -156,8 +156,8 @@ const PersonalStory = () => {
                   </div>
                   
                   <div className="mt-10 pt-8 border-t-2 border-secondary/30">
-                    <p className="font-display text-5xl md:text-6xl text-primary italic font-bold mb-3">
-                      Captain Vinh
+                    <p className="font-display text-4xl md:text-5xl text-primary italic font-bold mb-3">
+                      Vinh Around
                     </p>
                     <div className="flex items-center gap-3 mt-4">
                       <div className="h-2 w-32 gradient-sunset rounded-full animate-pulse-slow"></div>

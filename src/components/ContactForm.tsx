@@ -5,7 +5,6 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Send, Sparkles, Clock, Shield } from "lucide-react";
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -32,7 +31,7 @@ const ContactForm = () => {
     
     toast({
       title: "Đã gửi thành công! 🎉",
-      description: "Captain Vinh sẽ liên hệ với bạn trong 24h qua Zalo/SĐT đã cung cấp.",
+      description: "Vinh Around sẽ liên hệ với bạn trong 24h qua Zalo/SĐT đã cung cấp.",
     });
     
     setFormData({
@@ -55,9 +54,9 @@ const ContactForm = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 animate-slide-up">
             <div className="flex items-center justify-center gap-3 mb-6">
-              <Sparkles className="w-6 h-6 text-secondary fill-secondary" />
-              <div className="h-[2px] w-20 bg-gradient-to-r from-transparent via-secondary to-transparent"></div>
-              <Sparkles className="w-6 h-6 text-secondary fill-secondary" />
+              <span className="text-2xl md:text-3xl">✨</span>
+              <div className="h-[2px] w-16 md:w-20 bg-gradient-to-r from-transparent via-secondary to-transparent"></div>
+              <span className="text-2xl md:text-3xl">✨</span>
             </div>
             
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-primary">
@@ -69,12 +68,12 @@ const ContactForm = () => {
             <Card className="inline-block p-6 md:p-8 bg-gradient-to-br from-secondary/20 via-primary/10 to-secondary/20 border-2 border-secondary shadow-gold hover-lift relative overflow-hidden">
               <div className="absolute inset-0 animate-shimmer"></div>
               <div className="relative flex flex-col md:flex-row items-center gap-4">
-                <div className="flex gap-2">
-                  <Clock className="w-8 h-8 text-secondary animate-float" />
-                  <Sparkles className="w-6 h-6 text-secondary animate-float" style={{ animationDelay: '1s' }} />
+                <div className="flex gap-2 flex-shrink-0">
+                  <span className="text-3xl md:text-4xl animate-float">⏰</span>
+                  <span className="text-2xl md:text-3xl animate-float" style={{ animationDelay: '1s' }}>✨</span>
                 </div>
-                <p className="text-lg md:text-xl text-foreground leading-relaxed">
-                  <span className="font-display font-bold text-2xl text-secondary block md:inline">Tháng này Vinh chỉ nhận giới hạn 02 đoàn</span>
+                <p className="text-base md:text-lg text-foreground leading-relaxed">
+                  <span className="font-display font-bold text-xl md:text-2xl text-secondary block md:inline">Tháng này Vinh chỉ nhận giới hạn 02 đoàn</span>
                   {" "}để đảm bảo chất lượng phục vụ tốt nhất. 
                   <span className="block md:inline mt-2 md:mt-0"> Hãy để lại thông tin để Vinh giữ chỗ cho gia đình bạn.</span>
                 </p>
@@ -210,20 +209,20 @@ const ContactForm = () => {
               <Button 
                 type="submit"
                 size="lg"
-                className="w-full bg-gradient-to-r from-accent via-secondary to-accent hover:from-accent/90 hover:via-secondary/90 hover:to-accent/90 text-accent-foreground text-xl py-8 shadow-gold hover-lift font-bold rounded-xl relative overflow-hidden group"
+                className="w-full bg-gradient-to-r from-accent via-secondary to-accent hover:from-accent/90 hover:via-secondary/90 hover:to-accent/90 text-accent-foreground text-lg md:text-xl py-7 md:py-8 shadow-gold hover-lift font-bold rounded-xl relative overflow-hidden group"
               >
-                <span className="relative z-10 flex items-center justify-center gap-3">
-                  <Send className="w-6 h-6" />
-                  GỬI YÊU CẦU CHO CAPTAIN VINH
-                  <Sparkles className="w-6 h-6" />
+                <span className="relative z-10 flex items-center justify-center gap-2 md:gap-3">
+                  <span className="text-2xl">📮</span>
+                  <span className="text-base md:text-lg">GỬI YÊU CẦU CHO VINH AROUND</span>
+                  <span className="text-2xl">✨</span>
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-secondary via-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity animate-shimmer"></div>
               </Button>
 
-              <div className="flex items-center justify-center gap-3 pt-4">
-                <Shield className="w-5 h-5 text-secondary" />
-                <p className="text-center text-sm text-muted-foreground">
-                  🔒 Thông tin của bạn được <span className="font-bold text-secondary">bảo mật tuyệt đối</span> và chỉ được sử dụng để tư vấn tour
+              <div className="flex items-center justify-center gap-2 md:gap-3 pt-4">
+                <span className="text-xl md:text-2xl">🔒</span>
+                <p className="text-center text-xs md:text-sm text-muted-foreground">
+                  Thông tin của bạn được <span className="font-bold text-secondary">bảo mật tuyệt đối</span> và chỉ được sử dụng để tư vấn tour
                 </p>
               </div>
             </form>

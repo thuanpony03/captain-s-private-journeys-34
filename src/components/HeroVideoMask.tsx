@@ -102,7 +102,7 @@ const HeroVideoMask = () => {
 
         <div className="mt-12 space-y-6 animate-slide-up opacity-0" style={{ animationDelay: '1s' }}>
           <p className="text-2xl md:text-4xl text-primary-foreground font-light">
-            <span className="text-4xl">✈️</span> Du lịch như <span className="font-bold text-secondary">người nhà</span> cùng Captain Vinh
+            <span className="text-4xl">✈️</span> Du lịch như <span className="font-bold text-secondary">người nhà</span> cùng Vinh Around
           </p>
           
           <Button 
