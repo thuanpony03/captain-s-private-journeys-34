@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Send } from "lucide-react";
+import { Send, Sparkles, Clock, Shield } from "lucide-react";
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -19,7 +19,6 @@ const ContactForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Basic validation
     if (!formData.destination || !formData.groupSize || !formData.priority || !formData.contact) {
       toast({
         title: "Vui lòng điền đầy đủ thông tin",
@@ -29,7 +28,6 @@ const ContactForm = () => {
       return;
     }
 
-    // Here you would typically send the form data to your backend
     console.log("Form submitted:", formData);
     
     toast({
@@ -37,7 +35,6 @@ const ContactForm = () => {
       description: "Captain Vinh sẽ liên hệ với bạn trong 24h qua Zalo/SĐT đã cung cấp.",
     });
     
-    // Reset form
     setFormData({
       destination: "",
       groupSize: "",
@@ -47,103 +44,157 @@ const ContactForm = () => {
   };
 
   return (
-    <section id="contact-form" className="py-20 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">
-              Đừng để chuyến đi mơ ước chỉ nằm trên giấy
+    <section id="contact-form" className="py-20 md:py-32 bg-background relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12 animate-slide-up">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <Sparkles className="w-6 h-6 text-secondary fill-secondary" />
+              <div className="h-[2px] w-20 bg-gradient-to-r from-transparent via-secondary to-transparent"></div>
+              <Sparkles className="w-6 h-6 text-secondary fill-secondary" />
+            </div>
+            
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-primary">
+              Đừng để chuyến đi mơ ước
+              <br />
+              <span className="text-secondary italic">chỉ nằm trên giấy</span>
             </h2>
-            <Card className="inline-block p-6 bg-secondary/10 border-secondary">
-              <p className="text-lg text-foreground">
-                ⏰ <span className="font-bold">Tháng này Vinh chỉ nhận giới hạn 02 đoàn</span> để đảm bảo 
-                chất lượng phục vụ tốt nhất. Hãy để lại thông tin để Vinh giữ chỗ cho gia đình bạn.
-              </p>
+            
+            <Card className="inline-block p-6 md:p-8 bg-gradient-to-br from-secondary/20 via-primary/10 to-secondary/20 border-2 border-secondary shadow-gold hover-lift relative overflow-hidden">
+              <div className="absolute inset-0 animate-shimmer"></div>
+              <div className="relative flex flex-col md:flex-row items-center gap-4">
+                <div className="flex gap-2">
+                  <Clock className="w-8 h-8 text-secondary animate-float" />
+                  <Sparkles className="w-6 h-6 text-secondary animate-float" style={{ animationDelay: '1s' }} />
+                </div>
+                <p className="text-lg md:text-xl text-foreground leading-relaxed">
+                  <span className="font-display font-bold text-2xl text-secondary block md:inline">Tháng này Vinh chỉ nhận giới hạn 02 đoàn</span>
+                  {" "}để đảm bảo chất lượng phục vụ tốt nhất. 
+                  <span className="block md:inline mt-2 md:mt-0"> Hãy để lại thông tin để Vinh giữ chỗ cho gia đình bạn.</span>
+                </p>
+              </div>
             </Card>
           </div>
 
-          <Card className="p-8 shadow-elegant">
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Question 1: Destination */}
-              <div className="space-y-4">
-                <Label className="text-lg font-semibold text-foreground">
-                  1. Anh/Chị dự định đi đâu? *
+          <Card className="p-8 md:p-12 shadow-elegant relative overflow-hidden animate-zoom-in">
+            {/* Decorative Elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+            
+            <form onSubmit={handleSubmit} className="space-y-10 relative z-10">
+              {/* Question 1 */}
+              <div className="space-y-4 hover-lift transition-all">
+                <Label className="font-display text-xl md:text-2xl font-bold text-foreground flex items-center gap-3">
+                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary text-primary-foreground font-bold">1</span>
+                  Anh/Chị dự định đi đâu? *
                 </Label>
                 <RadioGroup 
                   value={formData.destination}
                   onValueChange={(value) => setFormData({...formData, destination: value})}
+                  className="space-y-3"
                 >
-                  <div className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted transition-smooth">
-                    <RadioGroupItem value="usa" id="usa" />
-                    <Label htmlFor="usa" className="cursor-pointer flex-1">🇺🇸 Mỹ (US West Coast)</Label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted transition-smooth">
-                    <RadioGroupItem value="australia" id="australia" />
-                    <Label htmlFor="australia" className="cursor-pointer flex-1">🇦🇺 Úc (Australia Grand Road)</Label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted transition-smooth">
-                    <RadioGroupItem value="europe" id="europe" />
-                    <Label htmlFor="europe" className="cursor-pointer flex-1">🇪🇺 Âu (Custom Tour)</Label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted transition-smooth">
-                    <RadioGroupItem value="other" id="other" />
-                    <Label htmlFor="other" className="cursor-pointer flex-1">🌍 Khác (Để Vinh tư vấn)</Label>
-                  </div>
+                  {[
+                    { value: "usa", label: "🇺🇸 Mỹ (US West Coast)", desc: "San Francisco, LA, San Diego" },
+                    { value: "australia", label: "🇦🇺 Úc (Australia Grand Road)", desc: "Sydney, Melbourne, Gold Coast" },
+                    { value: "europe", label: "🇪🇺 Âu (Custom Tour)", desc: "Pháp, Ý, Thụy Sĩ" },
+                    { value: "other", label: "🌍 Khác (Để Vinh tư vấn)", desc: "Địa điểm khác theo yêu cầu" }
+                  ].map((option) => (
+                    <div key={option.value} className="relative group">
+                      <div className={`flex items-center space-x-4 p-5 rounded-xl border-2 transition-all cursor-pointer ${
+                        formData.destination === option.value 
+                          ? 'border-secondary bg-secondary/10 shadow-md' 
+                          : 'border-border hover:border-secondary/50 hover:bg-muted'
+                      }`}>
+                        <RadioGroupItem value={option.value} id={option.value} className="peer" />
+                        <Label htmlFor={option.value} className="cursor-pointer flex-1">
+                          <p className="font-semibold text-base md:text-lg">{option.label}</p>
+                          <p className="text-sm text-muted-foreground mt-1">{option.desc}</p>
+                        </Label>
+                      </div>
+                    </div>
+                  ))}
                 </RadioGroup>
               </div>
 
-              {/* Question 2: Group Size */}
-              <div className="space-y-4">
-                <Label className="text-lg font-semibold text-foreground">
-                  2. Đoàn mình khoảng mấy người? *
+              {/* Question 2 */}
+              <div className="space-y-4 hover-lift transition-all">
+                <Label className="font-display text-xl md:text-2xl font-bold text-foreground flex items-center gap-3">
+                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary text-primary-foreground font-bold">2</span>
+                  Đoàn mình khoảng mấy người? *
                 </Label>
                 <RadioGroup 
                   value={formData.groupSize}
                   onValueChange={(value) => setFormData({...formData, groupSize: value})}
+                  className="space-y-3"
                 >
-                  <div className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted transition-smooth">
-                    <RadioGroupItem value="2-4" id="2-4" />
-                    <Label htmlFor="2-4" className="cursor-pointer flex-1">2-4 người (Gia đình nhỏ)</Label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted transition-smooth">
-                    <RadioGroupItem value="4-6" id="4-6" />
-                    <Label htmlFor="4-6" className="cursor-pointer flex-1">4-6 người (Lý tưởng nhất) ⭐</Label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted transition-smooth">
-                    <RadioGroupItem value="6+" id="6+" />
-                    <Label htmlFor="6+" className="cursor-pointer flex-1">Trên 6 người (Nhóm lớn)</Label>
-                  </div>
+                  {[
+                    { value: "2-4", label: "2-4 người", desc: "Gia đình nhỏ, ấm cúng", icon: "👨‍👩‍👧" },
+                    { value: "4-6", label: "4-6 người", desc: "Lý tưởng nhất ⭐", icon: "👨‍👩‍👧‍👦" },
+                    { value: "6+", label: "Trên 6 người", desc: "Nhóm lớn, vui vẻ", icon: "👨‍👩‍👧‍👦👨‍👩‍👧" }
+                  ].map((option) => (
+                    <div key={option.value} className="relative group">
+                      <div className={`flex items-center space-x-4 p-5 rounded-xl border-2 transition-all cursor-pointer ${
+                        formData.groupSize === option.value 
+                          ? 'border-secondary bg-secondary/10 shadow-md' 
+                          : 'border-border hover:border-secondary/50 hover:bg-muted'
+                      }`}>
+                        <RadioGroupItem value={option.value} id={option.value} />
+                        <span className="text-3xl">{option.icon}</span>
+                        <Label htmlFor={option.value} className="cursor-pointer flex-1">
+                          <p className="font-semibold text-base md:text-lg">{option.label}</p>
+                          <p className="text-sm text-muted-foreground mt-1">{option.desc}</p>
+                        </Label>
+                      </div>
+                    </div>
+                  ))}
                 </RadioGroup>
               </div>
 
-              {/* Question 3: Priority */}
-              <div className="space-y-4">
-                <Label className="text-lg font-semibold text-foreground">
-                  3. Anh/Chị ưu tiên điều gì nhất? *
+              {/* Question 3 */}
+              <div className="space-y-4 hover-lift transition-all">
+                <Label className="font-display text-xl md:text-2xl font-bold text-foreground flex items-center gap-3">
+                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary text-primary-foreground font-bold">3</span>
+                  Anh/Chị ưu tiên điều gì nhất? *
                 </Label>
                 <RadioGroup 
                   value={formData.priority}
                   onValueChange={(value) => setFormData({...formData, priority: value})}
+                  className="space-y-3"
                 >
-                  <div className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted transition-smooth">
-                    <RadioGroupItem value="health" id="health" />
-                    <Label htmlFor="health" className="cursor-pointer flex-1">💪 Sức khỏe (Lịch nhẹ nhàng, thoải mái)</Label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted transition-smooth">
-                    <RadioGroupItem value="experience" id="experience" />
-                    <Label htmlFor="experience" className="cursor-pointer flex-1">🎭 Trải nghiệm độc lạ (Khám phá văn hóa)</Label>
-                  </div>
-                  <div className="flex items-center space-x-2 p-3 rounded-lg hover:bg-muted transition-smooth">
-                    <RadioGroupItem value="luxury" id="luxury" />
-                    <Label htmlFor="luxury" className="cursor-pointer flex-1">📸 Check-in sang chảnh (Ảnh đẹp, địa điểm hot)</Label>
-                  </div>
+                  {[
+                    { value: "health", icon: "💪", label: "Sức khỏe", desc: "Lịch nhẹ nhàng, thoải mái, phù hợp người lớn tuổi" },
+                    { value: "experience", icon: "🎭", label: "Trải nghiệm độc lạ", desc: "Khám phá văn hóa, ẩm thực, gặp gỡ người bản địa" },
+                    { value: "luxury", icon: "📸", label: "Check-in sang chảnh", desc: "Ảnh đẹp, địa điểm hot, sang trọng đẳng cấp" }
+                  ].map((option) => (
+                    <div key={option.value} className="relative group">
+                      <div className={`flex items-center space-x-4 p-5 rounded-xl border-2 transition-all cursor-pointer ${
+                        formData.priority === option.value 
+                          ? 'border-secondary bg-secondary/10 shadow-md' 
+                          : 'border-border hover:border-secondary/50 hover:bg-muted'
+                      }`}>
+                        <RadioGroupItem value={option.value} id={option.value} />
+                        <span className="text-3xl">{option.icon}</span>
+                        <Label htmlFor={option.value} className="cursor-pointer flex-1">
+                          <p className="font-semibold text-base md:text-lg">{option.label}</p>
+                          <p className="text-sm text-muted-foreground mt-1">{option.desc}</p>
+                        </Label>
+                      </div>
+                    </div>
+                  ))}
                 </RadioGroup>
               </div>
 
-              {/* Question 4: Contact */}
-              <div className="space-y-4">
-                <Label htmlFor="contact" className="text-lg font-semibold text-foreground">
-                  4. Để lại SĐT/Zalo để Vinh liên hệ gửi lịch trình mẫu *
+              {/* Question 4 */}
+              <div className="space-y-4 hover-lift transition-all">
+                <Label htmlFor="contact" className="font-display text-xl md:text-2xl font-bold text-foreground flex items-center gap-3">
+                  <span className="flex items-center justify-center w-10 h-10 rounded-full bg-secondary text-primary-foreground font-bold">4</span>
+                  Để lại SĐT/Zalo để Vinh liên hệ *
                 </Label>
                 <Input
                   id="contact"
@@ -151,7 +202,7 @@ const ContactForm = () => {
                   placeholder="Nhập số điện thoại hoặc Zalo của bạn"
                   value={formData.contact}
                   onChange={(e) => setFormData({...formData, contact: e.target.value})}
-                  className="text-lg p-6"
+                  className="text-lg p-7 border-2 focus:border-secondary rounded-xl"
                 />
               </div>
 
@@ -159,15 +210,22 @@ const ContactForm = () => {
               <Button 
                 type="submit"
                 size="lg"
-                className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg py-6 shadow-gold hover-lift font-bold"
+                className="w-full bg-gradient-to-r from-accent via-secondary to-accent hover:from-accent/90 hover:via-secondary/90 hover:to-accent/90 text-accent-foreground text-xl py-8 shadow-gold hover-lift font-bold rounded-xl relative overflow-hidden group"
               >
-                <Send className="mr-2 w-5 h-5" />
-                GỬI YÊU CẦU CHO CAPTAIN VINH
+                <span className="relative z-10 flex items-center justify-center gap-3">
+                  <Send className="w-6 h-6" />
+                  GỬI YÊU CẦU CHO CAPTAIN VINH
+                  <Sparkles className="w-6 h-6" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-secondary via-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity animate-shimmer"></div>
               </Button>
 
-              <p className="text-center text-sm text-muted-foreground">
-                🔒 Thông tin của bạn được bảo mật tuyệt đối và chỉ được sử dụng để tư vấn tour
-              </p>
+              <div className="flex items-center justify-center gap-3 pt-4">
+                <Shield className="w-5 h-5 text-secondary" />
+                <p className="text-center text-sm text-muted-foreground">
+                  🔒 Thông tin của bạn được <span className="font-bold text-secondary">bảo mật tuyệt đối</span> và chỉ được sử dụng để tư vấn tour
+                </p>
+              </div>
             </form>
           </Card>
         </div>
