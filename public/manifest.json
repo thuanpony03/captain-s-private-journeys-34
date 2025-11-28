@@ -1,0 +1,44 @@
+{
+  "name": "Vinh Around - Private Tour Mỹ Úc Châu Âu",
+  "short_name": "Vinh Around",
+  "description": "Private Tour cao cấp Mỹ, Úc, Châu Âu - Xe riêng, lịch trình tùy chỉnh 100%",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a5f5a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["travel", "tourism", "business"],
+  "lang": "vi",
+  "dir": "ltr",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Đặt Tour Ngay",
+      "short_name": "Đặt Tour",
+      "description": "Liên hệ đặt tour private",
+      "url": "/#contact-form",
+      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Xem Gói Tour",
+      "short_name": "Gói Tour",
+      "description": "Xem các gói tour hiện có",
+      "url": "/#tours",
+      "icons": [{ "src": "/icon-96.png", "sizes": "96x96" }]
+    }
+  ]
+}

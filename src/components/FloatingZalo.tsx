@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { trackZaloClick } from "@/lib/analytics";
 
 const FloatingZalo = () => {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const handleZaloClick = () => {
+    trackZaloClick();
     window.open("https://zalo.me/yourphone", "_blank");
   };
 

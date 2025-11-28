@@ -1,203 +1,352 @@
 import { useEffect, useRef, useState } from "react";
-import { Card } from "@/components/ui/card";
-import { 
-  PhoneCall, 
-  Plane, 
-  Hotel, 
-  Car, 
-  UtensilsCrossed, 
-  Camera, 
-  CheckCircle2 
-} from "lucide-react";
 
 const ScrollytellingRoadmap = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeStep, setActiveStep] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
+  // Steps với ảnh thật từ Unsplash
   const milestones = [
     { 
-      Icon: PhoneCall, 
-      title: "Đặt tour", 
-      desc: "Liên hệ Vinh Around",
-      color: "text-secondary"
+      step: "01",
+      title: "Tư vấn & Lên kế hoạch", 
+      desc: "Liên hệ Vinh để thiết kế hành trình riêng",
+      image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=600&q=80",
     },
     { 
-      Icon: Plane, 
-      title: "Vé máy bay", 
-      desc: "Săn vé giờ đẹp",
-      color: "text-secondary"
+      step: "02",
+      title: "Đặt vé & Khách sạn", 
+      desc: "Vé bay giờ đẹp, khách sạn 5★ trung tâm",
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80",
     },
     { 
-      Icon: Hotel, 
-      title: "Khách sạn", 
-      desc: "5 sao trung tâm",
-      color: "text-secondary"
+      step: "03",
+      title: "Chuẩn bị xe riêng", 
+      desc: "Mercedes sang trọng, tài xế người Việt",
+      image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&q=80",
     },
     { 
-      Icon: Car, 
-      title: "Xe riêng", 
-      desc: "Mercedes sang trọng",
-      color: "text-secondary"
+      step: "04",
+      title: "Khám phá & Trải nghiệm", 
+      desc: "Địa điểm đẹp, ẩm thực ngon, kỷ niệm đáng nhớ",
+      image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80",
     },
     { 
-      Icon: UtensilsCrossed, 
-      title: "Ẩm thực", 
-      desc: "Món ngon mỗi ngày",
-      color: "text-secondary"
-    },
-    { 
-      Icon: Camera, 
-      title: "Trải nghiệm", 
-      desc: "Kỷ niệm đẹp",
-      color: "text-secondary"
-    },
-    { 
-      Icon: CheckCircle2, 
-      title: "Hoàn thành", 
-      desc: "Về nhà hạnh phúc",
-      color: "text-accent"
+      step: "05",
+      title: "Về nhà an toàn", 
+      desc: "Hành lý đầy quà, tim đầy kỷ niệm",
+      image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80",
     },
   ];
 
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
-      if (containerRef.current && lineRef.current) {
+      if (containerRef.current) {
         const container = containerRef.current;
         const rect = container.getBoundingClientRect();
         const windowHeight = window.innerHeight;
         
-        // Calculate progress based on scroll position
         const containerTop = rect.top;
         const containerHeight = rect.height;
+        const scrollIntoContainer = windowHeight - containerTop;
+        const progress = scrollIntoContainer / (containerHeight + windowHeight * 0.3);
         
-        // Start progress when container enters viewport
-        const startProgress = windowHeight - containerTop;
-        const maxProgress = containerHeight + windowHeight;
-        const progress = Math.max(0, Math.min(100, (startProgress / maxProgress) * 100));
+        const step = Math.min(
+          milestones.length - 1,
+          Math.max(0, Math.floor(progress * milestones.length * 1.1))
+        );
         
-        setScrollProgress(progress);
+        setActiveStep(step);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial calculation
+    handleScroll();
     
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [milestones.length]);
 
   return (
     <section 
       ref={containerRef} 
-      className="py-32 md:py-48 bg-gradient-to-b from-background via-muted/30 to-background relative overflow-hidden"
+      className="relative py-16 md:py-24 lg:py-32 overflow-hidden bg-primary"
     >
-      {/* Animated Background */}
+      {/* Background - Dark teal with accents */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-1/4 right-0 w-[600px] h-[600px] bg-accent/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-primary via-primary to-primary/95"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(212,175,55,0.08)_0%,transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(232,93,47,0.06)_0%,transparent_50%)]"></div>
+      </div>
+
+      {/* Floating Orbs - subtle */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-20 left-10 w-48 h-48 bg-secondary/10 rounded-full blur-[80px]"></div>
+        <div className="absolute bottom-20 right-10 w-64 h-64 bg-accent/8 rounded-full blur-[100px]"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Header Section */}
-        <div className="text-center mb-20">
-          <div className="flex items-center justify-center gap-4 mb-8">
-            <div className="h-[3px] w-24 bg-gradient-to-r from-transparent via-secondary to-accent rounded-full"></div>
-            <div className="w-3 h-3 rounded-full bg-secondary animate-pulse"></div>
-            <div className="h-[3px] w-24 bg-gradient-to-l from-transparent via-secondary to-accent rounded-full"></div>
+        {/* Header */}
+        <div className={`text-center mb-10 md:mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="inline-flex items-center gap-3 mb-4 md:mb-6">
+            <div className="h-px w-6 md:w-12 bg-gradient-to-r from-transparent to-secondary"></div>
+            <div className="px-4 py-1.5 md:px-6 md:py-2 rounded-full border border-secondary/50 bg-secondary/10">
+              <span className="text-[10px] md:text-sm font-bold text-secondary uppercase tracking-wider">Quy trình trọn gói</span>
+            </div>
+            <div className="h-px w-6 md:w-12 bg-gradient-to-l from-transparent to-secondary"></div>
           </div>
           
-          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
-            <span className="text-foreground">Hành trình của bạn</span>
-            <br />
-            <span className="text-gradient text-5xl md:text-7xl lg:text-8xl italic">từ A đến Z</span>
+          <h2 className="font-display text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-3">
+            Hành trình từ{" "}
+            <span className="bg-gradient-to-r from-secondary via-accent to-secondary bg-clip-text text-transparent">
+              A đến Z
+            </span>
           </h2>
-          <p className="text-xl md:text-2xl text-muted-foreground font-light">
-            Vinh Around lo toan mọi chi tiết cho chuyến đi của bạn
+          <p className="text-white/60 text-sm md:text-base max-w-md mx-auto">
+            Vinh lo trọn gói, bạn chỉ cần tận hưởng
           </p>
         </div>
 
-        {/* Vertical Timeline */}
-        <div className="max-w-4xl mx-auto">
+        {/* ===== MOBILE: Vertical Cards with Full Images ===== */}
+        <div className="md:hidden space-y-4">
+          {milestones.map((milestone, index) => {
+            const isActive = index <= activeStep;
+            const isCurrent = index === activeStep;
+            
+            return (
+              <div 
+                key={index}
+                className={`relative rounded-2xl overflow-hidden transition-all duration-500 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                {/* Full Image Background */}
+                <div className="relative h-48">
+                  <img 
+                    src={milestone.image}
+                    alt={milestone.title}
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Dark gradient overlay for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
+                  
+                  {/* Step Badge - Top Left */}
+                  <div className={`absolute top-3 left-3 w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm transition-all ${
+                    isCurrent 
+                      ? 'bg-gradient-to-br from-secondary to-accent text-white shadow-lg' 
+                      : isActive
+                        ? 'bg-secondary/80 text-white'
+                        : 'bg-black/50 text-white/70 border border-white/20'
+                  }`}>
+                    {milestone.step}
+                  </div>
+                  
+                  {/* Active indicator */}
+                  {isCurrent && (
+                    <div className="absolute top-3 right-3">
+                      <div className="w-3 h-3 rounded-full bg-secondary animate-pulse shadow-glow"></div>
+                    </div>
+                  )}
+                  
+                  {/* Content at bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <h3 className={`font-display text-lg font-bold mb-1 ${
+                      isCurrent ? 'text-secondary' : 'text-white'
+                    }`}>
+                      {milestone.title}
+                    </h3>
+                    <p className="text-white/80 text-sm leading-relaxed">
+                      {milestone.desc}
+                    </p>
+                    
+                    {/* Progress bar for current */}
+                    {isCurrent && (
+                      <div className="mt-3 h-1 bg-white/20 rounded-full overflow-hidden">
+                        <div className="h-full w-full bg-gradient-to-r from-secondary to-accent rounded-full animate-pulse"></div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Active border glow */}
+                {isCurrent && (
+                  <div className="absolute inset-0 rounded-2xl border-2 border-secondary/60 pointer-events-none"></div>
+                )}
+              </div>
+            );
+          })}
+          
+          {/* Mobile Progress Indicator */}
+          <div className="flex justify-center gap-2 pt-4">
+            {milestones.map((_, index) => (
+              <div 
+                key={index}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  index === activeStep 
+                    ? 'w-8 bg-secondary' 
+                    : index < activeStep 
+                      ? 'w-3 bg-secondary/50' 
+                      : 'w-3 bg-white/20'
+                }`}
+              ></div>
+            ))}
+          </div>
+        </div>
+
+        {/* ===== TABLET: 2-Column Grid ===== */}
+        <div className="hidden md:grid lg:hidden grid-cols-2 gap-5 max-w-3xl mx-auto">
+          {milestones.map((milestone, index) => {
+            const isActive = index <= activeStep;
+            const isCurrent = index === activeStep;
+            
+            return (
+              <div 
+                key={index}
+                className={`group relative rounded-2xl overflow-hidden transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${
+                  isCurrent ? 'ring-2 ring-secondary shadow-glow' : ''
+                }`}
+                style={{ transitionDelay: `${index * 100}ms` }}
+              >
+                {/* Image */}
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img 
+                    src={milestone.image}
+                    alt={milestone.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                  
+                  {/* Step Badge */}
+                  <div className={`absolute top-3 left-3 w-11 h-11 rounded-xl flex items-center justify-center font-bold text-sm ${
+                    isCurrent 
+                      ? 'bg-gradient-to-br from-secondary to-accent text-white shadow-lg' 
+                      : isActive
+                        ? 'bg-secondary/80 text-white'
+                        : 'bg-black/60 text-white/70 border border-white/20'
+                  }`}>
+                    {milestone.step}
+                  </div>
+                </div>
+                
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <h3 className={`font-display text-lg font-bold mb-1 ${
+                    isCurrent ? 'text-secondary' : 'text-white'
+                  }`}>
+                    {milestone.title}
+                  </h3>
+                  <p className="text-white/80 text-sm">
+                    {milestone.desc}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* ===== DESKTOP: Timeline Layout ===== */}
+        <div className="hidden lg:block max-w-6xl mx-auto">
           <div className="relative">
-            {/* Base Line - Gray */}
-            <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 md:-ml-0.5 bg-border rounded-full"></div>
-            
-            {/* Progress Line - Orange (Animated) */}
-            <div 
-              ref={lineRef}
-              className="absolute left-6 md:left-1/2 top-0 w-1 md:-ml-0.5 bg-gradient-to-b from-secondary via-accent to-secondary rounded-full shadow-glow transition-all duration-300 ease-out"
-              style={{ 
-                height: `${scrollProgress}%`
-              }}
-            ></div>
-            
-            {/* Milestones */}
-            <div className="space-y-12 md:space-y-16">
+            {/* Center Timeline */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 bg-white/10">
+              <div 
+                className="absolute top-0 left-0 w-full bg-gradient-to-b from-secondary via-accent to-secondary transition-all duration-700"
+                style={{ height: `${((activeStep + 1) / milestones.length) * 100}%` }}
+              >
+                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-secondary rounded-full shadow-glow animate-pulse">
+                  <div className="absolute inset-1 bg-white rounded-full"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Steps */}
+            <div className="space-y-12">
               {milestones.map((milestone, index) => {
-                const Icon = milestone.Icon;
-                const isActive = (index / milestones.length) * 100 < scrollProgress;
+                const isActive = index <= activeStep;
+                const isCurrent = index === activeStep;
+                const isLeft = index % 2 === 0;
                 
                 return (
                   <div
                     key={index}
-                    className={`relative flex items-start gap-6 md:gap-12 ${
-                      index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                    }`}
+                    className={`relative flex items-center ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}
                   >
-                    {/* Timeline Node */}
-                    <div className={`absolute left-6 md:left-1/2 w-12 h-12 md:-ml-6 rounded-2xl flex items-center justify-center z-10 transition-all duration-500 ${
-                      isActive 
-                        ? 'bg-gradient-to-br from-secondary to-accent shadow-glow scale-110' 
-                        : 'bg-muted border-2 border-border scale-100'
-                    }`}>
-                      <Icon className={`w-6 h-6 transition-colors duration-500 ${
-                        isActive ? 'text-white' : 'text-muted-foreground'
-                      }`} />
-                    </div>
-                    
-                    {/* Content Card */}
-                    <div className={`ml-20 md:ml-0 flex-1 ${
-                      index % 2 === 0 ? 'md:text-right md:pr-16' : 'md:pl-16'
-                    }`}>
-                      <Card className={`inline-block p-8 md:p-10 transition-all duration-300 group cursor-pointer border-2 ${
-                        isActive 
-                          ? 'border-secondary/30 shadow-float hover:shadow-glow hover:-translate-y-2 hover:scale-105' 
-                          : 'border-border hover:border-secondary/20 hover:-translate-y-1'
+                    {/* Image Card */}
+                    <div 
+                      className={`w-[calc(50%-40px)] transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'} ${isLeft ? 'pr-8' : 'pl-8'}`}
+                      style={{ 
+                        transitionDelay: `${index * 150}ms`, 
+                        transform: isVisible ? 'translateX(0)' : (isLeft ? 'translateX(-30px)' : 'translateX(30px)') 
+                      }}
+                    >
+                      <div className={`group relative rounded-2xl overflow-hidden transition-all duration-500 ${
+                        isCurrent 
+                          ? 'ring-2 ring-secondary shadow-glow scale-[1.02]' 
+                          : isActive 
+                            ? 'shadow-xl' 
+                            : 'opacity-60'
                       }`}>
-                        <div className="flex items-center gap-4 mb-3">
-                          {index % 2 === 0 ? (
-                            <>
-                              <div className={`w-2 h-2 rounded-full ${isActive ? 'bg-secondary' : 'bg-muted-foreground'} transition-colors`}></div>
-                              <h3 className={`font-display text-2xl md:text-3xl font-bold transition-colors ${
-                                isActive ? 'text-foreground' : 'text-muted-foreground'
-                              }`}>
-                                {milestone.title}
-                              </h3>
-                            </>
-                          ) : (
-                            <>
-                              <h3 className={`font-display text-2xl md:text-3xl font-bold transition-colors ${
-                                isActive ? 'text-foreground' : 'text-muted-foreground'
-                              }`}>
-                                {milestone.title}
-                              </h3>
-                              <div className={`w-2 h-2 rounded-full ${isActive ? 'bg-secondary' : 'bg-muted-foreground'} transition-colors`}></div>
-                            </>
-                          )}
+                        {/* Image */}
+                        <div className="relative aspect-[16/10] overflow-hidden">
+                          <img 
+                            src={milestone.image}
+                            alt={milestone.title}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                          
+                          {/* Step Number Badge */}
+                          <div className={`absolute top-4 ${isLeft ? 'right-4' : 'left-4'} w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg transition-all duration-500 ${
+                            isCurrent 
+                              ? 'bg-gradient-to-br from-secondary to-accent text-white shadow-lg' 
+                              : 'bg-black/60 text-white border border-white/20'
+                          }`}>
+                            {milestone.step}
+                          </div>
                         </div>
-                        <p className={`text-lg md:text-xl transition-colors ${
-                          isActive ? 'text-muted-foreground' : 'text-muted-foreground/60'
-                        }`}>
-                          {milestone.desc}
-                        </p>
                         
-                        {/* Hover Glow Effect */}
-                        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-secondary/0 via-secondary/10 to-secondary/0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-                      </Card>
+                        {/* Content Overlay */}
+                        <div className="absolute bottom-0 left-0 right-0 p-5">
+                          <h3 className={`font-display text-xl font-bold mb-1 ${
+                            isCurrent ? 'text-secondary' : 'text-white'
+                          }`}>
+                            {milestone.title}
+                          </h3>
+                          <p className="text-white/80 text-sm">
+                            {milestone.desc}
+                          </p>
+                        </div>
+                      </div>
                     </div>
                     
-                    {/* Spacer for desktop alternating layout */}
-                    <div className="hidden md:block flex-1"></div>
+                    {/* Center Node */}
+                    <div className="absolute left-1/2 -translate-x-1/2 z-10">
+                      <div className={`w-3 h-3 rounded-full transition-all duration-500 ${
+                        isCurrent 
+                          ? 'bg-secondary scale-150 shadow-glow' 
+                          : isActive 
+                            ? 'bg-secondary' 
+                            : 'bg-white/30'
+                      }`}></div>
+                    </div>
+                    
+                    {/* Empty Space */}
+                    <div className="w-[calc(50%-40px)]"></div>
                   </div>
                 );
               })}
@@ -206,24 +355,25 @@ const ScrollytellingRoadmap = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-20">
-          <Card className="inline-block gradient-sunset p-8 md:p-12 rounded-3xl shadow-glow border-2 border-white/20 relative overflow-hidden group">
-            <div className="absolute inset-0 animate-shimmer"></div>
-            <div className="absolute top-0 left-0 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
-            <div className="relative text-white">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
-                <div className="h-px w-16 bg-white/40"></div>
-                <div className="w-2 h-2 rounded-full bg-white animate-pulse" style={{ animationDelay: '1s' }}></div>
-              </div>
-              <p className="font-display text-2xl md:text-4xl font-bold mb-3">
-                Mọi thứ đã được lo trọn gói
+        <div className={`text-center mt-10 md:mt-16 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="inline-flex items-center gap-3 md:gap-4 bg-white/5 backdrop-blur-sm px-5 py-3 md:px-8 md:py-5 rounded-2xl border border-white/10">
+            {/* Mini Images */}
+            <div className="flex -space-x-2">
+              {milestones.slice(0, 3).map((m, i) => (
+                <div key={i} className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-primary overflow-hidden shadow-md">
+                  <img src={m.image} alt="" className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+            <div className="text-left">
+              <p className="font-display text-xs md:text-sm font-bold text-white">
+                Mọi thứ đã sẵn sàng
               </p>
-              <p className="text-base md:text-xl opacity-95 font-light italic">
-                Bạn chỉ cần tận hưởng hành trình
+              <p className="text-[10px] md:text-xs text-white/60">
+                Bạn chỉ cần <span className="text-secondary font-semibold">xách vali</span> & <span className="text-accent font-semibold">bay</span>
               </p>
             </div>
-          </Card>
+          </div>
         </div>
       </div>
     </section>

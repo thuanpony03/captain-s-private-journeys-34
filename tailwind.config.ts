@@ -90,6 +90,73 @@ export default {
             height: "0",
           },
         },
+        "reveal-text": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(100%) rotateX(-90deg)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0) rotateX(0)",
+          },
+        },
+        "glow-pulse": {
+          "0%, 100%": {
+            boxShadow: "0 0 20px rgba(246, 199, 28, 0.2), 0 0 40px rgba(246, 199, 28, 0.1)",
+          },
+          "50%": {
+            boxShadow: "0 0 40px rgba(246, 199, 28, 0.4), 0 0 80px rgba(246, 199, 28, 0.2), 0 0 120px rgba(247, 122, 86, 0.1)",
+          },
+        },
+        "stagger-fade": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(30px) scale(0.95)",
+            filter: "blur(10px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0) scale(1)",
+            filter: "blur(0)",
+          },
+        },
+        "morph": {
+          "0%, 100%": {
+            borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%",
+          },
+          "50%": {
+            borderRadius: "30% 60% 70% 40% / 50% 60% 30% 60%",
+          },
+        },
+        "particle-float": {
+          "0%, 100%": {
+            transform: "translate(0, 0) rotate(0deg)",
+            opacity: "0.3",
+          },
+          "25%": {
+            transform: "translate(30px, -30px) rotate(90deg)",
+            opacity: "0.6",
+          },
+          "50%": {
+            transform: "translate(60px, -10px) rotate(180deg)",
+            opacity: "0.8",
+          },
+          "75%": {
+            transform: "translate(30px, 20px) rotate(270deg)",
+            opacity: "0.6",
+          },
+        },
+        "gradient-shift": {
+          "0%": {
+            backgroundPosition: "0% 50%",
+          },
+          "50%": {
+            backgroundPosition: "100% 50%",
+          },
+          "100%": {
+            backgroundPosition: "0% 50%",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -102,6 +169,12 @@ export default {
         "wave": "wave 3s ease-in-out infinite",
         "pulse-slow": "pulseSlow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "rotate-slow": "rotateSlow 20s linear infinite",
+        "reveal-text": "reveal-text 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards",
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
+        "stagger-fade": "stagger-fade 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards",
+        "morph": "morph 6s ease-in-out infinite",
+        "particle-float": "particle-float 8s ease-in-out infinite",
+        "gradient-shift": "gradient-shift 8s ease infinite",
       },
     },
   },

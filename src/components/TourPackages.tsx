@@ -1,203 +1,367 @@
-import { Card } from "@/components/ui/card";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const TourPackages = () => {
-  const packages = [
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeRoute, setActiveRoute] = useState(0);
+
+  // Journeys với video/cinematic style
+  const journeys = [
     {
+      id: 1,
       title: "US West Coast",
-      subtitle: "Mùa thu vàng & Rượu vang Napa",
-      description: "San Francisco → Napa Valley → Los Angeles → San Diego",
-      highlights: [
-        "Cầu Golden Gate & Fisherman's Wharf huyền thoại",
-        "Thung lũng rượu vang Napa danh tiếng thế giới",
-        "Hollywood Walk of Fame & Santa Monica Beach",
-        "Công viên Balboa & San Diego Zoo nổi tiếng"
-      ],
-      duration: "10-12 ngày",
-      group: "6-8 người",
-      season: "Sep - Nov",
-      gradient: "from-orange-500 via-red-500 to-pink-500",
-      icon: "🇺🇸",
-      emoji: "🌉",
-      badge: "🔥 Hot",
-      price: "Từ $3,500"
+      tagline: "California Dreaming",
+      route: "LA → San Francisco",
+      description: "Cung đường huyền thoại bờ Tây nước Mỹ",
+      duration: "10 ngày",
+      price: "$3,500",
+      video: "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200&q=80",
+      stops: ["Los Angeles", "Santa Barbara", "Big Sur", "San Francisco"],
     },
     {
-      title: "Australia Grand Road",
-      subtitle: "Cung đường biển vĩ đại & Kangaroo",
-      description: "Sydney → Great Ocean Road → Melbourne → Gold Coast",
-      highlights: [
-        "Opera House & Harbour Bridge biểu tượng",
-        "Great Ocean Road - 12 Apostles kỳ vĩ",
-        "Gặp gỡ Kangaroo & Koala đáng yêu",
-        "Biển vàng Gold Coast tuyệt đẹp"
-      ],
-      duration: "12-14 ngày",
-      group: "6-8 người",
-      season: "Quanh năm",
-      gradient: "from-blue-500 via-teal-500 to-emerald-500",
-      icon: "🇦🇺",
-      emoji: "🦘",
-      badge: "⭐ Best Seller",
-      price: "Từ $4,200"
+      id: 2,
+      title: "Australia Grand",
+      tagline: "Down Under Adventure",
+      route: "Sydney → Melbourne",
+      description: "Great Ocean Road và bãi biển tuyệt đẹp",
+      duration: "14 ngày",
+      price: "$4,200",
+      video: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1200&q=80",
+      stops: ["Sydney", "Blue Mountains", "Great Ocean Road", "Melbourne"],
     },
     {
-      title: "Custom Tour",
-      subtitle: "Thiết kế riêng theo ý bạn",
-      description: "Đi bất cứ đâu bạn muốn - Theo phong cách riêng của bạn",
-      highlights: [
-        "Lộ trình 100% theo yêu cầu của bạn",
-        "Linh hoạt thời gian & điểm đến hoàn toàn",
-        "Phù hợp mọi sở thích gia đình",
-        "Vinh tư vấn chi tiết từng địa điểm"
-      ],
-      duration: "Tùy chỉnh",
-      group: "Từ 6 người",
-      season: "Theo lịch bạn",
-      gradient: "from-purple-500 via-pink-500 to-rose-500",
-      icon: "✈️",
-      emoji: "🎯",
-      badge: "✨ Flexible",
-      price: "Liên hệ"
+      id: 3,
+      title: "European Classic",
+      tagline: "Old World Charm",
+      route: "Paris → Rome",
+      description: "Kinh đô văn hóa và nghệ thuật châu Âu",
+      duration: "12 ngày",
+      price: "$3,800",
+      video: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&q=80",
+      stops: ["Paris", "Geneva", "Florence", "Rome"],
     }
   ];
 
+  const scrollToForm = () => {
+    document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto rotate journeys - longer on mobile
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveRoute((prev) => (prev + 1) % journeys.length);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const activeJourney = journeys[activeRoute];
+
   return (
-    <section className="py-32 md:py-48 bg-muted relative overflow-hidden">
-      {/* Animated Background */}
+    <section 
+      ref={sectionRef}
+      className="relative min-h-screen overflow-hidden bg-primary"
+    >
+      {/* Full Screen Background Image */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-secondary/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '3s' }}></div>
-        <div className="absolute top-20 right-20 text-8xl opacity-5 animate-plane-fly">✈️</div>
-        <div className="absolute bottom-20 left-20 text-9xl opacity-5 animate-rotate-slow">🌏</div>
+        {journeys.map((journey, index) => (
+          <div
+            key={journey.id}
+            className={`absolute inset-0 transition-all duration-1000 ${
+              index === activeRoute ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+            }`}
+          >
+            <img 
+              src={journey.video}
+              alt={journey.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+        {/* Brand Color Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/85 via-primary/75 to-primary/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/30 to-transparent"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 animate-slide-up">
-            <div className="flex items-center justify-center gap-4 mb-8">
-              <div className="h-[3px] w-24 bg-gradient-to-r from-transparent via-secondary to-accent rounded-full"></div>
-              <div className="w-3 h-3 rounded-full bg-secondary animate-pulse"></div>
-              <div className="h-[3px] w-24 bg-gradient-to-l from-transparent via-secondary to-accent rounded-full"></div>
-            </div>
-            <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6">
-              Các hành trình{" "}
-              <span className="text-gradient text-5xl md:text-7xl lg:text-8xl italic">Signature</span>
-            </h2>
-            <p className="text-xl md:text-2xl text-muted-foreground font-light max-w-3xl mx-auto">
-              Trải nghiệm được thiết kế riêng, chất lượng tối đa
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-12 md:gap-16">
-            {packages.map((pkg, index) => (
-              <Card 
-                key={index}
-                className="overflow-hidden hover-lift group relative"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                {/* Header with Gradient */}
-                <div className={`relative bg-gradient-to-br ${pkg.gradient} p-8 md:p-10 text-white overflow-hidden`}>
-                  <div className="absolute inset-0 bg-black/10"></div>
-                  <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
-                  <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
-                  
-                  <div className="relative z-10">
-                    {/* Badge */}
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                        <div className="w-8 h-8 rounded-lg bg-white/40"></div>
-                      </div>
-                      <div className="glass-effect px-4 py-2 rounded-full border-2 border-white/40">
-                        <span className="text-sm font-bold">{pkg.badge}</span>
-                      </div>
-                    </div>
-                    
-                    <h3 className="font-display text-3xl md:text-4xl font-bold mb-3">{pkg.title}</h3>
-                    <p className="text-white/95 text-lg md:text-xl font-light mb-6">{pkg.subtitle}</p>
-                    
-                    <div className="flex flex-wrap items-center gap-3 text-sm">
-                      <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
-                        <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
-                        <span className="font-semibold">{pkg.season}</span>
-                      </div>
-                      <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
-                        <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
-                        <span className="font-semibold">{pkg.group}</span>
-                      </div>
-                    </div>
-                  </div>
+      {/* Content Container */}
+      <div className="relative z-10 min-h-screen flex flex-col justify-center py-16 md:py-20 lg:py-24">
+        <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
+            
+            {/* Header - Mobile Optimized */}
+            <div className={`text-center mb-8 md:mb-12 lg:mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <div className="inline-flex items-center gap-3 mb-6">
+                <div className="h-px w-8 md:w-16 bg-gradient-to-r from-transparent to-secondary"></div>
+                <div className="glass-effect px-4 py-2 md:px-6 md:py-3 rounded-full border border-secondary/40">
+                  <span className="text-xs md:text-sm font-bold text-secondary uppercase tracking-wider">Signature Journeys</span>
                 </div>
+                <div className="h-px w-8 md:w-16 bg-gradient-to-l from-transparent to-secondary"></div>
+              </div>
+              
+              <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-white">
+                Các hành trình{" "}
+                <span className="bg-gradient-to-r from-secondary via-accent to-secondary bg-clip-text text-transparent italic">
+                  đặc biệt
+                </span>
+              </h2>
+            </div>
 
-                {/* Content */}
-                <div className="p-8 md:p-10 space-y-6 bg-card">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-2 h-2 rounded-full bg-secondary"></div>
-                    <p className="text-muted-foreground font-medium text-base">{pkg.description}</p>
+            {/* Mobile: Swipeable Cards */}
+            <div className="lg:hidden">
+              {/* Active Journey Display */}
+              <div className={`mb-6 transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+                <div className="glass-effect rounded-2xl p-5 border border-white/20">
+                  {/* Journey Number & Title */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-2xl font-display font-bold text-secondary">0{activeRoute + 1}</span>
+                        <span className="text-white/60 text-sm">{activeJourney.tagline}</span>
+                      </div>
+                      <h3 className="font-display text-2xl font-bold text-white">
+                        {activeJourney.title}
+                      </h3>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-secondary font-bold text-xl">{activeJourney.price}</p>
+                      <p className="text-white/60 text-sm">{activeJourney.duration}</p>
+                    </div>
                   </div>
 
-                  <div className="space-y-3">
-                    {pkg.highlights.map((highlight, i) => (
-                      <div 
-                        key={i} 
-                        className="flex items-start gap-3 group/item hover:translate-x-1 transition-all p-3 rounded-xl hover:bg-secondary/5"
-                      >
-                        <div className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 flex-shrink-0"></div>
-                        <span className="text-base md:text-lg text-foreground leading-relaxed">{highlight}</span>
+                  {/* Route */}
+                  <p className="text-white/70 mb-4">{activeJourney.route}</p>
+                  <p className="text-white/80 text-sm leading-relaxed mb-5">{activeJourney.description}</p>
+
+                  {/* Route Stops - Compact */}
+                  <div className="flex items-center gap-1 overflow-x-auto pb-3 hide-scrollbar mb-5">
+                    {activeJourney.stops.map((stop, i) => (
+                      <div key={i} className="flex items-center flex-shrink-0">
+                        <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                        <span className="text-white/70 text-xs mx-2 whitespace-nowrap">{stop}</span>
+                        {i < activeJourney.stops.length - 1 && (
+                          <div className="w-4 h-px bg-secondary/50"></div>
+                        )}
                       </div>
                     ))}
                   </div>
 
-                  <div className="pt-6 border-t-2 border-secondary/20">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-muted-foreground"></div>
-                        <span className="text-muted-foreground font-semibold text-sm">{pkg.duration}</span>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-2xl md:text-3xl font-bold text-secondary">{pkg.price}</p>
-                      </div>
-                    </div>
-                  </div>
-
+                  {/* CTA */}
                   <Button 
-                    className="w-full gradient-sunset hover:shadow-glow text-white font-bold text-base md:text-lg py-6 md:py-7 rounded-xl group/btn relative overflow-hidden"
-                    onClick={() => {
-                      document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    onClick={scrollToForm}
+                    className="w-full bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold py-4 rounded-xl"
                   >
-                    <span className="relative z-10 font-display">Xem lịch trình chi tiết</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-accent/30 to-secondary/30 opacity-0 group-hover/btn:opacity-100 transition-opacity animate-shimmer"></div>
+                    Đặt lịch khám phá
                   </Button>
                 </div>
 
-                {/* Decorative Border */}
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-secondary/40 rounded-xl transition-all duration-500 pointer-events-none"></div>
-              </Card>
-            ))}
-          </div>
-
-          <div className="mt-16 text-center animate-zoom-in">
-            <Card className="inline-block p-10 md:p-12 bg-card shadow-elegant hover-lift relative overflow-hidden group border-2 border-secondary/30">
-              <div className="absolute inset-0 bg-gradient-to-r from-secondary/5 via-accent/5 to-secondary/5 animate-shimmer"></div>
-              <div className="absolute top-0 left-0 w-32 h-32 bg-secondary/10 rounded-full blur-3xl"></div>
-              <div className="relative flex flex-col md:flex-row items-center gap-6">
-                <div className="w-16 h-16 rounded-2xl bg-secondary/10 flex items-center justify-center">
-                  <div className="w-8 h-8 rounded-lg bg-secondary/20"></div>
-                </div>
-                <div className="text-center md:text-left">
-                  <p className="font-display font-bold text-2xl md:text-3xl text-foreground mb-2">
-                    Chưa thấy điểm đến mình muốn?
-                  </p>
-                  <p className="text-lg md:text-xl text-muted-foreground">
-                    Hãy để <span className="font-bold text-secondary">Vinh thiết kế hành trình riêng</span> cho bạn! 
-                  </p>
+                {/* Progress Bar */}
+                <div className="mt-3 h-1 bg-white/20 rounded-full overflow-hidden">
+                  <div 
+                    key={activeRoute}
+                    className="h-full bg-gradient-to-r from-secondary to-accent rounded-full animate-progress"
+                  ></div>
                 </div>
               </div>
-            </Card>
+
+              {/* Journey Selector - Horizontal Scroll */}
+              <div className="overflow-x-auto pb-4 -mx-4 px-4 hide-scrollbar">
+                <div className="flex gap-3 min-w-max">
+                  {journeys.map((journey, index) => (
+                    <button
+                      key={journey.id}
+                      onClick={() => setActiveRoute(index)}
+                      className={`relative w-32 flex-shrink-0 rounded-xl overflow-hidden transition-all duration-300 ${
+                        index === activeRoute 
+                          ? 'ring-2 ring-secondary scale-105' 
+                          : 'opacity-70'
+                      }`}
+                    >
+                      <div className="aspect-[4/3]">
+                        <img 
+                          src={journey.video}
+                          alt={journey.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent"></div>
+                        <div className="absolute bottom-2 left-2 right-2">
+                          <p className="text-white font-bold text-sm truncate">{journey.title}</p>
+                          <p className="text-white/70 text-xs">{journey.price}</p>
+                        </div>
+                        {index === activeRoute && (
+                          <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary"></div>
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Custom Tour - Compact */}
+              <div 
+                className="mt-4 p-4 rounded-xl border border-dashed border-white/30 text-center"
+                onClick={scrollToForm}
+              >
+                <p className="text-white/70 text-sm">Muốn hành trình riêng?</p>
+                <p className="text-secondary font-semibold text-sm">Liên hệ Vinh ngay →</p>
+              </div>
+            </div>
+
+            {/* Desktop: Two Column Layout */}
+            <div className="hidden lg:grid lg:grid-cols-2 gap-16 items-center">
+              
+              {/* Left: Journey Info */}
+              <div className={`space-y-6 transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-xl glass-effect border border-secondary/40 flex items-center justify-center">
+                    <span className="text-2xl font-display font-bold text-secondary">0{activeRoute + 1}</span>
+                  </div>
+                  <div>
+                    <p className="text-secondary font-semibold">{activeJourney.tagline}</p>
+                    <p className="text-white/60 text-sm">{activeJourney.route}</p>
+                  </div>
+                </div>
+
+                <h3 className="font-display text-5xl xl:text-6xl font-bold text-white leading-tight">
+                  {activeJourney.title}
+                </h3>
+
+                <p className="text-xl text-white/80 leading-relaxed max-w-lg">
+                  {activeJourney.description}
+                </p>
+
+                {/* Route Stops */}
+                <div className="py-4">
+                  <div className="flex items-center gap-2">
+                    {activeJourney.stops.map((stop, i) => (
+                      <div key={i} className="flex items-center">
+                        <div className="flex flex-col items-center">
+                          <div className="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+                          <p className="text-white/70 text-xs mt-1.5 whitespace-nowrap">{stop}</p>
+                        </div>
+                        {i < activeJourney.stops.length - 1 && (
+                          <div className="w-10 h-px bg-secondary/60 mx-1"></div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Price & Duration */}
+                <div className="flex items-center gap-4">
+                  <div className="glass-effect px-5 py-3 rounded-xl border border-white/20">
+                    <p className="text-white/50 text-xs mb-0.5">Thời gian</p>
+                    <p className="text-white font-bold text-lg">{activeJourney.duration}</p>
+                  </div>
+                  <div className="glass-effect px-5 py-3 rounded-xl border border-secondary/40">
+                    <p className="text-secondary text-xs mb-0.5">Giá từ</p>
+                    <p className="text-white font-bold text-xl">{activeJourney.price}</p>
+                  </div>
+                </div>
+
+                <Button 
+                  onClick={scrollToForm}
+                  size="lg"
+                  className="bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold text-base px-8 py-5 rounded-xl hover:shadow-glow transition-all duration-300 hover:scale-105"
+                >
+                  Đặt lịch khám phá
+                </Button>
+              </div>
+
+              {/* Right: Journey Selector */}
+              <div className={`space-y-3 transition-all duration-1000 delay-400 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+                {journeys.map((journey, index) => (
+                  <button
+                    key={journey.id}
+                    onClick={() => setActiveRoute(index)}
+                    className={`w-full text-left p-5 rounded-xl border-2 transition-all duration-500 group ${
+                      index === activeRoute 
+                        ? 'glass-effect border-secondary shadow-glow' 
+                        : 'bg-white/5 border-white/10 hover:border-white/30 hover:bg-white/10'
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      {/* Thumbnail */}
+                      <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                        <img 
+                          src={journey.video}
+                          alt={journey.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className={`absolute inset-0 bg-gradient-to-t ${index === activeRoute ? 'from-secondary/50' : 'from-primary/60'} to-transparent`}></div>
+                        <div className="absolute bottom-1.5 left-1.5 text-white font-bold">0{index + 1}</div>
+                      </div>
+
+                      {/* Info */}
+                      <div className="flex-1 min-w-0">
+                        <h4 className={`font-display text-xl font-bold mb-0.5 transition-colors ${
+                          index === activeRoute ? 'text-secondary' : 'text-white'
+                        }`}>
+                          {journey.title}
+                        </h4>
+                        <p className="text-white/60 text-sm">{journey.route}</p>
+                        <p className="text-white/50 text-sm mt-0.5">{journey.duration} • {journey.price}</p>
+                      </div>
+
+                      {/* Indicator */}
+                      <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 transition-all ${
+                        index === activeRoute ? 'bg-secondary' : 'bg-white/30'
+                      }`}></div>
+                    </div>
+
+                    {/* Progress Bar */}
+                    {index === activeRoute && (
+                      <div className="mt-3 h-0.5 bg-white/20 rounded-full overflow-hidden">
+                        <div className="h-full bg-gradient-to-r from-secondary to-accent rounded-full animate-progress"></div>
+                      </div>
+                    )}
+                  </button>
+                ))}
+
+                {/* Custom Tour */}
+                <div 
+                  className="p-5 rounded-xl border-2 border-dashed border-white/30 text-center hover:border-secondary/50 transition-colors cursor-pointer"
+                  onClick={scrollToForm}
+                >
+                  <p className="text-white/70">Không thấy điểm đến mong muốn?</p>
+                  <p className="text-secondary font-semibold mt-1">Để Vinh thiết kế riêng cho bạn →</p>
+                </div>
+              </div>
+
+            </div>
+
           </div>
         </div>
       </div>
+
+      {/* Bottom Gradient */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 md:h-32 bg-gradient-to-t from-background to-transparent pointer-events-none"></div>
+
+      <style>{`
+        @keyframes progress {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+        .animate-progress {
+          animation: progress 8s linear;
+        }
+      `}</style>
     </section>
   );
 };
