@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { trackZaloClick } from "@/lib/analytics";
+import zaloLogo from "@/assets/zalo-logo.svg";
 
 const FloatingZalo = () => {
   const [showTooltip, setShowTooltip] = useState(false);
@@ -40,10 +41,10 @@ const FloatingZalo = () => {
           <Button
             size="lg"
             onClick={handleZaloClick}
-            className="relative bg-[#0068FF] hover:bg-[#0068FF]/90 text-white rounded-full w-16 h-16 md:w-20 md:h-20 shadow-float hover-lift flex items-center justify-center group font-bold text-lg md:text-xl"
+            className="relative bg-white hover:bg-white/90 rounded-full w-16 h-16 md:w-20 md:h-20 shadow-float hover-lift flex items-center justify-center group p-0 overflow-hidden"
             aria-label="Chat qua Zalo"
           >
-            Z
+            <img src={zaloLogo} alt="Zalo" className="w-full h-full" />
             
             {/* Badge */}
             <div className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-red-500 rounded-full animate-pulse shadow-float"></div>
