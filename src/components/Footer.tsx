@@ -223,11 +223,11 @@ const Footer = () => {
 
                 <div className="p-4 bg-white/5 rounded-xl border border-white/10 space-y-2">
                   <p className="text-white/60 text-xs">
-                    <span className="text-secondary font-semibold">MST:</span> 0123456789
+                    <span className="text-secondary font-semibold">MST:</span> 0314702049
                   </p>
-                  <p className="text-white/60 text-xs">
+                  {/* <p className="text-white/60 text-xs">
                     <span className="text-secondary font-semibold">GP LHQT:</span> 79-xxx/2024/TCDL
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>
