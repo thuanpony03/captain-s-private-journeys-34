@@ -9,53 +9,333 @@ const SocialProof = () => {
   // Real family photos data - premium gallery style
   const families = [
     // MỸ - 8 gia đình
-    { name: "Gia đình Mai", location: "🇺🇸 California", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 8, y: 15, size: "lg", orbit: 1 },
-    { name: "Nhà Hùng", location: "🇺🇸 New York", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 22, y: 8, size: "md", orbit: 2 },
-    { name: "Gia đình Linh", location: "🇺🇸 Texas", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80", x: 35, y: 20, size: "sm", orbit: 1 },
-    { name: "Nhà Nam", location: "🇺🇸 Florida", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 5, y: 35, size: "sm", orbit: 3 },
-    { name: "Gia đình Hoa", location: "🇺🇸 Seattle", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 18, y: 42, size: "md", orbit: 2 },
-    { name: "Nhà Tú", location: "🇺🇸 LA", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80", x: 12, y: 58, size: "sm", orbit: 1 },
-    { name: "Gia đình Yến", location: "🇺🇸 Chicago", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 25, y: 68, size: "lg", orbit: 2 },
-    { name: "Nhà Đạt", location: "🇺🇸 Boston", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 8, y: 78, size: "sm", orbit: 3 },
-    
+    {
+      name: "Gia đình Mai",
+      location: "🇺🇸 California",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584136/IMG_6572_iicryr.heic",
+      x: 8,
+      y: 15,
+      size: "lg",
+      orbit: 1,
+    },
+    {
+      name: "Nhà Hùng",
+      location: "🇺🇸 New York",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 22,
+      y: 8,
+      size: "md",
+      orbit: 2,
+    },
+    {
+      name: "Gia đình Linh",
+      location: "🇺🇸 Texas",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      x: 35,
+      y: 20,
+      size: "sm",
+      orbit: 1,
+    },
+    {
+      name: "Nhà Nam",
+      location: "🇺🇸 Florida",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 5,
+      y: 35,
+      size: "sm",
+      orbit: 3,
+    },
+    {
+      name: "Gia đình Hoa",
+      location: "🇺🇸 Seattle",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      x: 18,
+      y: 42,
+      size: "md",
+      orbit: 2,
+    },
+    {
+      name: "Nhà Tú",
+      location: "🇺🇸 LA",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      x: 12,
+      y: 58,
+      size: "sm",
+      orbit: 1,
+    },
+    {
+      name: "Gia đình Yến",
+      location: "🇺🇸 Chicago",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 25,
+      y: 68,
+      size: "lg",
+      orbit: 2,
+    },
+    {
+      name: "Nhà Đạt",
+      location: "🇺🇸 Boston",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      x: 8,
+      y: 78,
+      size: "sm",
+      orbit: 3,
+    },
+
     // ÚC - 6 gia đình
-    { name: "Gia đình Tuấn", location: "🇦🇺 Sydney", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 85, y: 12, size: "lg", orbit: 1 },
-    { name: "Nhà Hương", location: "🇦🇺 Melbourne", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80", x: 92, y: 28, size: "md", orbit: 2 },
-    { name: "Gia đình Bình", location: "🇦🇺 Brisbane", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 78, y: 22, size: "sm", orbit: 1 },
-    { name: "Nhà Thu", location: "🇦🇺 Perth", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 88, y: 45, size: "sm", orbit: 3 },
-    { name: "Gia đình Long", location: "🇦🇺 Adelaide", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80", x: 95, y: 62, size: "md", orbit: 2 },
-    { name: "Nhà Ngọc", location: "🇦🇺 Gold Coast", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 82, y: 75, size: "lg", orbit: 1 },
-    
+    {
+      name: "Gia đình Tuấn",
+      location: "🇦🇺 Sydney",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 85,
+      y: 12,
+      size: "lg",
+      orbit: 1,
+    },
+    {
+      name: "Nhà Hương",
+      location: "🇦🇺 Melbourne",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      x: 92,
+      y: 28,
+      size: "md",
+      orbit: 2,
+    },
+    {
+      name: "Gia đình Bình",
+      location: "🇦🇺 Brisbane",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      x: 78,
+      y: 22,
+      size: "sm",
+      orbit: 1,
+    },
+    {
+      name: "Nhà Thu",
+      location: "🇦🇺 Perth",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 88,
+      y: 45,
+      size: "sm",
+      orbit: 3,
+    },
+    {
+      name: "Gia đình Long",
+      location: "🇦🇺 Adelaide",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      x: 95,
+      y: 62,
+      size: "md",
+      orbit: 2,
+    },
+    {
+      name: "Nhà Ngọc",
+      location: "🇦🇺 Gold Coast",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      x: 82,
+      y: 75,
+      size: "lg",
+      orbit: 1,
+    },
+
     // CANADA - 5 gia đình
-    { name: "Gia đình Minh", location: "🇨🇦 Toronto", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 38, y: 5, size: "lg", orbit: 2 },
-    { name: "Nhà Lan", location: "🇨🇦 Vancouver", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 55, y: 10, size: "md", orbit: 1 },
-    { name: "Gia đình Khoa", location: "🇨🇦 Montreal", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80", x: 68, y: 8, size: "sm", orbit: 3 },
-    { name: "Nhà Trang", location: "🇨🇦 Calgary", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 45, y: 18, size: "sm", orbit: 2 },
-    { name: "Gia đình Phong", location: "🇨🇦 Ottawa", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 62, y: 22, size: "md", orbit: 1 },
-    
+    {
+      name: "Gia đình Minh",
+      location: "🇨🇦 Toronto",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 38,
+      y: 5,
+      size: "lg",
+      orbit: 2,
+    },
+    {
+      name: "Nhà Lan",
+      location: "🇨🇦 Vancouver",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      x: 55,
+      y: 10,
+      size: "md",
+      orbit: 1,
+    },
+    {
+      name: "Gia đình Khoa",
+      location: "🇨🇦 Montreal",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      x: 68,
+      y: 8,
+      size: "sm",
+      orbit: 3,
+    },
+    {
+      name: "Nhà Trang",
+      location: "🇨🇦 Calgary",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 45,
+      y: 18,
+      size: "sm",
+      orbit: 2,
+    },
+    {
+      name: "Gia đình Phong",
+      location: "🇨🇦 Ottawa",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      x: 62,
+      y: 22,
+      size: "md",
+      orbit: 1,
+    },
+
     // CHÂU ÂU - 16 gia đình
-    { name: "Gia đình Phương", location: "🇫🇷 Paris", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 30, y: 35, size: "md", orbit: 1 },
-    { name: "Nhà Hoàng", location: "🇬🇧 London", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80", x: 15, y: 28, size: "sm", orbit: 2 },
-    { name: "Gia đình Nga", location: "🇩🇪 Berlin", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 72, y: 35, size: "lg", orbit: 1 },
-    { name: "Nhà Tâm", location: "🇮🇹 Rome", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 58, y: 42, size: "sm", orbit: 3 },
-    { name: "Gia đình Vy", location: "🇪🇸 Madrid", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80", x: 42, y: 48, size: "md", orbit: 2 },
-    { name: "Nhà Đức", location: "🇨🇭 Zurich", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 75, y: 55, size: "sm", orbit: 1 },
-    { name: "Gia đình Thảo", location: "🇳🇱 Amsterdam", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 28, y: 55, size: "lg", orbit: 2 },
-    { name: "Nhà Việt", location: "🇦🇹 Vienna", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80", x: 65, y: 65, size: "md", orbit: 3 },
-    { name: "Gia đình Hiền", location: "🇧🇪 Brussels", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 35, y: 72, size: "sm", orbit: 1 },
-    { name: "Nhà Kiên", location: "🇵🇹 Lisbon", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 55, y: 78, size: "md", orbit: 2 },
-    { name: "Gia đình Nhung", location: "🇬🇷 Athens", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80", x: 78, y: 85, size: "sm", orbit: 1 },
-    { name: "Nhà Cường", location: "🇺🇸 Hawaii", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 5, y: 92, size: "md", orbit: 2 },
-    { name: "Gia đình Hạnh", location: "🇦🇺 Tasmania", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 92, y: 88, size: "sm", orbit: 1 },
-    { name: "Nhà Trung", location: "🇨🇦 Quebec", image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80", x: 48, y: 92, size: "lg", orbit: 3 },
-    { name: "Gia đình Diệu", location: "🇫🇷 Nice", image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80", x: 22, y: 88, size: "sm", orbit: 1 },
-    { name: "Nhà Sơn", location: "🇬🇧 Manchester", image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80", x: 68, y: 92, size: "md", orbit: 2 },
+    {
+      name: "Gia đình Phương",
+      location: "🇫🇷 Paris",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 30,
+      y: 35,
+      size: "md",
+      orbit: 1,
+    },
+    {
+      name: "Nhà Hoàng",
+      location: "🇬🇧 London",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      x: 15,
+      y: 28,
+      size: "sm",
+      orbit: 2,
+    },
+    {
+      name: "Gia đình Nga",
+      location: "🇩🇪 Berlin",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      x: 72,
+      y: 35,
+      size: "lg",
+      orbit: 1,
+    },
+    {
+      name: "Nhà Tâm",
+      location: "🇮🇹 Rome",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 58,
+      y: 42,
+      size: "sm",
+      orbit: 3,
+    },
+    {
+      name: "Gia đình Vy",
+      location: "🇪🇸 Madrid",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      x: 42,
+      y: 48,
+      size: "md",
+      orbit: 2,
+    },
+    {
+      name: "Nhà Đức",
+      location: "🇨🇭 Zurich",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      x: 75,
+      y: 55,
+      size: "sm",
+      orbit: 1,
+    },
+    {
+      name: "Gia đình Thảo",
+      location: "🇳🇱 Amsterdam",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 28,
+      y: 55,
+      size: "lg",
+      orbit: 2,
+    },
+    {
+      name: "Nhà Việt",
+      location: "🇦🇹 Vienna",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      x: 65,
+      y: 65,
+      size: "md",
+      orbit: 3,
+    },
+    {
+      name: "Gia đình Hiền",
+      location: "🇧🇪 Brussels",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      x: 35,
+      y: 72,
+      size: "sm",
+      orbit: 1,
+    },
+    {
+      name: "Nhà Kiên",
+      location: "🇵🇹 Lisbon",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 55,
+      y: 78,
+      size: "md",
+      orbit: 2,
+    },
+    {
+      name: "Gia đình Nhung",
+      location: "🇬🇷 Athens",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      x: 78,
+      y: 85,
+      size: "sm",
+      orbit: 1,
+    },
+    {
+      name: "Nhà Cường",
+      location: "🇺🇸 Hawaii",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      x: 5,
+      y: 92,
+      size: "md",
+      orbit: 2,
+    },
+    {
+      name: "Gia đình Hạnh",
+      location: "🇦🇺 Tasmania",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 92,
+      y: 88,
+      size: "sm",
+      orbit: 1,
+    },
+    {
+      name: "Nhà Trung",
+      location: "🇨🇦 Quebec",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      x: 48,
+      y: 92,
+      size: "lg",
+      orbit: 3,
+    },
+    {
+      name: "Gia đình Diệu",
+      location: "🇫🇷 Nice",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      x: 22,
+      y: 88,
+      size: "sm",
+      orbit: 1,
+    },
+    {
+      name: "Nhà Sơn",
+      location: "🇬🇧 Manchester",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      x: 68,
+      y: 92,
+      size: "md",
+      orbit: 2,
+    },
   ];
 
   // Mouse parallax effect
   useEffect(() => {
     if (window.innerWidth < 768) return;
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       if (sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect();
@@ -65,23 +345,27 @@ const SocialProof = () => {
         });
       }
     };
-    
+
     const section = sectionRef.current;
-    section?.addEventListener('mousemove', handleMouseMove);
-    return () => section?.removeEventListener('mousemove', handleMouseMove);
+    section?.addEventListener("mousemove", handleMouseMove);
+    return () => section?.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   const getSizeClasses = (size: string) => {
-    switch(size) {
-      case 'lg': return 'w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24';
-      case 'md': return 'w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20';
-      case 'sm': return 'w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16';
-      default: return 'w-12 h-12 md:w-16 md:h-16';
+    switch (size) {
+      case "lg":
+        return "w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24";
+      case "md":
+        return "w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20";
+      case "sm":
+        return "w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16";
+      default:
+        return "w-12 h-12 md:w-16 md:h-16";
     }
   };
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="py-16 md:py-24 lg:py-32 relative overflow-hidden bg-gradient-to-b from-white via-[#faf9f7] to-white"
     >
@@ -89,9 +373,15 @@ const SocialProof = () => {
       <div className="absolute inset-0 overflow-hidden">
         {/* Soft gradient orbs */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-[120px] animate-morph"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[140px] animate-morph" style={{animationDelay: '3s'}}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/3 rounded-full blur-[160px] animate-morph" style={{animationDelay: '6s'}}></div>
-        
+        <div
+          className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[140px] animate-morph"
+          style={{ animationDelay: "3s" }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/3 rounded-full blur-[160px] animate-morph"
+          style={{ animationDelay: "6s" }}
+        ></div>
+
         {/* Decorative dots */}
         {[...Array(40)].map((_, i) => (
           <div
@@ -126,7 +416,7 @@ const SocialProof = () => {
             stroke="url(#lineGradientLight)"
             strokeWidth="1.5"
             className="animate-pulse"
-            style={{ animationDelay: `${i * 0.15}s`, animationDuration: '4s' }}
+            style={{ animationDelay: `${i * 0.15}s`, animationDuration: "4s" }}
           />
         ))}
       </svg>
@@ -138,14 +428,14 @@ const SocialProof = () => {
             <span className="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
             <span className="text-primary font-bold text-sm uppercase tracking-wider">100+ Gia Đình Hạnh Phúc</span>
           </div>
-          
+
           <h2 className="font-display text-4xl md:text-5xl lg:text-7xl font-black mb-6 text-primary">
             Hành trình của
             <span className="block bg-gradient-to-r from-secondary via-accent to-secondary bg-clip-text text-transparent mt-2">
               những gia đình Việt
             </span>
           </h2>
-          
+
           <p className="text-lg md:text-xl text-primary/70 max-w-2xl mx-auto font-medium">
             Mỗi hình ảnh là một câu chuyện - Mỗi nụ cười là minh chứng cho dịch vụ của chúng tôi
           </p>
@@ -153,18 +443,26 @@ const SocialProof = () => {
 
         {/* Interactive Family Gallery Map */}
         <div className="relative h-[500px] md:h-[650px] lg:h-[750px] max-w-7xl mx-auto px-4">
-          
           {/* Center Hub - Vinh Around */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
             <div className="relative">
               {/* Pulsing rings */}
-              <div className="absolute inset-0 -m-6 rounded-full border-2 border-secondary/30 animate-ping" style={{animationDuration: '3s'}}></div>
-              <div className="absolute inset-0 -m-12 rounded-full border border-secondary/20 animate-ping" style={{animationDuration: '4s'}}></div>
-              <div className="absolute inset-0 -m-20 rounded-full border border-secondary/10 animate-ping" style={{animationDuration: '5s'}}></div>
-              
+              <div
+                className="absolute inset-0 -m-6 rounded-full border-2 border-secondary/30 animate-ping"
+                style={{ animationDuration: "3s" }}
+              ></div>
+              <div
+                className="absolute inset-0 -m-12 rounded-full border border-secondary/20 animate-ping"
+                style={{ animationDuration: "4s" }}
+              ></div>
+              <div
+                className="absolute inset-0 -m-20 rounded-full border border-secondary/10 animate-ping"
+                style={{ animationDuration: "5s" }}
+              ></div>
+
               {/* Main hub */}
               <div className="relative w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-secondary shadow-2xl shadow-secondary/20 group cursor-pointer hover:scale-110 transition-transform duration-300 bg-white">
-                <img 
+                <img
                   src="/lovable-uploads/576f0773-8f19-4601-901e-115efd9c4874.jpg"
                   alt="Vinh Around"
                   className="w-full h-full object-cover"
@@ -193,7 +491,7 @@ const SocialProof = () => {
               onClick={() => setActiveFamily(activeFamily === index ? null : index)}
             >
               {/* Photo Container */}
-              <div 
+              <div
                 className={`relative ${getSizeClasses(family.size)} group cursor-pointer`}
                 style={{
                   animation: `float ${3 + family.orbit}s ease-in-out infinite`,
@@ -201,32 +499,38 @@ const SocialProof = () => {
                 }}
               >
                 {/* Glow effect on hover */}
-                <div className={`absolute inset-0 rounded-2xl bg-secondary/30 blur-xl transition-all duration-300 ${activeFamily === index ? 'scale-150 opacity-100' : 'scale-100 opacity-0'}`}></div>
-                
+                <div
+                  className={`absolute inset-0 rounded-2xl bg-secondary/30 blur-xl transition-all duration-300 ${activeFamily === index ? "scale-150 opacity-100" : "scale-100 opacity-0"}`}
+                ></div>
+
                 {/* Photo frame */}
-                <div className={`relative w-full h-full rounded-2xl overflow-hidden border-3 bg-white transition-all duration-300 ${activeFamily === index ? 'border-secondary shadow-2xl shadow-secondary/30 scale-110' : 'border-white/60 shadow-lg'}`}>
-                  <img 
-                    src={family.image}
-                    alt={family.name}
-                    className="w-full h-full object-cover"
-                  />
+                <div
+                  className={`relative w-full h-full rounded-2xl overflow-hidden border-3 bg-white transition-all duration-300 ${activeFamily === index ? "border-secondary shadow-2xl shadow-secondary/30 scale-110" : "border-white/60 shadow-lg"}`}
+                >
+                  <img src={family.image} alt={family.name} className="w-full h-full object-cover" />
                   {/* Overlay gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                
+
                 {/* Flag badge */}
-                <div className={`absolute -bottom-1 -right-1 w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 rounded-full bg-white flex items-center justify-center text-xs md:text-sm lg:text-base border-2 border-secondary/30 shadow-md transition-all duration-300 ${activeFamily === index ? 'scale-125' : 'scale-100'}`}>
-                  {family.location.split(' ')[0]}
+                <div
+                  className={`absolute -bottom-1 -right-1 w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 rounded-full bg-white flex items-center justify-center text-xs md:text-sm lg:text-base border-2 border-secondary/30 shadow-md transition-all duration-300 ${activeFamily === index ? "scale-125" : "scale-100"}`}
+                >
+                  {family.location.split(" ")[0]}
                 </div>
-                
+
                 {/* Tooltip on hover */}
-                <div className={`absolute left-1/2 -translate-x-1/2 transition-all duration-300 pointer-events-none z-40 whitespace-nowrap ${activeFamily === index ? 'opacity-100 -bottom-16 md:-bottom-20' : 'opacity-0 -bottom-10'}`}>
+                <div
+                  className={`absolute left-1/2 -translate-x-1/2 transition-all duration-300 pointer-events-none z-40 whitespace-nowrap ${activeFamily === index ? "opacity-100 -bottom-16 md:-bottom-20" : "opacity-0 -bottom-10"}`}
+                >
                   <div className="bg-white px-4 py-3 rounded-xl shadow-2xl border-2 border-secondary/20">
                     <p className="font-bold text-sm md:text-base text-primary">{family.name}</p>
                     <p className="text-xs md:text-sm text-primary/60">{family.location}</p>
                     <div className="flex items-center justify-center gap-1 mt-1">
                       {[...Array(5)].map((_, i) => (
-                        <span key={i} className="text-amber-400 text-xs">⭐</span>
+                        <span key={i} className="text-amber-400 text-xs">
+                          ⭐
+                        </span>
                       ))}
                     </div>
                   </div>
@@ -234,7 +538,7 @@ const SocialProof = () => {
               </div>
             </div>
           ))}
-          
+
           {/* Orbital paths - very subtle */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-dashed border-secondary/10 pointer-events-none"></div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-dashed border-secondary/5 pointer-events-none"></div>
@@ -248,7 +552,10 @@ const SocialProof = () => {
             { flag: "🇨🇦", name: "Canada", count: "15+" },
             { flag: "🇪🇺", name: "Châu Âu", count: "42+" },
           ].map((region, i) => (
-            <div key={i} className="bg-white px-5 py-3 rounded-2xl border-2 border-secondary/10 shadow-lg flex items-center gap-3 hover:scale-105 hover:border-secondary/30 transition-all duration-300 cursor-pointer">
+            <div
+              key={i}
+              className="bg-white px-5 py-3 rounded-2xl border-2 border-secondary/10 shadow-lg flex items-center gap-3 hover:scale-105 hover:border-secondary/30 transition-all duration-300 cursor-pointer"
+            >
               <span className="text-2xl md:text-3xl">{region.flag}</span>
               <div>
                 <span className="text-sm md:text-base font-bold text-primary block">{region.name}</span>
@@ -267,12 +574,16 @@ const SocialProof = () => {
               { number: "10+", label: "Năm KN", icon: "⭐" },
               { number: "100%", label: "Hài lòng", icon: "💯" },
             ].map((stat, index) => (
-              <Card 
+              <Card
                 key={index}
                 className="p-6 md:p-8 text-center bg-white hover:shadow-2xl hover:shadow-secondary/10 transition-all duration-300 hover:scale-105 border-2 border-secondary/10 group cursor-pointer"
               >
-                <div className="text-4xl md:text-5xl mb-3 group-hover:scale-110 transition-transform duration-300">{stat.icon}</div>
-                <p className="font-display text-3xl md:text-4xl font-black bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">{stat.number}</p>
+                <div className="text-4xl md:text-5xl mb-3 group-hover:scale-110 transition-transform duration-300">
+                  {stat.icon}
+                </div>
+                <p className="font-display text-3xl md:text-4xl font-black bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+                  {stat.number}
+                </p>
                 <p className="text-xs md:text-sm text-primary/60 font-medium mt-1">{stat.label}</p>
               </Card>
             ))}
