@@ -68,8 +68,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email notification
     const emailResponse = await resend.emails.send({
-      from: "Vinh Around <onboarding@resend.dev>",
-      to: ["luongcongthuann@gmail.com"], // Replace with actual email
+      from: "Vinh Around <onboarding@resend.dev>", // Sau khi verify domain: "Vinh Around <notifications@yourdomain.com>"
+      to: ["luongcongthuann@gmail.com"], // Email nhận thông báo lead
       subject: "🎯 Lead Mới Từ Landing Page!",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
