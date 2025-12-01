@@ -44,11 +44,17 @@ const TourPackages = () => {
 
   // Auto rotate journeys - longer on mobile
   useEffect(() => {
+    if (!journeys.length) {
+      setActiveRoute(0);
+      return;
+    }
+
     const interval = setInterval(() => {
       setActiveRoute((prev) => (prev + 1) % journeys.length);
     }, 8000);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [journeys.length]);
 
   if (loading) {
     return (
@@ -68,6 +74,10 @@ const TourPackages = () => {
 
   // Safe to access now - we know journeys has items
   const activeJourney = journeys[activeRoute];
+  if (!activeJourney) {
+    return null;
+  }
+
 
   return (
     <section 
