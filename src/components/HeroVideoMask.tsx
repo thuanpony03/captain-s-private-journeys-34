@@ -2,53 +2,29 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
-import { useSiteContent, useSiteMedia } from "@/hooks/useSiteContent";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const HeroVideoMask = () => {
-  const { content, loading: contentLoading } = useSiteContent('hero');
-  const { media, loading: mediaLoading } = useSiteMedia('hero');
   const heroRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const captainImageRef = useRef<HTMLDivElement>(null);
-  
-  const loading = contentLoading || mediaLoading;
 
   useEffect(() => {
-    // Only run animation after content is loaded
-    if (!loading) {
-      const elements = document.querySelectorAll('.hero-animate');
-      elements.forEach((el, i) => {
-        setTimeout(() => {
-          el.classList.add('opacity-100', 'translate-y-0');
-          el.classList.remove('opacity-0', 'translate-y-8');
-        }, i * 200);
-      });
-    }
-  }, [loading]);
+    // Simple fade in animation
+    const elements = document.querySelectorAll('.hero-animate');
+    elements.forEach((el, i) => {
+      setTimeout(() => {
+        el.classList.add('opacity-100', 'translate-y-0');
+        el.classList.remove('opacity-0', 'translate-y-8');
+      }, i * 200);
+    });
+  }, []);
 
   const scrollToForm = () => {
     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
   };
-
-  // Get video URL from media or use default
-  const videoUrl = media.find(m => m.media_type === 'video')?.media_url || 
-    content.video_url || 
-    'https://cdn.pixabay.com/video/2023/10/12/184734-873923034_large.mp4';
-  
-  // Get captain image from media or use default
-  const captainImage = media.find(m => m.name.toLowerCase().includes('captain') || m.name.toLowerCase().includes('vinh'))?.media_url ||
-    '/lovable-uploads/576f0773-8f19-4601-901e-115efd9c4874.jpg';
-
-  if (loading) {
-    return (
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-20 pb-20 md:pb-24">
-        <div className="text-primary text-xl">Loading...</div>
-      </section>
-    );
-  }
 
   return (
     <section 
@@ -65,7 +41,7 @@ const HeroVideoMask = () => {
           playsInline
           className="w-full h-full object-cover scale-105"
         >
-          <source src={videoUrl} type="video/mp4" />
+          <source src="https://cdn.pixabay.com/video/2023/10/12/184734-873923034_large.mp4" type="video/mp4" />
         </video>
         {/* Light gradient overlay - video visible */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/60 via-primary/50 to-primary/55"></div>
@@ -85,8 +61,8 @@ const HeroVideoMask = () => {
               <div className="relative w-64 sm:w-80 md:w-96 lg:w-[420px] h-80 sm:h-96 md:h-[460px] lg:h-[520px]">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden border-4 border-secondary/60 shadow-2xl">
                   <img 
-                    src={captainImage}
-                    alt={content.name || "Vinh Around - Your Road Captain"}
+                    src="/lovable-uploads/576f0773-8f19-4601-901e-115efd9c4874.jpg"
+                    alt="Vinh Around - Your Road Captain"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent"></div>
@@ -96,8 +72,8 @@ const HeroVideoMask = () => {
               {/* Clean Name Badge */}
               <div className="absolute -bottom-6 -right-6 md:-bottom-8 md:-right-8 glass-effect px-6 md:px-8 py-4 md:py-6 rounded-2xl border border-secondary/40 shadow-xl hero-animate opacity-0 translate-y-8 transition-all duration-1000 delay-300">
                 <div className="text-center">
-                  <p className="text-white font-bold text-lg md:text-xl">{content.name || 'VINH AROUND'}</p>
-                  <p className="text-secondary text-sm md:text-base font-semibold">{content.title || 'Your Road Captain'}</p>
+                  <p className="text-white font-bold text-lg md:text-xl">VINH AROUND</p>
+                  <p className="text-secondary text-sm md:text-base font-semibold">Your Road Captain</p>
                   <div className="flex justify-center gap-1 mt-2">
                     {[...Array(5)].map((_, i) => (
                       <div key={i} className="w-1.5 h-1.5 bg-secondary rounded-full"></div>
@@ -131,15 +107,15 @@ const HeroVideoMask = () => {
                 className="font-display font-bold mb-6 md:mb-8 hero-animate opacity-0 translate-y-8 transition-all duration-1000"
               >
                 <div className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl text-white leading-tight mb-2 md:mb-4">
-                  {content.headline_line1 || 'Đừng đi du lịch'}
+                  Đừng đi du lịch
                 </div>
                 <div className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl leading-tight">
                   <span className="bg-gradient-to-r from-secondary via-accent to-secondary bg-clip-text text-transparent font-black italic">
-                    {content.headline_line2 || 'như khách'}
+                    như khách
                   </span>
                 </div>
                 <div className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl text-white/95 leading-tight mt-4 md:mt-6 font-light">
-                  {content.headline_line3 || 'Đi như "người nhà" cùng Vinh'}
+                  Đi như "người nhà" cùng Vinh
                 </div>
               </h1>
             </div>
@@ -152,7 +128,7 @@ const HeroVideoMask = () => {
                 className="bg-gradient-to-r from-secondary to-accent text-lg md:text-xl px-12 md:px-20 py-6 md:py-8 rounded-2xl font-bold shadow-2xl hover:shadow-glow hover-lift border border-white/30 w-full sm:w-auto transition-all hover:scale-105 duration-300"
               >
                 <span className="text-white font-display tracking-wide">
-                  {content.cta_text || 'ĐẶT LỊCH CÙNG VINH'}
+                  ĐẶT LỊCH CÙNG VINH
                 </span>
               </Button>
               
@@ -160,7 +136,7 @@ const HeroVideoMask = () => {
               <div className="inline-flex items-center gap-3 glass-effect px-6 py-3 rounded-2xl border border-white/20">
                 <div className="w-2 h-2 rounded-full bg-secondary"></div>
                 <span className="text-white/90 font-medium text-sm md:text-base">
-                  {content.badge_text || 'Còn 2 slot tháng này'}
+                  Còn 2 slot tháng này
                 </span>
               </div>
             </div>
