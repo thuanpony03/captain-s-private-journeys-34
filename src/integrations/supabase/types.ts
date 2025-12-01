@@ -47,6 +47,132 @@ export type Database = {
         }
         Relationships: []
       }
+      site_content: {
+        Row: {
+          id: string
+          key: string
+          section: string
+          type: string
+          updated_at: string | null
+          updated_by: string | null
+          value: string
+        }
+        Insert: {
+          id?: string
+          key: string
+          section: string
+          type?: string
+          updated_at?: string | null
+          updated_by?: string | null
+          value: string
+        }
+        Update: {
+          id?: string
+          key?: string
+          section?: string
+          type?: string
+          updated_at?: string | null
+          updated_by?: string | null
+          value?: string
+        }
+        Relationships: []
+      }
+      site_media: {
+        Row: {
+          alt_text: string | null
+          created_at: string | null
+          created_by: string | null
+          height: number | null
+          id: string
+          is_active: boolean | null
+          media_type: string
+          media_url: string
+          name: string
+          order_index: number | null
+          section: string
+          updated_at: string | null
+          width: number | null
+        }
+        Insert: {
+          alt_text?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          height?: number | null
+          id?: string
+          is_active?: boolean | null
+          media_type: string
+          media_url: string
+          name: string
+          order_index?: number | null
+          section: string
+          updated_at?: string | null
+          width?: number | null
+        }
+        Update: {
+          alt_text?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          height?: number | null
+          id?: string
+          is_active?: boolean | null
+          media_type?: string
+          media_url?: string
+          name?: string
+          order_index?: number | null
+          section?: string
+          updated_at?: string | null
+          width?: number | null
+        }
+        Relationships: []
+      }
+      tour_packages: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          duration: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          order_index: number | null
+          price: string | null
+          route: string | null
+          stops: Json | null
+          tagline: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          duration?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          order_index?: number | null
+          price?: string | null
+          route?: string | null
+          stops?: Json | null
+          tagline?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          duration?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          order_index?: number | null
+          price?: string | null
+          route?: string | null
+          stops?: Json | null
+          tagline?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null

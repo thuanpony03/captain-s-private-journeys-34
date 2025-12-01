@@ -9,11 +9,14 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, RefreshCw, LogOut, Users, MessageSquare, Settings, BarChart3, Calendar, Phone, Clock, Trash2 } from "lucide-react";
+import { ArrowLeft, RefreshCw, LogOut, Users, MessageSquare, Settings, BarChart3, Calendar, Phone, Clock, Trash2, Image, FileText, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import CustomCursor from "@/components/CustomCursor";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
+import { ContentEditor } from "@/components/admin/ContentEditor";
+import { MediaManager } from "@/components/admin/MediaManager";
+import { TourManager } from "@/components/admin/TourManager";
 
 interface LeadSubmission {
   id: string;
@@ -38,7 +41,7 @@ const Admin = () => {
     conversionRate: 0
   });
   const [activeTab, setActiveTab] = useState("leads");
-  const [contentTab, setContentTab] = useState("gallery");
+  const [contentTab, setContentTab] = useState("text");
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -488,20 +491,34 @@ const Admin = () => {
 
             {/* Content Management */}
             <TabsContent value="content" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Content Management System</CardTitle>
-                  <CardDescription>
-                    Tính năng đang được phát triển. Sẽ có Gallery và Testimonials management.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center py-12 text-gray-500">
-                    <MessageSquare className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                    <p>Content Management đang được xây dựng...</p>
-                  </div>
-                </CardContent>
-              </Card>
+              <Tabs value={contentTab} onValueChange={setContentTab} className="space-y-4">
+                <TabsList className="bg-white shadow-sm border grid grid-cols-3 w-full md:w-auto">
+                  <TabsTrigger value="text" className="flex items-center gap-2">
+                    <FileText className="w-4 h-4" />
+                    <span className="hidden md:inline">Nội dung</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="media" className="flex items-center gap-2">
+                    <Image className="w-4 h-4" />
+                    <span className="hidden md:inline">Media</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="tours" className="flex items-center gap-2">
+                    <MapPin className="w-4 h-4" />
+                    <span className="hidden md:inline">Tours</span>
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="text">
+                  <ContentEditor />
+                </TabsContent>
+
+                <TabsContent value="media">
+                  <MediaManager />
+                </TabsContent>
+
+                <TabsContent value="tours">
+                  <TourManager />
+                </TabsContent>
+              </Tabs>
             </TabsContent>
 
             {/* Settings */}
