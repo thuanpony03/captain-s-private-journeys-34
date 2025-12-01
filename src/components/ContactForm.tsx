@@ -32,8 +32,11 @@ const ContactForm = () => {
     }
     return () => observer.disconnect();
   }, []);
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (!formData.destination || !formData.groupSize || !formData.priority || !formData.contact) {
       toast({
         title: "Vui lòng điền đầy đủ thông tin",
@@ -44,20 +47,60 @@ const ContactForm = () => {
       return;
     }
 
-    // Track successful form submission
-    trackFormSubmit('Contact Form');
-    trackEvent('conversion', 'Form', 'Lead Generated', 1);
-    console.log("Form submitted:", formData);
-    toast({
-      title: "Đã gửi thành công!",
-      description: "Vinh Around sẽ liên hệ với bạn trong 24h qua Zalo/SĐT đã cung cấp."
-    });
-    setFormData({
-      destination: "",
-      groupSize: "",
-      priority: "",
-      contact: ""
-    });
+    setIsSubmitting(true);
+
+    try {
+      // Submit to edge function which handles database + email
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-lead-notification`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({
+            destination: formData.destination,
+            group_size: formData.groupSize,
+            priority: formData.priority,
+            contact: formData.contact,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      const result = await response.json();
+      console.log("Form submitted successfully:", result);
+
+      // Track successful form submission
+      trackFormSubmit('Contact Form');
+      trackEvent('conversion', 'Form', 'Lead Generated', 1);
+
+      toast({
+        title: "Đã gửi thành công!",
+        description: "Vinh Around sẽ liên hệ với bạn trong 24h qua Zalo/SĐT đã cung cấp."
+      });
+
+      setFormData({
+        destination: "",
+        groupSize: "",
+        priority: "",
+        contact: ""
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast({
+        title: "Có lỗi xảy ra",
+        description: "Vui lòng thử lại hoặc liên hệ trực tiếp qua Zalo",
+        variant: "destructive"
+      });
+      trackEvent('error', 'Form', 'Form Submission Failed');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   const destinations = [{
     value: "usa",
@@ -366,11 +409,18 @@ const ContactForm = () => {
                   </div>
 
                   {/* Submit Button */}
-                  <Button type="submit" size="lg" className="w-full bg-gradient-to-r from-secondary via-secondary to-accent hover:from-secondary/90 hover:to-accent/90 font-bold text-base md:text-lg py-5 md:py-6 rounded-xl transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-secondary/30 text-white">
-                    Nhận Tư Vấn Miễn Phí
-                    <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
+                  <Button 
+                    type="submit" 
+                    size="lg"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-secondary via-secondary to-accent hover:from-secondary/90 hover:to-accent/90 font-bold text-base md:text-lg py-5 md:py-6 rounded-xl transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-secondary/30 text-white disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  >
+                    {isSubmitting ? 'ĐANG GỬI...' : 'Nhận Tư Vấn Miễn Phí'}
+                    {!isSubmitting && (
+                      <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    )}
                   </Button>
 
                   {/* Footer note */}
