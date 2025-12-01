@@ -114,7 +114,7 @@ const SocialProof = () => {
     {
       name: "Nhà Thu",
       location: "🇦🇺 Perth",
-      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764585914/IMG_5987_t7lutp.jpg",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764585582/IMG_3551_xqii7g.jpg",
       x: 88,
       y: 45,
       size: "sm",
@@ -123,7 +123,8 @@ const SocialProof = () => {
     {
       name: "Gia đình Long",
       location: "🇦🇺 Adelaide",
-      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764585913/IMG_5962_sfcv9p.jpg",
+      image:
+        "https://res.cloudinary.com/duuntcik9/image/upload/v1764585582/z7281115055835_fe8da4945e165345b8fbec41d12e1763_tj1jlg.jpg",
       x: 95,
       y: 62,
       size: "md",
@@ -132,7 +133,8 @@ const SocialProof = () => {
     {
       name: "Nhà Ngọc",
       location: "🇦🇺 Gold Coast",
-      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764585583/IMG_3673_tw8jbo_descn7.jpg",
+      image:
+        "https://res.cloudinary.com/duuntcik9/image/upload/v1764584323/Gemini_Generated_Image_i3f45ri3f45ri3f4_jmeemp.png",
       x: 82,
       y: 75,
       size: "lg",
@@ -143,7 +145,7 @@ const SocialProof = () => {
     {
       name: "Gia đình Minh",
       location: "🇨🇦 Toronto",
-      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584779/IMG_3751_toxim6.jpg",
+      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
       x: 38,
       y: 5,
       size: "lg",
@@ -152,7 +154,7 @@ const SocialProof = () => {
     {
       name: "Nhà Lan",
       location: "🇨🇦 Vancouver",
-      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584778/IMG_1272_g0ldzs.jpg0",
+      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
       x: 55,
       y: 10,
       size: "md",
@@ -161,8 +163,7 @@ const SocialProof = () => {
     {
       name: "Gia đình Khoa",
       location: "🇨🇦 Montreal",
-      image:
-        "https://res.cloudinary.com/duuntcik9/image/upload/v1764584144/z6947063792147_aa0be3563131d94f1c4f78725e2231d3_jpjean.jpg",
+      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
       x: 68,
       y: 8,
       size: "sm",
