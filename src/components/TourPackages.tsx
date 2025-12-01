@@ -1,47 +1,25 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useTourPackages } from "@/hooks/useSiteContent";
 
 const TourPackages = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [activeRoute, setActiveRoute] = useState(0);
+  const { tours, loading } = useTourPackages();
 
-  // Journeys với video/cinematic style
-  const journeys = [
-    {
-      id: 1,
-      title: "US West Coast",
-      tagline: "California Dreaming",
-      route: "LA → San Francisco",
-      description: "Cung đường huyền thoại bờ Tây nước Mỹ",
-      duration: "10 ngày",
-      price: "$3,500",
-      video: "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200&q=80",
-      stops: ["Los Angeles", "Santa Barbara", "Big Sur", "San Francisco"],
-    },
-    {
-      id: 2,
-      title: "Australia Grand",
-      tagline: "Down Under Adventure",
-      route: "Sydney → Melbourne",
-      description: "Great Ocean Road và bãi biển tuyệt đẹp",
-      duration: "14 ngày",
-      price: "$4,200",
-      video: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1200&q=80",
-      stops: ["Sydney", "Blue Mountains", "Great Ocean Road", "Melbourne"],
-    },
-    {
-      id: 3,
-      title: "European Classic",
-      tagline: "Old World Charm",
-      route: "Paris → Rome",
-      description: "Kinh đô văn hóa và nghệ thuật châu Âu",
-      duration: "12 ngày",
-      price: "$3,800",
-      video: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1200&q=80",
-      stops: ["Paris", "Geneva", "Florence", "Rome"],
-    }
-  ];
+  // Transform tours data for compatibility
+  const journeys = tours.map(tour => ({
+    id: tour.id,
+    title: tour.title,
+    tagline: tour.tagline || '',
+    route: tour.route || '',
+    description: tour.description || '',
+    duration: tour.duration || '',
+    price: tour.price || '',
+    video: tour.image_url || 'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200&q=80',
+    stops: Array.isArray(tour.stops) ? tour.stops : []
+  }));
 
   const scrollToForm = () => {
     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
@@ -73,6 +51,22 @@ const TourPackages = () => {
   }, []);
 
   const activeJourney = journeys[activeRoute];
+
+  if (loading) {
+    return (
+      <section className="relative min-h-screen overflow-hidden bg-primary flex items-center justify-center">
+        <div className="text-white text-xl">Loading tours...</div>
+      </section>
+    );
+  }
+
+  if (journeys.length === 0) {
+    return (
+      <section className="relative min-h-screen overflow-hidden bg-primary flex items-center justify-center">
+        <div className="text-white text-xl">No tours available</div>
+      </section>
+    );
+  }
 
   return (
     <section 
