@@ -12,7 +12,8 @@ const SocialProof = () => {
     {
       name: "Gia đình Mai",
       location: "🇺🇸 California",
-      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584136/IMG_6572_iicryr.heic",
+      image:
+        "https://res.cloudinary.com/duuntcik9/image/upload/v1764584144/z6947063792147_aa0be3563131d94f1c4f78725e2231d3_jpjean.jpg",
       x: 8,
       y: 15,
       size: "lg",
