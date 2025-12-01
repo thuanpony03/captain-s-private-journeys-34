@@ -17,15 +17,17 @@ const HeroVideoMask = () => {
   const loading = contentLoading || mediaLoading;
 
   useEffect(() => {
-    // Simple fade in animation
-    const elements = document.querySelectorAll('.hero-animate');
-    elements.forEach((el, i) => {
-      setTimeout(() => {
-        el.classList.add('opacity-100', 'translate-y-0');
-        el.classList.remove('opacity-0', 'translate-y-8');
-      }, i * 200);
-    });
-  }, []);
+    // Only run animation after content is loaded
+    if (!loading) {
+      const elements = document.querySelectorAll('.hero-animate');
+      elements.forEach((el, i) => {
+        setTimeout(() => {
+          el.classList.add('opacity-100', 'translate-y-0');
+          el.classList.remove('opacity-0', 'translate-y-8');
+        }, i * 200);
+      });
+    }
+  }, [loading]);
 
   const scrollToForm = () => {
     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
