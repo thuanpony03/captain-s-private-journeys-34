@@ -1,14 +1,8 @@
 import { useEffect, useRef } from "react";
-import heroImage from "@/assets/hero-captain.jpg";
-import { useSiteContent, useSiteMedia } from "@/hooks/useSiteContent";
 
 const PersonalStory = () => {
-  const { content, loading: contentLoading } = useSiteContent('personal_story');
-  const { media, loading: mediaLoading } = useSiteMedia('personal_story');
   const sectionRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  
-  const loading = contentLoading || mediaLoading;
   
   useEffect(() => {
     const handleScroll = () => {
@@ -24,20 +18,6 @@ const PersonalStory = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Get portrait image from media or use default
-  const portraitImage = media.find(m => m.media_type === 'image')?.media_url ||
-    '/lovable-uploads/576f0773-8f19-4601-901e-115efd9c4874.jpg';
-
-  if (loading) {
-    return (
-      <section className="py-32 md:py-48 bg-muted relative overflow-hidden">
-        <div className="container mx-auto px-4 text-center">
-          <div className="text-primary text-xl">Loading...</div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section ref={sectionRef} className="py-32 md:py-48 bg-muted relative overflow-hidden">
@@ -55,9 +35,9 @@ const PersonalStory = () => {
             <div className="order-1 lg:order-1">
               <div ref={imageRef} className="lg:sticky lg:top-32 rounded-2xl md:rounded-3xl overflow-hidden shadow-float parallax">
                 <img 
-                  alt={content.name || "Vinh Around - Your trusted road captain"}
+                  alt="Vinh Around - Your trusted road captain"
                   className="w-full h-[400px] md:h-[500px] lg:h-[700px] object-cover" 
-                  src={portraitImage}
+                  src="/lovable-uploads/576f0773-8f19-4601-901e-115efd9c4874.jpg"
                 />
                 
                 {/* Subtle Overlay */}
@@ -67,10 +47,10 @@ const PersonalStory = () => {
                 <div className="absolute bottom-4 md:bottom-8 left-4 md:left-8 right-4 md:right-8">
                   <div className="glass-effect p-4 md:p-6 rounded-xl md:rounded-2xl border border-white/10">
                     <h3 className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1">
-                      {content.name || 'Vinh Around'}
+                      Vinh Around
                     </h3>
                     <p className="text-base text-white/90">
-                      {content.title || 'Road Captain with 10+ Years Experience'}
+                      Road Captain with 10+ Years Experience
                     </p>
                   </div>
                 </div>
@@ -88,13 +68,13 @@ const PersonalStory = () => {
                   </p>
                 </div>
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
-                  {content.intro || 'Chào bạn, tôi là Vinh Around.'}
+                  Chào bạn, tôi là Vinh Around.
                 </h2>
               </div>
               
               <div className="space-y-6">
                 <p className="text-lg md:text-xl text-foreground leading-relaxed">
-                  <span className="font-bold text-secondary">{content.experience || '10 năm cầm lái'}</span> trên những cung đường Mỹ, Úc, Âu, tôi nhận ra điều này:
+                  <span className="font-bold text-secondary">10 năm cầm lái</span> trên những cung đường Mỹ, Úc, Âu, tôi nhận ra điều này:
                 </p>
                 
                 {/* Editorial Headline - Large Serif Quote */}
@@ -102,7 +82,7 @@ const PersonalStory = () => {
                   <div className="absolute -left-4 top-0 text-9xl text-secondary/10 font-display leading-none">"</div>
                   <blockquote className="relative z-10">
                     <p className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground mb-6">
-                      {content.quote || 'Người Việt mình đi du lịch KHỔ quá!'}
+                      Người Việt mình đi du lịch KHỔ quá!
                     </p>
                   </blockquote>
                   <div className="absolute -right-4 bottom-0 text-9xl text-secondary/10 font-display leading-none">"</div>
