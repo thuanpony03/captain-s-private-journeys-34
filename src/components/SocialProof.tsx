@@ -87,7 +87,7 @@ const SocialProof = () => {
     {
       name: "Gia đình Tuấn",
       location: "🇦🇺 Sydney",
-      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584778/IMG_3673_tw8jbo.jpg",
       x: 85,
       y: 12,
       size: "lg",
@@ -96,7 +96,7 @@ const SocialProof = () => {
     {
       name: "Nhà Hương",
       location: "🇦🇺 Melbourne",
-      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584323/IMG_0645_si3owv.jpg",
       x: 92,
       y: 28,
       size: "md",
@@ -105,7 +105,7 @@ const SocialProof = () => {
     {
       name: "Gia đình Bình",
       location: "🇦🇺 Brisbane",
-      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584778/IMG_1470_nxfxxg.jpg",
       x: 78,
       y: 22,
       size: "sm",
