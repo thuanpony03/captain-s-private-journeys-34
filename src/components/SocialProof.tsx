@@ -114,7 +114,7 @@ const SocialProof = () => {
     {
       name: "Nhà Thu",
       location: "🇦🇺 Perth",
-      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764585914/IMG_5987_t7lutp.jpg",
       x: 88,
       y: 45,
       size: "sm",
@@ -123,7 +123,7 @@ const SocialProof = () => {
     {
       name: "Gia đình Long",
       location: "🇦🇺 Adelaide",
-      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764585913/IMG_5962_sfcv9p.jpg",
       x: 95,
       y: 62,
       size: "md",
@@ -132,7 +132,7 @@ const SocialProof = () => {
     {
       name: "Nhà Ngọc",
       location: "🇦🇺 Gold Coast",
-      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764585583/IMG_3673_tw8jbo_descn7.jpg",
       x: 82,
       y: 75,
       size: "lg",
@@ -143,7 +143,7 @@ const SocialProof = () => {
     {
       name: "Gia đình Minh",
       location: "🇨🇦 Toronto",
-      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584779/IMG_3751_toxim6.jpg",
       x: 38,
       y: 5,
       size: "lg",
@@ -152,7 +152,7 @@ const SocialProof = () => {
     {
       name: "Nhà Lan",
       location: "🇨🇦 Vancouver",
-      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584778/IMG_1272_g0ldzs.jpg0",
       x: 55,
       y: 10,
       size: "md",
@@ -161,7 +161,8 @@ const SocialProof = () => {
     {
       name: "Gia đình Khoa",
       location: "🇨🇦 Montreal",
-      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      image:
+        "https://res.cloudinary.com/duuntcik9/image/upload/v1764584144/z6947063792147_aa0be3563131d94f1c4f78725e2231d3_jpjean.jpg",
       x: 68,
       y: 8,
       size: "sm",
