@@ -50,8 +50,6 @@ const TourPackages = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const activeJourney = journeys[activeRoute];
-
   if (loading) {
     return (
       <section className="relative min-h-screen overflow-hidden bg-primary flex items-center justify-center">
@@ -67,6 +65,9 @@ const TourPackages = () => {
       </section>
     );
   }
+
+  // Safe to access now - we know journeys has items
+  const activeJourney = journeys[activeRoute];
 
   return (
     <section 
