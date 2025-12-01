@@ -1,0 +1,1 @@
+alter table public.lead_submissions enable row level security;
