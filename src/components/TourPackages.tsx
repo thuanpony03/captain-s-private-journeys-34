@@ -26,13 +26,18 @@ const TourPackages = () => {
   };
 
   useEffect(() => {
+    // Set visible immediately if tours are loaded
+    if (tours.length > 0) {
+      setIsVisible(true);
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 } // Reduced threshold for faster trigger
     );
 
     if (sectionRef.current) {
@@ -40,7 +45,7 @@ const TourPackages = () => {
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [tours.length]);
 
   // Auto rotate journeys - longer on mobile
   useEffect(() => {
