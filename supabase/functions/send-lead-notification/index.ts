@@ -1,13 +1,12 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.0';
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.0";
 import { Resend } from "https://esm.sh/resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
 interface LeadSubmission {
@@ -25,23 +24,23 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const leadData: LeadSubmission = await req.json();
-    
+
     console.log("Received lead submission:", leadData);
 
     // Create Supabase client with service role for bypassing RLS
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     // Save to database
     const { data: savedLead, error: dbError } = await supabase
-      .from('lead_submissions')
+      .from("lead_submissions")
       .insert({
         destination: leadData.destination,
         group_size: leadData.group_size,
         priority: leadData.priority,
         contact: leadData.contact,
-        status: 'new'
+        status: "new",
       })
       .select()
       .single();
@@ -55,22 +54,22 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Format the destination label
     const destinationLabels: Record<string, string> = {
-      'usa': 'USA - West Coast Road Trip',
-      'australia': 'Australia - Great Ocean Road',
-      'europe': 'Europe (Paris • Rome • Zurich)',
-      'other': 'Khác - Để Vinh tư vấn'
+      usa: "USA - West Coast Road Trip",
+      australia: "Australia - Great Ocean Road",
+      europe: "Europe (Paris • Rome • Zurich)",
+      other: "Khác - Để Vinh tư vấn",
     };
 
     const priorityLabels: Record<string, string> = {
-      'health': 'Sức khỏe (Lịch nhẹ nhàng, thoải mái)',
-      'experience': 'Trải nghiệm (Văn hóa, ẩm thực độc đáo)',
-      'luxury': 'Sang trọng (Check-in đẳng cấp)'
+      health: "Sức khỏe (Lịch nhẹ nhàng, thoải mái)",
+      experience: "Trải nghiệm (Văn hóa, ẩm thực độc đáo)",
+      luxury: "Sang trọng (Check-in đẳng cấp)",
     };
 
     // Send email notification
     const emailResponse = await resend.emails.send({
       from: "Vinh Around <onboarding@resend.dev>",
-      to: ["your-email@example.com"], // Replace with actual email
+      to: ["luongcongthuann@gmail.com"], // Replace with actual email
       subject: "🎯 Lead Mới Từ Landing Page!",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
@@ -111,7 +110,7 @@ const handler = async (req: Request): Promise<Response> => {
                 ID Lead: <code style="background: #f5f5f5; padding: 2px 6px; border-radius: 3px;">${savedLead.id}</code>
               </p>
               <p style="color: #666; margin: 5px 0 0 0; font-size: 12px;">
-                Thời gian: ${new Date().toLocaleString('vi-VN')}
+                Thời gian: ${new Date().toLocaleString("vi-VN")}
               </p>
             </div>
           </div>
@@ -129,7 +128,7 @@ const handler = async (req: Request): Promise<Response> => {
       JSON.stringify({
         success: true,
         leadId: savedLead.id,
-        message: "Lead saved and notification sent"
+        message: "Lead saved and notification sent",
       }),
       {
         status: 200,
@@ -137,17 +136,14 @@ const handler = async (req: Request): Promise<Response> => {
           "Content-Type": "application/json",
           ...corsHeaders,
         },
-      }
+      },
     );
   } catch (error: any) {
     console.error("Error in send-lead-notification function:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { "Content-Type": "application/json", ...corsHeaders },
+    });
   }
 };
 
