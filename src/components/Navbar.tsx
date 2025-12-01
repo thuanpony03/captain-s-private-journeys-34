@@ -41,16 +41,31 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* CTA Button - Mobile Optimized */}
-          <Button
-            onClick={scrollToForm}
-            className="bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 rounded-full shadow-elegant hover:shadow-glow hover-lift text-xs sm:text-sm md:text-base border-2 border-white/30 transition-all hover:scale-105"
-          >
-            <span className="flex items-center gap-1.5 sm:gap-2">
-              <span className="hidden sm:inline">ĐẶT LỊCH NGAY</span>
-              <span className="sm:hidden">Liên hệ ngay</span>
-            </span>
-          </Button>
+          {/* Navigation Items */}
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Admin Link - Only in development */}
+            {import.meta.env.DEV && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => window.location.href = '/admin'}
+                className="text-white/70 hover:text-white hover:bg-white/10 text-xs hidden md:flex"
+              >
+                Admin
+              </Button>
+            )}
+            
+            {/* CTA Button - Mobile Optimized */}
+            <Button
+              onClick={scrollToForm}
+              className="bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 rounded-full shadow-elegant hover:shadow-glow hover-lift text-xs sm:text-sm md:text-base border-2 border-white/30 transition-all hover:scale-105"
+            >
+              <span className="flex items-center gap-1.5 sm:gap-2">
+                <span className="hidden sm:inline">ĐẶT LỊCH NGAY</span>
+                <span className="sm:hidden">Liên hệ ngay</span>
+              </span>
+            </Button>
+          </div>
         </div>
       </div>
     </nav>

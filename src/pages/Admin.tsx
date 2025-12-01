@@ -4,9 +4,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, RefreshCw } from "lucide-react";
+import { ArrowLeft, RefreshCw, LogOut, Users, MessageSquare, Settings, BarChart3, Calendar, Phone, Mail, MapPin, Clock, Trash2, Edit, Eye, Image as ImageIcon, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
+import CustomCursor from "@/components/CustomCursor";
+import GalleryManagement from "@/components/GalleryManagement";
+import TestimonialManagement from "@/components/TestimonialManagement";
 
 interface LeadSubmission {
   id: string;
@@ -23,19 +31,77 @@ const Admin = () => {
   const [leads, setLeads] = useState<LeadSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
+  const [stats, setStats] = useState({
+    totalLeads: 0,
+    newLeads: 0,
+    convertedLeads: 0,
+    conversionRate: 0
+  });
+  const [activeTab, setActiveTab] = useState("leads");
+  const [contentTab, setContentTab] = useState("gallery");
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  const createTestLead = async () => {
+    try {
+      const testLead = {
+        destination: 'usa',
+        group_size: '4-6',
+        priority: 'luxury',
+        contact: 'Test User - 0987654321'
+      };
+
+      const { data, error } = await supabase
+        .from('lead_submissions')
+        .insert(testLead)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      toast({
+        title: "Tạo test lead thành công",
+        description: `Lead ID: ${data.id}`,
+      });
+
+      fetchLeads(); // Refresh the list
+    } catch (error: any) {
+      toast({
+        title: "Lỗi tạo test lead",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
 
   const fetchLeads = async () => {
     setLoading(true);
     try {
+      console.log('Fetching leads...');
       const { data, error } = await supabase
         .from('lead_submissions')
         .select('*')
         .order('created_at', { ascending: false });
 
+      console.log('Supabase response:', { data, error });
+
       if (error) throw error;
-      setLeads(data || []);
+      
+      const leadsData = data || [];
+      setLeads(leadsData);
+      
+      // Calculate stats
+      const totalLeads = leadsData.length;
+      const newLeads = leadsData.filter(lead => lead.status === 'new').length;
+      const convertedLeads = leadsData.filter(lead => lead.status === 'converted').length;
+      const conversionRate = totalLeads > 0 ? (convertedLeads / totalLeads) * 100 : 0;
+      
+      setStats({
+        totalLeads,
+        newLeads,
+        convertedLeads,
+        conversionRate
+      });
     } catch (error: any) {
       toast({
         title: "Lỗi",
@@ -48,8 +114,25 @@ const Admin = () => {
   };
 
   useEffect(() => {
-    fetchLeads();
-  }, []);
+    // Simple auth check - all logged in users can access admin
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate("/auth");
+        return;
+      }
+      
+      // All authenticated users have admin access
+      toast({
+        title: "Chào mừng đến Admin Dashboard",
+        description: "Bạn đã có quyền truy cập đầy đủ!",
+      });
+      
+      fetchLeads();
+    };
+    
+    checkAuth();
+  }, [navigate, toast]);
 
   const updateLeadStatus = async (id: string, status: string) => {
     setUpdating(id);
@@ -100,152 +183,400 @@ const Admin = () => {
     }
   };
 
-  const destinationLabels: Record<string, string> = {
-    'usa': 'USA - West Coast',
-    'australia': 'Australia - Great Ocean Road',
-    'europe': 'Europe',
-    'other': 'Khác'
+  const deleteLead = async (id: string) => {
+    if (!confirm("Bạn có chắc muốn xóa lead này?")) return;
+    
+    try {
+      const { error } = await supabase
+        .from('lead_submissions')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Đã xóa",
+        description: "Lead đã được xóa khỏi hệ thống",
+      });
+
+      fetchLeads();
+    } catch (error: any) {
+      toast({
+        title: "Lỗi",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
   };
 
-  const priorityLabels: Record<string, string> = {
-    'health': 'Sức khỏe',
-    'experience': 'Trải nghiệm',
-    'luxury': 'Sang trọng'
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate("/");
   };
 
-  const statusColors: Record<string, string> = {
-    'new': 'bg-blue-500',
-    'contacted': 'bg-yellow-500',
-    'converted': 'bg-green-500',
-    'lost': 'bg-red-500'
+  const getStatusBadge = (status: string) => {
+    const statusConfig = {
+      new: { color: "bg-blue-100 text-blue-800", label: "Mới" },
+      contacted: { color: "bg-yellow-100 text-yellow-800", label: "Đã liên hệ" },
+      quoted: { color: "bg-purple-100 text-purple-800", label: "Đã báo giá" },
+      converted: { color: "bg-green-100 text-green-800", label: "Đã chốt" },
+      lost: { color: "bg-red-100 text-red-800", label: "Thất bại" }
+    };
+    
+    const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.new;
+    return <Badge className={config.color}>{config.label}</Badge>;
   };
+
+  const getPriorityIcon = (priority: string) => {
+    switch (priority) {
+      case 'health': return '🏥';
+      case 'experience': return '🎭';
+      case 'luxury': return '💎';
+      default: return '🌟';
+    }
+  };
+
+  const getDestinationFlag = (destination: string) => {
+    switch (destination) {
+      case 'usa': return '🇺🇸';
+      case 'australia': return '🇦🇺';
+      case 'europe': return '🇪🇺';
+      default: return '🌍';
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-primary/5 flex items-center justify-center">
+        <div className="text-center">
+          <RefreshCw className="w-8 h-8 animate-spin text-primary mx-auto mb-4" />
+          <p className="text-primary/80">Đang tải dữ liệu...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => navigate('/')}
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <div>
-              <h1 className="text-3xl font-bold text-primary">Quản Lý Leads</h1>
-              <p className="text-muted-foreground">Danh sách khách hàng tiềm năng</p>
+    <>
+      <SEOHead 
+        title="Admin Dashboard - Vinh Around Private Tours"
+        description="Quản lý hệ thống tour du lịch riêng Vinh Around"
+      />
+      <CustomCursor />
+      
+      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-primary/5">
+        {/* Header */}
+        <header className="bg-white border-b shadow-sm">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Button variant="ghost" onClick={() => navigate("/")} className="text-primary hover:bg-primary/10">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Về trang chủ
+                </Button>
+                <div className="h-6 w-px bg-gray-300" />
+                <div>
+                  <h1 className="text-2xl font-bold text-primary">Admin Dashboard</h1>
+                  <p className="text-sm text-gray-600">Vinh Around Private Tours</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <Button variant="outline" onClick={fetchLeads} disabled={loading}>
+                  <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+                  Làm mới
+                </Button>
+                <Button variant="ghost" onClick={handleSignOut} className="text-red-600 hover:bg-red-50">
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Đăng xuất
+                </Button>
+              </div>
             </div>
           </div>
-          <Button onClick={fetchLeads} disabled={loading} variant="outline">
-            <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-            Làm mới
-          </Button>
-        </div>
+        </header>
 
-        {loading ? (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-muted-foreground">Đang tải...</p>
+        <div className="container mx-auto px-6 py-8">
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium opacity-90">Tổng Leads</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold">{stats.totalLeads}</div>
+                <div className="flex items-center text-xs opacity-90 mt-1">
+                  <Users className="w-3 h-3 mr-1" />
+                  Khách hàng tiềm năng
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium opacity-90">Leads Mới</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold">{stats.newLeads}</div>
+                <div className="flex items-center text-xs opacity-90 mt-1">
+                  <Clock className="w-3 h-3 mr-1" />
+                  Cần xử lý
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gradient-to-r from-green-500 to-emerald-600 text-white">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium opacity-90">Đã Chốt</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold">{stats.convertedLeads}</div>
+                <div className="flex items-center text-xs opacity-90 mt-1">
+                  <BarChart3 className="w-3 h-3 mr-1" />
+                  Thành công
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium opacity-90">Tỷ Lệ Chốt</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold">{stats.conversionRate.toFixed(1)}%</div>
+                <div className="flex items-center text-xs opacity-90 mt-1">
+                  <Calendar className="w-3 h-3 mr-1" />
+                  Hiệu quả
+                </div>
+              </CardContent>
+            </Card>
           </div>
-        ) : leads.length === 0 ? (
-          <Card>
-            <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground">Chưa có lead nào</p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid gap-6">
-            {leads.map((lead) => (
-              <Card key={lead.id} className="overflow-hidden">
-                <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-xl font-bold text-primary">
-                        {destinationLabels[lead.destination]}
-                      </CardTitle>
-                      <CardDescription>
-                        {new Date(lead.created_at).toLocaleString('vi-VN')}
-                      </CardDescription>
-                    </div>
-                    <Badge className={`${statusColors[lead.status]} text-white`}>
-                      {lead.status.toUpperCase()}
-                    </Badge>
-                  </div>
+
+          {/* Main Content */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+            <TabsList className="bg-white shadow-sm border">
+              <TabsTrigger value="leads" className="flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                Quản Lý Leads
+              </TabsTrigger>
+              <TabsTrigger value="content" className="flex items-center gap-2">
+                <MessageSquare className="w-4 h-4" />
+                Content Management
+              </TabsTrigger>
+              <TabsTrigger value="settings" className="flex items-center gap-2">
+                <Settings className="w-4 h-4" />
+                Cài Đặt
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Leads Management */}
+            <TabsContent value="leads" className="space-y-6">
+              <div className="flex justify-between items-center mb-4">
+                <div>
+                  <h3 className="text-lg font-semibold">Quản Lý Leads</h3>
+                  <p className="text-sm text-gray-600">Tổng cộng: {leads.length} leads</p>
+                </div>
+                <div className="space-x-2">
+                  <Button onClick={fetchLeads} variant="outline" size="sm">
+                    <RefreshCw className="w-4 h-4 mr-2" />
+                    Làm mới
+                  </Button>
+                  <Button onClick={createTestLead} variant="outline" size="sm">
+                    Tạo Test Lead
+                  </Button>
+                </div>
+              </div>
+              <div className="grid gap-6">
+                {leads.length === 0 ? (
+                  <Card>
+                    <CardContent className="flex flex-col items-center justify-center py-12">
+                      <Users className="w-16 h-16 text-gray-400 mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-600 mb-2">Chưa có leads nào</h3>
+                      <p className="text-gray-500 text-center">
+                        Khi khách hàng điền form trên website, thông tin sẽ hiển thị ở đây
+                      </p>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  leads.map((lead) => (
+                    <Card key={lead.id} className="hover:shadow-lg transition-shadow">
+                      <CardHeader>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="text-2xl">
+                              {getDestinationFlag(lead.destination)}
+                            </div>
+                            <div>
+                              <CardTitle className="text-lg">
+                                {lead.destination.toUpperCase()} - {lead.group_size} người
+                              </CardTitle>
+                              <CardDescription className="flex items-center gap-4 mt-1">
+                                <span className="flex items-center gap-1">
+                                  <Calendar className="w-3 h-3" />
+                                  {new Date(lead.created_at).toLocaleDateString('vi-VN', {
+                                    year: 'numeric',
+                                    month: 'short',
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                  })}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                  {getPriorityIcon(lead.priority)}
+                                  {lead.priority === 'health' ? 'Sức khỏe' : 
+                                   lead.priority === 'experience' ? 'Trải nghiệm' : 'Sang trọng'}
+                                </span>
+                              </CardDescription>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-2">
+                            {getStatusBadge(lead.status)}
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => deleteLead(lead.id)}
+                              className="text-red-600 hover:bg-red-50"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardHeader>
+                      
+                      <CardContent className="space-y-4">
+                        {/* Contact Info */}
+                        <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
+                          <Phone className="w-4 h-4 text-primary" />
+                          <span className="font-medium">{lead.contact}</span>
+                        </div>
+                        
+                        {/* Status Update */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <Label htmlFor={`status-${lead.id}`}>Cập nhật trạng thái</Label>
+                            <Select
+                              value={lead.status}
+                              onValueChange={(value) => updateLeadStatus(lead.id, value)}
+                              disabled={updating === lead.id}
+                            >
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="new">🔵 Mới</SelectItem>
+                                <SelectItem value="contacted">🟡 Đã liên hệ</SelectItem>
+                                <SelectItem value="quoted">🟣 Đã báo giá</SelectItem>
+                                <SelectItem value="converted">🟢 Đã chốt</SelectItem>
+                                <SelectItem value="lost">🔴 Thất bại</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          
+                          <div>
+                            <Label htmlFor={`notes-${lead.id}`}>Ghi chú</Label>
+                            <Textarea
+                              id={`notes-${lead.id}`}
+                              placeholder="Thêm ghi chú về lead này..."
+                              value={lead.notes || ''}
+                              onChange={(e) => {
+                                const updatedLeads = leads.map(l => 
+                                  l.id === lead.id ? { ...l, notes: e.target.value } : l
+                                );
+                                setLeads(updatedLeads);
+                              }}
+                              onBlur={(e) => updateNotes(lead.id, e.target.value)}
+                              className="resize-none"
+                              rows={3}
+                            />
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </div>
+            </TabsContent>
+
+            {/* Content Management */}
+            <TabsContent value="content" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Content Management System</CardTitle>
+                  <CardDescription>
+                    Quản lý nội dung website: gallery, testimonials và nội dung khác
+                  </CardDescription>
                 </CardHeader>
-                <CardContent className="pt-6">
-                  <div className="grid md:grid-cols-2 gap-4 mb-4">
+                <CardContent>
+                  <Tabs value={contentTab} onValueChange={setContentTab} className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="gallery" className="flex items-center gap-2">
+                        <ImageIcon className="w-4 h-4" />
+                        Gallery
+                      </TabsTrigger>
+                      <TabsTrigger value="testimonials" className="flex items-center gap-2">
+                        <Star className="w-4 h-4" />
+                        Testimonials
+                      </TabsTrigger>
+                    </TabsList>
+
+                    <TabsContent value="gallery" className="mt-6">
+                      <GalleryManagement />
+                    </TabsContent>
+
+                    <TabsContent value="testimonials" className="mt-6">
+                      <TestimonialManagement />
+                    </TabsContent>
+                  </Tabs>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Settings */}
+            <TabsContent value="settings" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Cài Đặt Hệ Thống</CardTitle>
+                  <CardDescription>
+                    Quản lý cài đặt website và tài khoản admin
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
                     <div>
-                      <p className="text-sm font-semibold text-muted-foreground mb-1">Số lượng</p>
-                      <p className="text-lg font-bold">{lead.group_size} người</p>
+                      <h3 className="text-lg font-semibold mb-4">Thông Tin Website</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label>Tên công ty</Label>
+                          <Input defaultValue="Vinh Around Private Tours" />
+                        </div>
+                        <div>
+                          <Label>Email liên hệ</Label>
+                          <Input defaultValue="admin@passport.cafe" />
+                        </div>
+                        <div>
+                          <Label>Số điện thoại</Label>
+                          <Input placeholder="Nhập số điện thoại" />
+                        </div>
+                        <div>
+                          <Label>Địa chỉ</Label>
+                          <Input placeholder="Nhập địa chỉ công ty" />
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-sm font-semibold text-muted-foreground mb-1">Ưu tiên</p>
-                      <p className="text-lg font-bold">{priorityLabels[lead.priority]}</p>
+                    
+                    <div className="pt-4 border-t">
+                      <Button className="bg-primary hover:bg-primary/90">
+                        Lưu Cài Đặt
+                      </Button>
                     </div>
-                    <div className="md:col-span-2">
-                      <p className="text-sm font-semibold text-muted-foreground mb-1">Liên hệ</p>
-                      <p className="text-lg font-bold text-primary">{lead.contact}</p>
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <p className="text-sm font-semibold text-muted-foreground mb-2">Ghi chú</p>
-                    <Textarea
-                      placeholder="Thêm ghi chú..."
-                      value={lead.notes || ''}
-                      onChange={(e) => updateNotes(lead.id, e.target.value)}
-                      className="min-h-[100px]"
-                    />
-                  </div>
-
-                  <div className="flex gap-2 flex-wrap">
-                    <Button
-                      size="sm"
-                      variant={lead.status === 'new' ? 'default' : 'outline'}
-                      onClick={() => updateLeadStatus(lead.id, 'new')}
-                      disabled={updating === lead.id}
-                    >
-                      Mới
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant={lead.status === 'contacted' ? 'default' : 'outline'}
-                      onClick={() => updateLeadStatus(lead.id, 'contacted')}
-                      disabled={updating === lead.id}
-                    >
-                      Đã liên hệ
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant={lead.status === 'converted' ? 'default' : 'outline'}
-                      onClick={() => updateLeadStatus(lead.id, 'converted')}
-                      disabled={updating === lead.id}
-                    >
-                      Thành công
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant={lead.status === 'lost' ? 'default' : 'outline'}
-                      onClick={() => updateLeadStatus(lead.id, 'lost')}
-                      disabled={updating === lead.id}
-                    >
-                      Thất bại
-                    </Button>
-                  </div>
-
-                  <div className="mt-4 pt-4 border-t">
-                    <p className="text-xs text-muted-foreground">
-                      ID: <code className="bg-muted px-2 py-1 rounded">{lead.id}</code>
-                    </p>
                   </div>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        )}
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

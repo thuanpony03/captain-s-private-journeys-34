@@ -5,6 +5,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmit, trackEvent } from "@/lib/analytics";
+import { supabase } from "@/integrations/supabase/client";
 const ContactForm = () => {
   const {
     toast
@@ -50,30 +51,68 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Submit to edge function which handles database + email
-      const response = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-lead-notification`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-          },
-          body: JSON.stringify({
+      console.log('Submitting form data:', formData);
+      
+      // Try edge function first
+      let success = false;
+      let result = null;
+      
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-lead-notification`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+            },
+            body: JSON.stringify({
+              destination: formData.destination,
+              group_size: formData.groupSize,
+              priority: formData.priority,
+              contact: formData.contact,
+            }),
+          }
+        );
+
+        if (response.ok) {
+          result = await response.json();
+          success = true;
+          console.log("Edge function success:", result);
+        } else {
+          console.warn('Edge function failed, trying direct DB insert');
+        }
+      } catch (edgeError) {
+        console.warn('Edge function error:', edgeError);
+      }
+      
+      // Fallback: Direct database insert
+      if (!success) {
+        const { data, error } = await supabase
+          .from('lead_submissions')
+          .insert({
             destination: formData.destination,
             group_size: formData.groupSize,
             priority: formData.priority,
             contact: formData.contact,
-          }),
+            status: 'new'
+          })
+          .select()
+          .single();
+          
+        if (error) {
+          console.error('Database insert error:', error);
+          throw error;
         }
-      );
-
-      if (!response.ok) {
+        
+        result = { leadId: data.id };
+        success = true;
+        console.log("Direct DB insert success:", data);
+      }
+      
+      if (!success) {
         throw new Error('Failed to submit form');
       }
-
-      const result = await response.json();
-      console.log("Form submitted successfully:", result);
 
       // Track successful form submission
       trackFormSubmit('Contact Form');
