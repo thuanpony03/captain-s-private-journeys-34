@@ -31,7 +31,7 @@ const SocialProof = () => {
     {
       name: "Gia đình Linh",
       location: "🇺🇸 Texas",
-      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584778/IMG_3673_tw8jbo.jpg",
       x: 35,
       y: 20,
       size: "sm",
@@ -40,7 +40,7 @@ const SocialProof = () => {
     {
       name: "Nhà Nam",
       location: "🇺🇸 Florida",
-      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584777/IMG_6572_vdrvfy.jpg",
       x: 5,
       y: 35,
       size: "sm",
@@ -49,7 +49,7 @@ const SocialProof = () => {
     {
       name: "Gia đình Hoa",
       location: "🇺🇸 Seattle",
-      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584778/IMG_1470_nxfxxg.jpg",
       x: 18,
       y: 42,
       size: "md",
@@ -58,7 +58,7 @@ const SocialProof = () => {
     {
       name: "Nhà Tú",
       location: "🇺🇸 LA",
-      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584778/IMG_1272_g0ldzs.jpg",
       x: 12,
       y: 58,
       size: "sm",
@@ -67,7 +67,7 @@ const SocialProof = () => {
     {
       name: "Gia đình Yến",
       location: "🇺🇸 Chicago",
-      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584779/IMG_3751_toxim6.jpg",
       x: 25,
       y: 68,
       size: "lg",
@@ -76,7 +76,7 @@ const SocialProof = () => {
     {
       name: "Nhà Đạt",
       location: "🇺🇸 Boston",
-      image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?w=200&q=80",
+      image: "https://res.cloudinary.com/duuntcik9/image/upload/v1764584777/IMG_6449_miwyxp.jpg",
       x: 8,
       y: 78,
       size: "sm",
