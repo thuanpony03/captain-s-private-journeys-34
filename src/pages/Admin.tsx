@@ -9,12 +9,11 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, RefreshCw, LogOut, Users, MessageSquare, Settings, BarChart3, Calendar, Phone, Mail, MapPin, Clock, Trash2, Edit, Eye, Image as ImageIcon, Star } from "lucide-react";
+import { ArrowLeft, RefreshCw, LogOut, Users, MessageSquare, Settings, BarChart3, Calendar, Phone, Clock, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import CustomCursor from "@/components/CustomCursor";
-import GalleryManagement from "@/components/GalleryManagement";
-import TestimonialManagement from "@/components/TestimonialManagement";
+import { useAdminAuth } from "@/hooks/useAdminAuth";
 
 interface LeadSubmission {
   id: string;
@@ -28,6 +27,7 @@ interface LeadSubmission {
 }
 
 const Admin = () => {
+  const { user, isAdmin, loading: authLoading } = useAdminAuth();
   const [leads, setLeads] = useState<LeadSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<string | null>(null);
@@ -114,25 +114,10 @@ const Admin = () => {
   };
 
   useEffect(() => {
-    // Simple auth check - all logged in users can access admin
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate("/auth");
-        return;
-      }
-      
-      // All authenticated users have admin access
-      toast({
-        title: "Chào mừng đến Admin Dashboard",
-        description: "Bạn đã có quyền truy cập đầy đủ!",
-      });
-      
+    if (!authLoading && isAdmin) {
       fetchLeads();
-    };
-    
-    checkAuth();
-  }, [navigate, toast]);
+    }
+  }, [authLoading, isAdmin]);
 
   const updateLeadStatus = async (id: string, status: string) => {
     setUpdating(id);
@@ -245,7 +230,7 @@ const Admin = () => {
     }
   };
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-primary/5 flex items-center justify-center">
         <div className="text-center">
@@ -254,6 +239,10 @@ const Admin = () => {
         </div>
       </div>
     );
+  }
+
+  if (!isAdmin) {
+    return null;
   }
 
   return (
@@ -503,30 +492,14 @@ const Admin = () => {
                 <CardHeader>
                   <CardTitle>Content Management System</CardTitle>
                   <CardDescription>
-                    Quản lý nội dung website: gallery, testimonials và nội dung khác
+                    Tính năng đang được phát triển. Sẽ có Gallery và Testimonials management.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Tabs value={contentTab} onValueChange={setContentTab} className="w-full">
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="gallery" className="flex items-center gap-2">
-                        <ImageIcon className="w-4 h-4" />
-                        Gallery
-                      </TabsTrigger>
-                      <TabsTrigger value="testimonials" className="flex items-center gap-2">
-                        <Star className="w-4 h-4" />
-                        Testimonials
-                      </TabsTrigger>
-                    </TabsList>
-
-                    <TabsContent value="gallery" className="mt-6">
-                      <GalleryManagement />
-                    </TabsContent>
-
-                    <TabsContent value="testimonials" className="mt-6">
-                      <TestimonialManagement />
-                    </TabsContent>
-                  </Tabs>
+                  <div className="text-center py-12 text-gray-500">
+                    <MessageSquare className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                    <p>Content Management đang được xây dựng...</p>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
