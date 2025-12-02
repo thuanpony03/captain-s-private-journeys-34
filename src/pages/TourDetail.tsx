@@ -15,24 +15,25 @@ interface Tour {
   duration: string | null;
   price: string | null;
   image_url: string | null;
+  slug: string | null;
   stops: string[];
 }
 
 const TourDetail = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const [tour, setTour] = useState<Tour | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
     const fetchTour = async () => {
-      if (!id) return;
+      if (!slug) return;
 
       try {
         const { data, error } = await supabase
           .from('tour_packages')
           .select('*')
-          .eq('id', id)
+          .eq('slug', slug)
           .eq('is_active', true)
           .maybeSingle();
 
@@ -57,7 +58,7 @@ const TourDetail = () => {
     };
 
     fetchTour();
-  }, [id, toast]);
+  }, [slug, toast]);
 
   const handleShare = () => {
     const url = window.location.href;
@@ -134,7 +135,7 @@ const TourDetail = () => {
         description={tour.description || `Khám phá ${tour.title} cùng Vinh Around - Tour du lịch cao cấp với dịch vụ tận tâm`}
         keywords={`${tour.title}, private tour, vinh around, du lịch cao cấp, ${tour.route || ''}`}
         image={tour.image_url || 'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200&q=80'}
-        url={`https://vinharound.com/tour/${id}`}
+        url={`https://vinharound.com/tour/${tour.slug || slug}`}
         type="article"
       />
       

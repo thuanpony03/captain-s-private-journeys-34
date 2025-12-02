@@ -17,6 +17,7 @@ interface TourPackage {
   duration: string | null;
   price: string | null;
   image_url: string | null;
+  slug: string | null;
   stops: any; // JSONB from database
   is_active: boolean;
   order_index: number;
@@ -28,6 +29,17 @@ export const TourManager = () => {
   const [editing, setEditing] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<TourPackage>>({});
   const { toast } = useToast();
+
+  const generateSlug = (title: string): string => {
+    return title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+      .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/-+/g, '-') // Replace multiple hyphens with single
+      .trim();
+  };
 
   const fetchTours = async () => {
     setLoading(true);
@@ -56,7 +68,10 @@ export const TourManager = () => {
 
   const startEdit = (tour: TourPackage) => {
     setEditing(tour.id);
-    setEditForm(tour);
+    setEditForm({
+      ...tour,
+      slug: tour.slug || generateSlug(tour.title)
+    });
   };
 
   const cancelEdit = () => {
@@ -68,9 +83,14 @@ export const TourManager = () => {
     if (!editing) return;
 
     try {
+      const updatedForm = {
+        ...editForm,
+        slug: editForm.slug || (editForm.title ? generateSlug(editForm.title) : undefined)
+      };
+
       const { error } = await supabase
         .from('tour_packages')
-        .update(editForm)
+        .update(updatedForm)
         .eq('id', editing);
 
       if (error) throw error;
@@ -173,7 +193,14 @@ export const TourManager = () => {
                   {editing === tour.id ? (
                     <Input
                       value={editForm.title || ''}
-                      onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                      onChange={(e) => {
+                        const newTitle = e.target.value;
+                        setEditForm({ 
+                          ...editForm, 
+                          title: newTitle,
+                          slug: editForm.slug || generateSlug(newTitle)
+                        });
+                      }}
                       className="max-w-xs"
                     />
                   ) : (
@@ -269,6 +296,18 @@ export const TourManager = () => {
                       value={editForm.image_url || ''}
                       onChange={(e) => setEditForm({ ...editForm, image_url: e.target.value })}
                     />
+                  </div>
+
+                  <div>
+                    <Label>URL Slug (SEO-friendly)</Label>
+                    <Input
+                      placeholder="usa-west-coast-tour"
+                      value={editForm.slug || ''}
+                      onChange={(e) => setEditForm({ ...editForm, slug: e.target.value })}
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Để trống để tự động tạo từ tiêu đề
+                    </p>
                   </div>
 
                   <div>

@@ -27,8 +27,8 @@ const TourPackages = () => {
     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const viewTourDetail = (tourId: string) => {
-    navigate(`/tour/${tourId}`);
+  const viewTourDetail = (tour: any) => {
+    navigate(`/tour/${tour.slug || tour.id}`);
   };
 
   useEffect(() => {
@@ -181,7 +181,7 @@ const TourPackages = () => {
                   {/* CTA */}
                   <div className="flex gap-2">
                     <Button 
-                      onClick={() => viewTourDetail(activeJourney.id)}
+                      onClick={() => viewTourDetail(activeJourney)}
                       variant="outline"
                       className="flex-1 border-secondary text-secondary hover:bg-secondary hover:text-white font-bold py-4 rounded-xl"
                     >
@@ -302,7 +302,7 @@ const TourPackages = () => {
 
                 <div className="flex gap-3">
                   <Button 
-                    onClick={() => viewTourDetail(activeJourney.id)}
+                    onClick={() => viewTourDetail(activeJourney)}
                     size="lg"
                     variant="outline"
                     className="border-secondary text-secondary hover:bg-secondary hover:text-white font-bold text-base px-8 py-5 rounded-xl transition-all duration-300"

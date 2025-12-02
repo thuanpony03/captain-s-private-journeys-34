@@ -136,6 +136,7 @@ export type Database = {
           order_index: number | null
           price: string | null
           route: string | null
+          slug: string | null
           stops: Json | null
           tagline: string | null
           title: string
@@ -151,6 +152,7 @@ export type Database = {
           order_index?: number | null
           price?: string | null
           route?: string | null
+          slug?: string | null
           stops?: Json | null
           tagline?: string | null
           title: string
@@ -166,6 +168,7 @@ export type Database = {
           order_index?: number | null
           price?: string | null
           route?: string | null
+          slug?: string | null
           stops?: Json | null
           tagline?: string | null
           title?: string
