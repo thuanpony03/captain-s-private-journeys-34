@@ -29,13 +29,14 @@ const VinhVlogs = () => {
     },
     {
       id: 2,
-      title: "Tại Sao Nên Chọn Private Tour?",
-      thumbnail: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400&h=700&fit=crop",
+      title: "Văn hóa tip ở Mỹ",
+      thumbnail:
+        "https://res.cloudinary.com/dvu2csvsg/image/upload/v1764653895/2e3bd91d-fc9f-4e58-99c5-c1a9e6ed1180_xqfcgn.jpg",
       duration: "4:20",
       views: "18K",
       topic: "Quan điểm",
       videoUrl: "https://youtube.com/embed/ibsTKAaCrF8",
-      description: "Vinh chia sẻ lý do private tour > group tour",
+      description: "Vinh chia sẻ về văn hóa tip ở Mỹ cho mọi người",
     },
     {
       id: 3,
