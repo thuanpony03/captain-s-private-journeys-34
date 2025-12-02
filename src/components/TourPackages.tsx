@@ -13,6 +13,7 @@ const TourPackages = () => {
   // Transform tours data for compatibility
   const journeys = tours.map(tour => ({
     id: tour.id,
+    slug: tour.slug,
     title: tour.title,
     tagline: tour.tagline || '',
     route: tour.route || '',
