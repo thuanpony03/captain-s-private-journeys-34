@@ -270,6 +270,16 @@ export const TourManager = () => {
                       onChange={(e) => setEditForm({ ...editForm, image_url: e.target.value })}
                     />
                   </div>
+
+                  <div>
+                    <Label>Điểm đến (mỗi dòng 1 điểm)</Label>
+                    <Textarea
+                      value={Array.isArray(editForm.stops) ? editForm.stops.join('\n') : ''}
+                      onChange={(e) => setEditForm({ ...editForm, stops: e.target.value.split('\n').filter(s => s.trim()) })}
+                      rows={5}
+                      placeholder="San Francisco&#10;Los Angeles&#10;Las Vegas"
+                    />
+                  </div>
                 </>
               ) : (
                 <>

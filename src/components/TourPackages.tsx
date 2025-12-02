@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useTourPackages } from "@/hooks/useSiteContent";
 
@@ -7,6 +8,7 @@ const TourPackages = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeRoute, setActiveRoute] = useState(0);
   const { tours, loading } = useTourPackages();
+  const navigate = useNavigate();
 
   // Transform tours data for compatibility
   const journeys = tours.map(tour => ({
@@ -23,6 +25,10 @@ const TourPackages = () => {
 
   const scrollToForm = () => {
     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const viewTourDetail = (tourId: string) => {
+    navigate(`/tour/${tourId}`);
   };
 
   useEffect(() => {
@@ -173,12 +179,21 @@ const TourPackages = () => {
                   </div>
 
                   {/* CTA */}
-                  <Button 
-                    onClick={scrollToForm}
-                    className="w-full bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold py-4 rounded-xl"
-                  >
-                    Đặt lịch khám phá
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button 
+                      onClick={() => viewTourDetail(activeJourney.id)}
+                      variant="outline"
+                      className="flex-1 border-secondary text-secondary hover:bg-secondary hover:text-white font-bold py-4 rounded-xl"
+                    >
+                      Xem chi tiết
+                    </Button>
+                    <Button 
+                      onClick={scrollToForm}
+                      className="flex-1 bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold py-4 rounded-xl"
+                    >
+                      Đặt lịch
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Progress Bar */}
@@ -285,13 +300,23 @@ const TourPackages = () => {
                   </div>
                 </div>
 
-                <Button 
-                  onClick={scrollToForm}
-                  size="lg"
-                  className="bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold text-base px-8 py-5 rounded-xl hover:shadow-glow transition-all duration-300 hover:scale-105"
-                >
-                  Đặt lịch khám phá
-                </Button>
+                <div className="flex gap-3">
+                  <Button 
+                    onClick={() => viewTourDetail(activeJourney.id)}
+                    size="lg"
+                    variant="outline"
+                    className="border-secondary text-secondary hover:bg-secondary hover:text-white font-bold text-base px-8 py-5 rounded-xl transition-all duration-300"
+                  >
+                    Xem chi tiết lịch trình
+                  </Button>
+                  <Button 
+                    onClick={scrollToForm}
+                    size="lg"
+                    className="bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold text-base px-8 py-5 rounded-xl hover:shadow-glow transition-all duration-300 hover:scale-105"
+                  >
+                    Đặt lịch ngay
+                  </Button>
+                </div>
               </div>
 
               {/* Right: Journey Selector */}
