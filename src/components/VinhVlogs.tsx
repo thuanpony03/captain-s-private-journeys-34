@@ -21,7 +21,7 @@ const VinhVlogs = () => {
       title: "Sự KHÁC BIỆT của dịch vụ du lịch cao cấp",
       thumbnail:
         "https://res.cloudinary.com/dvu2csvsg/image/upload/v1764653894/7c62cba1-849e-4f8b-bc0f-b0f87d966106_pd2nt4.jpg",
-      duration: "3:45",
+      duration: "0:46",
       views: "12K",
       topic: "Kinh nghiệm",
       videoUrl: "https://youtube.com/embed/YcDhNx2SHyE?feature=share", // Replace with actual video
@@ -32,7 +32,7 @@ const VinhVlogs = () => {
       title: "Văn hóa tip ở Mỹ",
       thumbnail:
         "https://res.cloudinary.com/dvu2csvsg/image/upload/v1764653895/2e3bd91d-fc9f-4e58-99c5-c1a9e6ed1180_xqfcgn.jpg",
-      duration: "4:20",
+      duration: "0:20",
       views: "18K",
       topic: "Kinh nghiệm",
       videoUrl: "https://youtube.com/embed/ibsTKAaCrF8",
