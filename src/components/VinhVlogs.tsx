@@ -19,7 +19,8 @@ const VinhVlogs = () => {
     {
       id: 1,
       title: "Sự KHÁC BIỆT của dịch vụ du lịch cao cấp",
-      thumbnail: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=700&fit=crop",
+      thumbnail:
+        "https://res.cloudinary.com/dvu2csvsg/image/upload/v1764653894/7c62cba1-849e-4f8b-bc0f-b0f87d966106_pd2nt4.jpg",
       duration: "3:45",
       views: "12K",
       topic: "Kinh nghiệm",
@@ -33,8 +34,7 @@ const VinhVlogs = () => {
       duration: "4:20",
       views: "18K",
       topic: "Quan điểm",
-      videoUrl:
-        "https://res.cloudinary.com/dvu2csvsg/video/upload/v1764642265/Vinh_cha%CC%82u_A%CC%82u_voice_Vinh_uofwwm.mov",
+      videoUrl: "https://youtube.com/embed/ibsTKAaCrF8",
       description: "Vinh chia sẻ lý do private tour > group tour",
     },
     {
