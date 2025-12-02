@@ -102,11 +102,46 @@ const TourDetail = () => {
     );
   }
 
+  // Generate structured data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": tour.title,
+    "description": tour.description || `Khám phá ${tour.title} cùng Vinh Around`,
+    "image": tour.image_url || 'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200&q=80',
+    "offers": {
+      "@type": "Offer",
+      "price": tour.price || "Liên hệ",
+      "priceCurrency": "VND"
+    },
+    "itinerary": tour.stops.map((stop, index) => ({
+      "@type": "Place",
+      "name": stop,
+      "position": index + 1
+    })),
+    "duration": tour.duration,
+    "provider": {
+      "@type": "Organization",
+      "name": "Vinh Around Travel",
+      "url": "https://vinharound.com"
+    }
+  };
+
   return (
     <>
       <SEOHead
         title={`${tour.title} | Vinh Around Travel`}
         description={tour.description || `Khám phá ${tour.title} cùng Vinh Around - Tour du lịch cao cấp với dịch vụ tận tâm`}
+        keywords={`${tour.title}, private tour, vinh around, du lịch cao cấp, ${tour.route || ''}`}
+        image={tour.image_url || 'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200&q=80'}
+        url={`https://vinharound.com/tour/${id}`}
+        type="article"
+      />
+      
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       
       <div className="min-h-screen bg-background">
@@ -214,37 +249,68 @@ const TourDetail = () => {
           {/* Itinerary */}
           {tour.stops.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-6">
-                Lịch trình chi tiết
-              </h2>
+              <div className="text-center mb-8">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-3">
+                  Lịch trình chi tiết
+                </h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  Hành trình được thiết kế tỉ mỉ với {tour.stops.length} điểm đến đặc biệt
+                </p>
+              </div>
               
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {tour.stops.map((stop, index) => (
-                  <div key={index} className="flex gap-4">
+                  <div 
+                    key={index} 
+                    className="flex gap-4 md:gap-6 animate-fade-in"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
                     {/* Timeline */}
                     <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center text-white font-bold">
-                        {index + 1}
+                      <div className="relative">
+                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-secondary via-accent to-secondary flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-lg">
+                          {index + 1}
+                        </div>
+                        <div className="absolute inset-0 w-12 h-12 md:w-14 md:h-14 rounded-full bg-gradient-to-br from-secondary to-accent opacity-20 blur-md"></div>
                       </div>
                       {index < tour.stops.length - 1 && (
-                        <div className="w-0.5 flex-1 bg-gradient-to-b from-secondary to-accent/30 my-2"></div>
+                        <div className="w-1 flex-1 bg-gradient-to-b from-secondary via-accent/50 to-accent/30 my-3 rounded-full"></div>
                       )}
                     </div>
 
-                    {/* Content */}
-                    <div className="flex-1 pb-8">
-                      <div className="glass-effect p-5 rounded-xl border border-primary/10 hover:border-secondary/30 transition-all">
-                        <div className="flex items-start gap-3">
-                          <MapPin className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
-                          <div>
-                            <h3 className="text-lg font-bold text-foreground mb-1">{stop}</h3>
-                            <p className="text-sm text-muted-foreground">Điểm dừng chân thứ {index + 1}</p>
+                    {/* Content Card */}
+                    <div className="flex-1 pb-2">
+                      <div className="group glass-effect p-6 md:p-7 rounded-2xl border border-primary/10 hover:border-secondary/40 transition-all duration-300 hover:shadow-xl hover:shadow-secondary/10 hover:-translate-y-1">
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                            <MapPin className="w-6 h-6 text-secondary" />
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-lg md:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                              {stop}
+                            </h3>
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                              <span>Điểm dừng thứ {index + 1} trong hành trình</span>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Journey Summary */}
+              <div className="mt-8 glass-effect p-6 rounded-2xl border border-primary/10 bg-gradient-to-br from-background to-primary/5">
+                <div className="flex items-center justify-center gap-3 text-primary">
+                  <div className="w-px h-12 bg-gradient-to-b from-transparent via-primary to-transparent"></div>
+                  <div className="text-center">
+                    <p className="text-sm text-muted-foreground mb-1">Tổng điểm đến</p>
+                    <p className="text-3xl font-bold">{tour.stops.length}</p>
+                  </div>
+                  <div className="w-px h-12 bg-gradient-to-b from-transparent via-primary to-transparent"></div>
+                </div>
               </div>
             </div>
           )}
