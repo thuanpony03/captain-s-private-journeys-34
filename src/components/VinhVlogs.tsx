@@ -4,14 +4,14 @@ import { trackVideoPlay, trackEvent } from "@/lib/analytics";
 
 const VinhVlogs = () => {
   const [activeVideo, setActiveVideo] = useState<number | null>(null);
-  
+
   const handleVideoClick = (vlog: any) => {
     if (activeVideo === vlog.id) {
       setActiveVideo(null);
     } else {
       setActiveVideo(vlog.id);
       trackVideoPlay(vlog.title);
-      trackEvent('engagement', 'Video', vlog.topic);
+      trackEvent("engagement", "Video", vlog.topic);
     }
   };
 
@@ -23,8 +23,9 @@ const VinhVlogs = () => {
       duration: "3:45",
       views: "12K",
       topic: "Kinh nghiệm",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Replace with actual video
-      description: "Những điều cần tránh để chuyến đi hoàn hảo"
+      videoUrl:
+        "https://res.cloudinary.com/dvu2csvsg/video/upload/v1764642264/Vinh_tie%CC%82%CC%80n_tips_voice_Vinh_ovn183.mov", // Replace with actual video
+      description: "Những điều cần tránh để chuyến đi hoàn hảo",
     },
     {
       id: 2,
@@ -33,8 +34,9 @@ const VinhVlogs = () => {
       duration: "4:20",
       views: "18K",
       topic: "Quan điểm",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      description: "Vinh chia sẻ lý do private tour > group tour"
+      videoUrl:
+        "https://res.cloudinary.com/dvu2csvsg/video/upload/v1764642265/Vinh_cha%CC%82u_A%CC%82u_voice_Vinh_uofwwm.mov",
+      description: "Vinh chia sẻ lý do private tour > group tour",
     },
     {
       id: 3,
@@ -44,7 +46,7 @@ const VinhVlogs = () => {
       views: "25K",
       topic: "Vlog",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      description: "Great Ocean Road - hành trình đáng nhớ"
+      description: "Great Ocean Road - hành trình đáng nhớ",
     },
     {
       id: 4,
@@ -54,7 +56,7 @@ const VinhVlogs = () => {
       views: "9K",
       topic: "Tips",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      description: "Checklist cho chuyến đi dài ngày"
+      description: "Checklist cho chuyến đi dài ngày",
     },
   ];
 
@@ -73,14 +75,14 @@ const VinhVlogs = () => {
             <span className="text-2xl">🎬</span>
             <span className="text-primary font-bold text-sm uppercase tracking-wider">Vinh's Vlogs</span>
           </div>
-          
+
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-primary">
             Kinh Nghiệm & Quan Điểm
             <span className="block bg-gradient-to-r from-secondary via-accent to-secondary bg-clip-text text-transparent mt-2">
               Từ Captain Vinh
             </span>
           </h2>
-          
+
           <p className="text-lg md:text-xl text-primary/70 max-w-2xl mx-auto font-medium">
             Những chia sẻ thực tế từ hàng trăm chuyến đi - Ngắn gọn, dễ hiểu, hữu ích
           </p>
@@ -109,18 +111,18 @@ const VinhVlogs = () => {
                         ></iframe>
                       ) : (
                         <>
-                          <img 
+                          <img
                             src={vlog.thumbnail}
                             alt={vlog.title}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                          
+
                           {/* Play Button */}
                           <div className="absolute inset-0 flex items-center justify-center">
                             <div className="w-16 h-16 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
                               <svg className="w-8 h-8 text-primary ml-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                               </svg>
                             </div>
                           </div>
@@ -140,17 +142,23 @@ const VinhVlogs = () => {
 
                     {/* Info */}
                     <div className="p-4">
-                      <h3 className="font-display text-lg font-bold text-primary mb-2 line-clamp-2">
-                        {vlog.title}
-                      </h3>
-                      <p className="text-sm text-primary/60 mb-3 line-clamp-2">
-                        {vlog.description}
-                      </p>
+                      <h3 className="font-display text-lg font-bold text-primary mb-2 line-clamp-2">{vlog.title}</h3>
+                      <p className="text-sm text-primary/60 mb-3 line-clamp-2">{vlog.description}</p>
                       <div className="flex items-center gap-3 text-xs text-primary/50">
                         <span className="flex items-center gap-1">
                           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                            />
                           </svg>
                           {vlog.views}
                         </span>
@@ -165,11 +173,7 @@ const VinhVlogs = () => {
           {/* Desktop/Tablet: Grid */}
           <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {vlogs.map((vlog) => (
-              <div
-                key={vlog.id}
-                className="group cursor-pointer"
-                onClick={() => handleVideoClick(vlog)}
-              >
+              <div key={vlog.id} className="group cursor-pointer" onClick={() => handleVideoClick(vlog)}>
                 <Card className="overflow-hidden border-2 border-primary/10 hover:border-secondary/30 transition-all duration-300 hover:shadow-2xl hover:scale-105 bg-white">
                   {/* 9:16 Video Container */}
                   <div className="relative aspect-[9/16] overflow-hidden bg-gradient-to-br from-primary/5 to-accent/5">
@@ -182,18 +186,18 @@ const VinhVlogs = () => {
                       ></iframe>
                     ) : (
                       <>
-                        <img 
+                        <img
                           src={vlog.thumbnail}
                           alt={vlog.title}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-                        
+
                         {/* Play Button */}
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="w-20 h-20 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
                             <svg className="w-10 h-10 text-primary ml-1" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                              <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                             </svg>
                           </div>
                         </div>
@@ -219,8 +223,18 @@ const VinhVlogs = () => {
                           <div className="flex items-center gap-3 text-xs text-white/80">
                             <span className="flex items-center gap-1">
                               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                />
                               </svg>
                               {vlog.views} views
                             </span>
@@ -256,21 +270,21 @@ const VinhVlogs = () => {
               Cập nhật video mới mỗi tuần trên YouTube & TikTok
             </p>
             <div className="flex items-center justify-center gap-3">
-              <a 
-                href="#" 
+              <a
+                href="#"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-sm transition-all hover:scale-105"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                 </svg>
                 YouTube
               </a>
-              <a 
-                href="#" 
+              <a
+                href="#"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-black hover:bg-gray-900 text-white font-bold text-sm transition-all hover:scale-105"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
                 </svg>
                 TikTok
               </a>
