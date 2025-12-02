@@ -23,8 +23,7 @@ const VinhVlogs = () => {
       duration: "3:45",
       views: "12K",
       topic: "Kinh nghiệm",
-      videoUrl:
-        "https://res.cloudinary.com/dvu2csvsg/video/upload/v1764642264/Vinh_tie%CC%82%CC%80n_tips_voice_Vinh_ovn183.mov", // Replace with actual video
+      videoUrl: "https://youtube.com/shorts/YcDhNx2SHyE?feature=share", // Replace with actual video
       description: "Những điều cần tránh để chuyến đi hoàn hảo",
     },
     {
