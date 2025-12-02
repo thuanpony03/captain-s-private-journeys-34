@@ -23,7 +23,7 @@ const VinhVlogs = () => {
       duration: "3:45",
       views: "12K",
       topic: "Kinh nghiệm",
-      videoUrl: "https://youtube.com/shorts/YcDhNx2SHyE?feature=share", // Replace with actual video
+      videoUrl: "https://youtube.com/embed/YcDhNx2SHyE?feature=share", // Replace with actual video
       description: "Những điều cần tránh để chuyến đi hoàn hảo",
     },
     {
