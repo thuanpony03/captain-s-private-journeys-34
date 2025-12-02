@@ -40,13 +40,13 @@ const VinhVlogs = () => {
     },
     {
       id: 3,
-      title: "Du Lịch Úc Cùng Gia Đình",
-      thumbnail: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=400&h=700&fit=crop",
-      duration: "5:10",
+      title: "3h sáng ở New York",
+      thumbnail: "https://res.cloudinary.com/dvu2csvsg/image/upload/v1764653895/d9ed134d440dcb53921c_cucs4d.jpg",
+      duration: "0:31",
       views: "25K",
       topic: "Vlog",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      description: "Great Ocean Road - hành trình đáng nhớ",
+      videoUrl: "https://www.youtube.com/embed/wEmQ40jV8ss",
+      description: "3h sáng ở New York bị lệch múi giờ",
     },
     {
       id: 4,
