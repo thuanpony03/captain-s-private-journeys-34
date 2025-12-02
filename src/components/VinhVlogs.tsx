@@ -18,13 +18,13 @@ const VinhVlogs = () => {
   const vlogs = [
     {
       id: 1,
-      title: "5 Sai Lầm Khi Đi Tour Mỹ",
+      title: "Sự KHÁC BIỆT của dịch vụ du lịch cao cấp",
       thumbnail: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&h=700&fit=crop",
       duration: "3:45",
       views: "12K",
       topic: "Kinh nghiệm",
       videoUrl: "https://youtube.com/embed/YcDhNx2SHyE?feature=share", // Replace with actual video
-      description: "Những điều cần tránh để chuyến đi hoàn hảo",
+      description: "Điều kiện cần và đủ của dịch vụ du lịch cao cấp",
     },
     {
       id: 2,
