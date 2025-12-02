@@ -34,7 +34,7 @@ const VinhVlogs = () => {
         "https://res.cloudinary.com/dvu2csvsg/image/upload/v1764653895/2e3bd91d-fc9f-4e58-99c5-c1a9e6ed1180_xqfcgn.jpg",
       duration: "4:20",
       views: "18K",
-      topic: "Quan điểm",
+      topic: "Kinh nghiệm",
       videoUrl: "https://youtube.com/embed/ibsTKAaCrF8",
       description: "Vinh chia sẻ về văn hóa tip ở Mỹ cho mọi người",
     },
