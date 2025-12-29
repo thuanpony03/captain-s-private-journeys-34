@@ -14,6 +14,7 @@ import ContactForm from "@/components/ContactForm";
 import ContactFormPopup from "@/components/ContactFormPopup";
 import Footer from "@/components/Footer";
 import FloatingZalo from "@/components/FloatingZalo";
+import FloatingContacts from "@/components/FloatingContacts";
 
 const Index = () => {
   return (
@@ -34,6 +35,7 @@ const Index = () => {
         <ContactForm />
         <Footer />
         <FloatingZalo />
+        <FloatingContacts />
       </main>
     </SmoothScroll>
   );
