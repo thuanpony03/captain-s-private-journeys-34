@@ -164,7 +164,7 @@ const ContactFormPopup = () => {
             : 'opacity-0 scale-95 translate-y-[-45%] pointer-events-none'
         }`}
       >
-        <div className="bg-gradient-to-b from-white to-[#faf9f7] rounded-2xl shadow-2xl overflow-hidden max-h-[85vh] overflow-y-auto">
+        <div className="bg-gradient-to-b from-white to-[#faf9f7] rounded-2xl shadow-2xl overflow-hidden max-h-[80vh] overflow-y-auto">
           
           {/* Close button */}
           <button
@@ -199,7 +199,7 @@ const ContactFormPopup = () => {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="p-4 space-y-4">
+          <form onSubmit={handleSubmit} className="p-4 space-y-3">
             
             {/* Question 1 - Destination */}
             <div>
@@ -314,16 +314,15 @@ const ContactFormPopup = () => {
 
             {/* Question 5 - Notes */}
             <div>
-              <Label className="font-semibold text-xs text-primary flex items-center gap-1.5 mb-2">
+              <Label className="font-semibold text-xs text-primary flex items-center gap-1.5 mb-1.5">
                 <span className="w-4 h-4 rounded-full bg-primary/60 text-white flex items-center justify-center text-[10px] font-bold">5</span>
                 Ghi chú <span className="text-primary/50 font-normal">(không bắt buộc)</span>
               </Label>
-              <Textarea 
+              <Input 
                 placeholder="Thời gian dự kiến, yêu cầu đặc biệt..." 
                 value={formData.notes} 
                 onChange={e => setFormData({...formData, notes: e.target.value})}
-                rows={2}
-                className="w-full px-3 py-2.5 text-sm bg-primary/[0.02] border-2 border-primary/10 focus:border-primary rounded-xl text-primary placeholder:text-primary/30 resize-none" 
+                className="w-full px-3 py-2.5 text-sm bg-primary/[0.02] border-2 border-primary/10 focus:border-primary rounded-xl text-primary placeholder:text-primary/30" 
               />
             </div>
 
