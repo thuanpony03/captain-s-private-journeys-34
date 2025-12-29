@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmit, trackEvent } from "@/lib/analytics";
 import { supabase } from "@/integrations/supabase/client";
-import { Phone, MessageCircle, X } from "lucide-react";
+import { Phone, MessageCircle, X, Facebook } from "lucide-react";
 
 const ContactFormPopup = () => {
   const { toast } = useToast();
@@ -20,19 +20,16 @@ const ContactFormPopup = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Auto-open popup after 3 seconds with smooth animation
+  // Auto-open popup after 2 seconds with smooth animation (always show)
   useEffect(() => {
-    const hasSeenPopup = sessionStorage.getItem('contactPopupSeen');
-    if (!hasSeenPopup) {
-      const timer = setTimeout(() => {
-        setIsAnimating(true);
-        setTimeout(() => {
-          setIsOpen(true);
-          trackEvent('view', 'Popup', 'Contact Popup Opened');
-        }, 100);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setIsOpen(true);
+        trackEvent('view', 'Popup', 'Contact Popup Opened');
+      }, 100);
+    }, 2000);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleClose = () => {
@@ -140,7 +137,7 @@ const ContactFormPopup = () => {
     <>
       {/* Floating Contact Bubbles - Always visible */}
       <div className="fixed left-4 bottom-24 z-40 flex flex-col gap-3">
-        {/* Vinh's bubble */}
+        {/* Vinh's Phone bubble */}
         <a 
           href="tel:0901234567"
           className="group flex items-center gap-2 animate-fade-in"
@@ -167,6 +164,23 @@ const ContactFormPopup = () => {
           <div className="hidden group-hover:block bg-white px-3 py-1.5 rounded-lg shadow-lg text-xs">
             <p className="font-bold text-primary">Thuận (Trợ lý)</p>
             <p className="text-primary/60">0394 180 613</p>
+          </div>
+        </a>
+
+        {/* Facebook bubble */}
+        <a 
+          href="https://www.facebook.com/vinh.around.2025"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-center gap-2 animate-fade-in"
+          style={{ animationDelay: '0.9s' }}
+        >
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#1877F2] to-[#0866FF] flex items-center justify-center shadow-lg shadow-[#1877F2]/30 hover:scale-110 transition-transform">
+            <Facebook className="w-5 h-5 text-white" />
+          </div>
+          <div className="hidden group-hover:block bg-white px-3 py-1.5 rounded-lg shadow-lg text-xs">
+            <p className="font-bold text-primary">Facebook</p>
+            <p className="text-primary/60">Vinh Around</p>
           </div>
         </a>
       </div>
