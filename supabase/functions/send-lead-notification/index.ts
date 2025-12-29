@@ -14,6 +14,7 @@ interface LeadSubmission {
   group_size: string;
   priority: string;
   contact: string;
+  notes?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -40,6 +41,7 @@ const handler = async (req: Request): Promise<Response> => {
         group_size: leadData.group_size,
         priority: leadData.priority,
         contact: leadData.contact,
+        notes: leadData.notes || null,
         status: "new",
       })
       .select()
@@ -103,6 +105,13 @@ const handler = async (req: Request): Promise<Response> => {
                 <strong style="color: #1a5f5a; display: block; margin-bottom: 5px;">📞 Liên hệ:</strong>
                 <span style="color: #333; font-size: 18px; font-weight: bold;">${leadData.contact}</span>
               </div>
+              
+              ${leadData.notes ? `
+              <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #4caf50;">
+                <strong style="color: #1a5f5a; display: block; margin-bottom: 5px;">📝 Ghi chú:</strong>
+                <span style="color: #333; font-size: 14px;">${leadData.notes}</span>
+              </div>
+              ` : ''}
             </div>
             
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e0e0e0; text-align: center;">

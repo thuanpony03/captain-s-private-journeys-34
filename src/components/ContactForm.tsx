@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmit, trackEvent } from "@/lib/analytics";
@@ -15,8 +16,9 @@ const ContactForm = () => {
   const [formData, setFormData] = useState({
     destination: "",
     groupSize: "",
-    priority: "",
-    contact: ""
+    priorities: [] as string[],
+    contact: "",
+    notes: ""
   });
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -38,10 +40,10 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.destination || !formData.groupSize || !formData.priority || !formData.contact) {
+    if (!formData.destination || !formData.groupSize || formData.priorities.length === 0 || !formData.contact) {
       toast({
         title: "Vui lòng điền đầy đủ thông tin",
-        description: "Tất cả các câu hỏi đều cần được trả lời",
+        description: "Điểm đến, số người, ưu tiên và số Zalo đều cần được điền",
         variant: "destructive"
       });
       trackEvent('error', 'Form', 'Incomplete Form Submission');
@@ -56,6 +58,7 @@ const ContactForm = () => {
       // Try edge function first
       let success = false;
       let result = null;
+      const priorityString = formData.priorities.join(', ');
       
       try {
         const response = await fetch(
@@ -69,8 +72,9 @@ const ContactForm = () => {
             body: JSON.stringify({
               destination: formData.destination,
               group_size: formData.groupSize,
-              priority: formData.priority,
+              priority: priorityString,
               contact: formData.contact,
+              notes: formData.notes,
             }),
           }
         );
@@ -93,8 +97,9 @@ const ContactForm = () => {
           .insert({
             destination: formData.destination,
             group_size: formData.groupSize,
-            priority: formData.priority,
+            priority: priorityString,
             contact: formData.contact,
+            notes: formData.notes,
             status: 'new'
           })
           .select()
@@ -126,8 +131,9 @@ const ContactForm = () => {
       setFormData({
         destination: "",
         groupSize: "",
-        priority: "",
-        contact: ""
+        priorities: [],
+        contact: "",
+        notes: ""
       });
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -399,37 +405,48 @@ const ContactForm = () => {
                     </RadioGroup>
                   </div>
 
-                  {/* Question 3 - Priority */}
+                  {/* Question 3 - Priority (Multi-select) */}
                   <div>
                     <div className="flex items-center gap-2 mb-4">
                       <span className="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">3</span>
                       <Label className="font-semibold text-sm md:text-base text-primary">
-                        Điều gì quan trọng nhất với bạn?
+                        Điều gì quan trọng với bạn? <span className="text-primary/50 font-normal">(chọn nhiều)</span>
                       </Label>
                     </div>
                     
-                    <RadioGroup value={formData.priority} onValueChange={value => setFormData({
-                    ...formData,
-                    priority: value
-                  })} className="space-y-2">
-                      {priorities.map(pri => <div key={pri.value}>
-                          <RadioGroupItem value={pri.value} id={`priority-${pri.value}`} className="sr-only peer" />
-                          <Label htmlFor={`priority-${pri.value}`} className={`
+                    <div className="space-y-2">
+                      {priorities.map(pri => {
+                        const isChecked = formData.priorities.includes(pri.value);
+                        return (
+                          <label 
+                            key={pri.value}
+                            className={`
                               flex items-center justify-between cursor-pointer p-3 md:p-4 rounded-xl border-2 transition-all duration-200
-                              ${formData.priority === pri.value ? 'border-primary bg-primary/5' : 'border-primary/10 hover:border-primary/30'}
-                            `}>
-                            <div>
-                              <p className="font-semibold text-primary text-sm">{pri.label}</p>
-                              <p className="text-primary/50 text-xs">{pri.desc}</p>
+                              ${isChecked ? 'border-primary bg-primary/5' : 'border-primary/10 hover:border-primary/30'}
+                            `}
+                          >
+                            <div className="flex items-center gap-3">
+                              <Checkbox 
+                                checked={isChecked}
+                                onCheckedChange={() => {
+                                  setFormData(prev => ({
+                                    ...prev,
+                                    priorities: prev.priorities.includes(pri.value)
+                                      ? prev.priorities.filter(p => p !== pri.value)
+                                      : [...prev.priorities, pri.value]
+                                  }));
+                                }}
+                                className="w-5 h-5 border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                              />
+                              <div>
+                                <p className="font-semibold text-primary text-sm">{pri.label}</p>
+                                <p className="text-primary/50 text-xs">{pri.desc}</p>
+                              </div>
                             </div>
-                            <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${formData.priority === pri.value ? 'border-primary bg-primary' : 'border-primary/30'}`}>
-                              {formData.priority === pri.value && <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                </svg>}
-                            </div>
-                          </Label>
-                        </div>)}
-                    </RadioGroup>
+                          </label>
+                        );
+                      })}
+                    </div>
                   </div>
 
                   {/* Question 4 - Contact */}
@@ -445,6 +462,23 @@ const ContactForm = () => {
                     ...formData,
                     contact: e.target.value
                   })} className="w-full px-4 py-4 text-base bg-primary/[0.02] border-2 border-primary/10 focus:border-primary rounded-xl text-primary placeholder:text-primary/30 transition-all" />
+                  </div>
+
+                  {/* Question 5 - Notes */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="w-6 h-6 rounded-full bg-primary/60 text-white flex items-center justify-center text-xs font-bold">5</span>
+                      <Label className="font-semibold text-sm md:text-base text-primary">
+                        Ghi chú <span className="text-primary/50 font-normal">(không bắt buộc)</span>
+                      </Label>
+                    </div>
+                    
+                    <Input 
+                      placeholder="Thời gian dự kiến, yêu cầu đặc biệt..." 
+                      value={formData.notes} 
+                      onChange={e => setFormData({...formData, notes: e.target.value})}
+                      className="w-full px-4 py-4 text-base bg-primary/[0.02] border-2 border-primary/10 focus:border-primary rounded-xl text-primary placeholder:text-primary/30 transition-all" 
+                    />
                   </div>
 
                   {/* Submit Button */}
