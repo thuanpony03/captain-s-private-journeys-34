@@ -164,132 +164,114 @@ const ContactFormPopup = () => {
             : 'opacity-0 scale-95 translate-y-[-45%] pointer-events-none'
         }`}
       >
-        <div className="bg-gradient-to-b from-white to-[#faf9f7] rounded-2xl shadow-2xl overflow-hidden max-h-[80vh] overflow-y-auto">
+        <div className="bg-gradient-to-b from-white to-[#faf9f7] rounded-2xl shadow-2xl overflow-hidden">
           
           {/* Close button */}
           <button
             onClick={handleClose}
-            className="absolute right-3 top-3 z-50 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-sm"
+            className="absolute right-2 top-2 z-50 w-7 h-7 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-colors shadow-sm"
           >
             <X className="w-4 h-4 text-primary/60" />
           </button>
 
-          {/* Header */}
-          <div className="bg-gradient-to-r from-primary via-primary/95 to-primary px-5 py-4 text-white relative">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-              <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">Còn 2 slot tháng này</span>
-            </div>
-            <h2 className="font-display text-xl font-black">
-              Tư Vấn <span className="text-secondary">Miễn Phí</span>
-            </h2>
-            <p className="text-white/70 text-xs mt-0.5">30 giây • Vinh gọi lại trong 24h</p>
-            
-            {/* Quick contact in header */}
-            <div className="flex gap-3 mt-3 pt-3 border-t border-white/20">
-              <a href="tel:0933344646" className="flex items-center gap-1.5 text-white/90 hover:text-white text-xs">
-                <Phone className="w-3.5 h-3.5" />
-                <span>Anh Vinh: 0933 344 646</span>
-              </a>
-              <a href="tel:0394180613" className="flex items-center gap-1.5 text-white/90 hover:text-white text-xs">
-                <MessageCircle className="w-3.5 h-3.5" />
-                <span>Thuận: 0394 180 613</span>
-              </a>
+          {/* Compact Header */}
+          <div className="bg-gradient-to-r from-primary via-primary/95 to-primary px-4 py-3 text-white">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-white/80">Còn 2 slot</span>
+                </div>
+                <h2 className="font-display text-lg font-black leading-tight">
+                  Tư Vấn <span className="text-secondary">Miễn Phí</span>
+                </h2>
+              </div>
+              <div className="text-right text-[10px] text-white/80">
+                <a href="tel:0933344646" className="block hover:text-white">Vinh: 0933 344 646</a>
+                <a href="tel:0394180613" className="block hover:text-white">Thuận: 0394 180 613</a>
+              </div>
             </div>
           </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="p-4 space-y-3">
+          {/* Compact Form */}
+          <form onSubmit={handleSubmit} className="p-3 space-y-2.5">
             
-            {/* Question 1 - Destination */}
-            <div>
-              <Label className="font-semibold text-xs text-primary flex items-center gap-1.5 mb-2">
-                <span className="w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">1</span>
-                Điểm đến?
-              </Label>
-              <RadioGroup 
-                value={formData.destination} 
-                onValueChange={value => setFormData({...formData, destination: value})} 
-                className="grid grid-cols-4 gap-2"
-              >
-                {destinations.map(dest => (
-                  <div key={dest.value}>
-                    <RadioGroupItem value={dest.value} id={`popup-${dest.value}`} className="sr-only peer" />
-                    <Label 
-                      htmlFor={`popup-${dest.value}`} 
-                      className={`block cursor-pointer p-2 rounded-xl border-2 text-center transition-all ${
-                        formData.destination === dest.value 
-                          ? 'border-primary bg-primary/5 shadow-sm' 
-                          : 'border-primary/10 hover:border-primary/30'
-                      }`}
-                    >
-                      <p className="text-xl leading-none mb-0.5">{dest.label}</p>
-                      <p className="text-[9px] text-primary/60 font-medium">{dest.name}</p>
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
+            {/* Row 1: Destination + Group Size */}
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <Label className="font-semibold text-[10px] text-primary mb-1.5 block">Điểm đến?</Label>
+                <RadioGroup 
+                  value={formData.destination} 
+                  onValueChange={value => setFormData({...formData, destination: value})} 
+                  className="grid grid-cols-4 gap-1"
+                >
+                  {destinations.map(dest => (
+                    <div key={dest.value}>
+                      <RadioGroupItem value={dest.value} id={`popup-${dest.value}`} className="sr-only peer" />
+                      <Label 
+                        htmlFor={`popup-${dest.value}`} 
+                        className={`block cursor-pointer p-1.5 rounded-lg border text-center transition-all ${
+                          formData.destination === dest.value 
+                            ? 'border-primary bg-primary/5' 
+                            : 'border-primary/10 hover:border-primary/30'
+                        }`}
+                      >
+                        <p className="text-base leading-none">{dest.label}</p>
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+              <div>
+                <Label className="font-semibold text-[10px] text-primary mb-1.5 block">Số người?</Label>
+                <RadioGroup 
+                  value={formData.groupSize} 
+                  onValueChange={value => setFormData({...formData, groupSize: value})} 
+                  className="grid grid-cols-3 gap-1"
+                >
+                  {groupSizes.map(size => (
+                    <div key={size.value}>
+                      <RadioGroupItem value={size.value} id={`popup-size-${size.value}`} className="sr-only peer" />
+                      <Label 
+                        htmlFor={`popup-size-${size.value}`} 
+                        className={`block cursor-pointer py-1.5 rounded-lg border text-center transition-all ${
+                          formData.groupSize === size.value 
+                            ? 'border-primary bg-primary/5' 
+                            : 'border-primary/10 hover:border-primary/30'
+                        }`}
+                      >
+                        <p className="font-bold text-primary text-xs">{size.label}</p>
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
             </div>
 
-            {/* Question 2 - Group Size */}
+            {/* Row 2: Priorities */}
             <div>
-              <Label className="font-semibold text-xs text-primary flex items-center gap-1.5 mb-2">
-                <span className="w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">2</span>
-                Số người?
+              <Label className="font-semibold text-[10px] text-primary mb-1.5 block">
+                Ưu tiên? <span className="text-primary/50">(chọn nhiều)</span>
               </Label>
-              <RadioGroup 
-                value={formData.groupSize} 
-                onValueChange={value => setFormData({...formData, groupSize: value})} 
-                className="grid grid-cols-3 gap-2"
-              >
-                {groupSizes.map(size => (
-                  <div key={size.value} className="relative">
-                    <RadioGroupItem value={size.value} id={`popup-size-${size.value}`} className="sr-only peer" />
-                    <Label 
-                      htmlFor={`popup-size-${size.value}`} 
-                      className={`block cursor-pointer py-2.5 px-3 rounded-xl border-2 text-center transition-all ${
-                        formData.groupSize === size.value 
-                          ? 'border-primary bg-primary/5 shadow-sm' 
-                          : 'border-primary/10 hover:border-primary/30'
-                      }`}
-                    >
-                      <p className="font-bold text-primary text-base">{size.label}</p>
-                    </Label>
-                    {size.hot && (
-                      <span className="absolute -top-1.5 left-1/2 -translate-x-1/2 px-1.5 py-0.5 bg-secondary text-primary text-[8px] font-bold rounded-full">
-                        HOT
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </RadioGroup>
-            </div>
-
-            {/* Question 3 - Priority (Multi-select) */}
-            <div>
-              <Label className="font-semibold text-xs text-primary flex items-center gap-1.5 mb-2">
-                <span className="w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">3</span>
-                Ưu tiên? <span className="text-primary/50 font-normal">(chọn nhiều)</span>
-              </Label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="flex gap-1.5">
                 {priorities.map(pri => {
                   const isChecked = formData.priorities.includes(pri.value);
                   return (
                     <label 
                       key={pri.value}
-                      className={`cursor-pointer py-2.5 px-2 rounded-xl border-2 text-center transition-all ${
+                      className={`flex-1 cursor-pointer py-1.5 rounded-lg border text-center transition-all ${
                         isChecked 
-                          ? 'border-primary bg-primary/5 shadow-sm' 
+                          ? 'border-primary bg-primary/5' 
                           : 'border-primary/10 hover:border-primary/30'
                       }`}
                     >
-                      <div className="flex items-center justify-center gap-1.5">
+                      <div className="flex items-center justify-center gap-1">
                         <Checkbox 
                           checked={isChecked}
                           onCheckedChange={() => togglePriority(pri.value)}
-                          className="w-3.5 h-3.5 border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                          className="w-3 h-3 border-primary/30 data-[state=checked]:bg-primary"
                         />
-                        <span className="font-semibold text-primary text-xs">{pri.label}</span>
+                        <span className="font-medium text-primary text-[11px]">{pri.label}</span>
                       </div>
                     </label>
                   );
@@ -297,33 +279,27 @@ const ContactFormPopup = () => {
               </div>
             </div>
 
-            {/* Question 4 - Contact */}
-            <div>
-              <Label className="font-semibold text-xs text-primary flex items-center gap-1.5 mb-2">
-                <span className="w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">4</span>
-                Số Zalo
-              </Label>
-              <Input 
-                type="tel" 
-                placeholder="VD: 0901 234 567" 
-                value={formData.contact} 
-                onChange={e => setFormData({...formData, contact: e.target.value})}
-                className="w-full px-3 py-3 text-sm bg-primary/[0.02] border-2 border-primary/10 focus:border-primary rounded-xl text-primary placeholder:text-primary/30" 
-              />
-            </div>
-
-            {/* Question 5 - Notes */}
-            <div>
-              <Label className="font-semibold text-xs text-primary flex items-center gap-1.5 mb-1.5">
-                <span className="w-4 h-4 rounded-full bg-primary/60 text-white flex items-center justify-center text-[10px] font-bold">5</span>
-                Ghi chú <span className="text-primary/50 font-normal">(không bắt buộc)</span>
-              </Label>
-              <Input 
-                placeholder="Thời gian dự kiến, yêu cầu đặc biệt..." 
-                value={formData.notes} 
-                onChange={e => setFormData({...formData, notes: e.target.value})}
-                className="w-full px-3 py-2.5 text-sm bg-primary/[0.02] border-2 border-primary/10 focus:border-primary rounded-xl text-primary placeholder:text-primary/30" 
-              />
+            {/* Row 3: Contact + Notes inline */}
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <Label className="font-semibold text-[10px] text-primary mb-1 block">Số Zalo *</Label>
+                <Input 
+                  type="tel" 
+                  placeholder="0901 234 567" 
+                  value={formData.contact} 
+                  onChange={e => setFormData({...formData, contact: e.target.value})}
+                  className="w-full px-2.5 py-2 text-xs bg-primary/[0.02] border border-primary/10 focus:border-primary rounded-lg" 
+                />
+              </div>
+              <div>
+                <Label className="font-semibold text-[10px] text-primary mb-1 block">Ghi chú</Label>
+                <Input 
+                  placeholder="Yêu cầu khác..." 
+                  value={formData.notes} 
+                  onChange={e => setFormData({...formData, notes: e.target.value})}
+                  className="w-full px-2.5 py-2 text-xs bg-primary/[0.02] border border-primary/10 focus:border-primary rounded-lg" 
+                />
+              </div>
             </div>
 
             {/* Submit Button */}
@@ -331,16 +307,12 @@ const ContactFormPopup = () => {
               type="submit" 
               size="lg"
               disabled={isSubmitting}
-              className="w-full bg-gradient-to-r from-secondary via-secondary to-accent hover:from-secondary/90 hover:to-accent/90 font-bold text-sm py-5 rounded-xl transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-secondary/30 text-white disabled:opacity-50"
+              className="w-full bg-gradient-to-r from-secondary via-secondary to-accent hover:from-secondary/90 hover:to-accent/90 font-bold text-sm py-4 rounded-xl transition-all shadow-lg shadow-secondary/30 text-white disabled:opacity-50"
             >
               {isSubmitting ? 'Đang gửi...' : 'Nhận Tư Vấn Ngay →'}
             </Button>
 
-            {/* Trust */}
-            <p className="text-center text-primary/40 text-[10px] flex items-center justify-center gap-3">
-              <span>🔒 Bảo mật</span>
-              <span>✓ 100+ gia đình</span>
-            </p>
+            <p className="text-center text-primary/40 text-[9px]">🔒 Bảo mật • ✓ 100+ gia đình tin tưởng</p>
           </form>
         </div>
       </div>
