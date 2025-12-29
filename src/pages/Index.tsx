@@ -11,6 +11,7 @@ import LandCruiseExperience from "@/components/LandCruiseExperience";
 import ComparisonTable from "@/components/ComparisonTable";
 import SocialProof from "@/components/SocialProof";
 import ContactForm from "@/components/ContactForm";
+import ContactFormPopup from "@/components/ContactFormPopup";
 import Footer from "@/components/Footer";
 import FloatingZalo from "@/components/FloatingZalo";
 
@@ -20,6 +21,7 @@ const Index = () => {
       <SEOHead />
       <CustomCursor />
       <Navbar />
+      <ContactFormPopup />
       <main className="min-h-screen">
         <HeroVideoMask />
         <PersonalStory />
