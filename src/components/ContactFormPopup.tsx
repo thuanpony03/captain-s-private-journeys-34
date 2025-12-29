@@ -272,25 +272,28 @@ const ContactFormPopup = () => {
                 Ưu tiên? <span className="text-primary/50 font-normal">(chọn nhiều)</span>
               </Label>
               <div className="grid grid-cols-3 gap-2">
-                {priorities.map(pri => (
-                  <div 
-                    key={pri.value}
-                    onClick={() => togglePriority(pri.value)}
-                    className={`cursor-pointer py-2.5 px-2 rounded-xl border-2 text-center transition-all ${
-                      formData.priorities.includes(pri.value) 
-                        ? 'border-primary bg-primary/5 shadow-sm' 
-                        : 'border-primary/10 hover:border-primary/30'
-                    }`}
-                  >
-                    <div className="flex items-center justify-center gap-1.5">
-                      <Checkbox 
-                        checked={formData.priorities.includes(pri.value)}
-                        className="w-3.5 h-3.5 border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                      />
-                      <p className="font-semibold text-primary text-xs">{pri.label}</p>
-                    </div>
-                  </div>
-                ))}
+                {priorities.map(pri => {
+                  const isChecked = formData.priorities.includes(pri.value);
+                  return (
+                    <label 
+                      key={pri.value}
+                      className={`cursor-pointer py-2.5 px-2 rounded-xl border-2 text-center transition-all ${
+                        isChecked 
+                          ? 'border-primary bg-primary/5 shadow-sm' 
+                          : 'border-primary/10 hover:border-primary/30'
+                      }`}
+                    >
+                      <div className="flex items-center justify-center gap-1.5">
+                        <Checkbox 
+                          checked={isChecked}
+                          onCheckedChange={() => togglePriority(pri.value)}
+                          className="w-3.5 h-3.5 border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                        />
+                        <span className="font-semibold text-primary text-xs">{pri.label}</span>
+                      </div>
+                    </label>
+                  );
+                })}
               </div>
             </div>
 
