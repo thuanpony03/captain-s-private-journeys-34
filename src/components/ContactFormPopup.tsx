@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmit, trackEvent } from "@/lib/analytics";
 import { supabase } from "@/integrations/supabase/client";
-import { Phone, MessageCircle, X, Facebook } from "lucide-react";
+import { X, Phone, MessageCircle } from "lucide-react";
 
 const ContactFormPopup = () => {
   const { toast } = useToast();
@@ -15,8 +17,9 @@ const ContactFormPopup = () => {
   const [formData, setFormData] = useState({
     destination: "",
     groupSize: "",
-    priority: "",
-    contact: ""
+    priorities: [] as string[],
+    contact: "",
+    notes: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -38,13 +41,22 @@ const ContactFormPopup = () => {
     sessionStorage.setItem('contactPopupSeen', 'true');
   };
 
+  const togglePriority = (value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      priorities: prev.priorities.includes(value)
+        ? prev.priorities.filter(p => p !== value)
+        : [...prev.priorities, value]
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.destination || !formData.groupSize || !formData.priority || !formData.contact) {
+    if (!formData.destination || !formData.groupSize || formData.priorities.length === 0 || !formData.contact) {
       toast({
         title: "Vui lòng điền đầy đủ thông tin",
-        description: "Tất cả các câu hỏi đều cần được trả lời",
+        description: "Điểm đến, số người, ưu tiên và số Zalo đều cần được điền",
         variant: "destructive"
       });
       return;
@@ -54,6 +66,7 @@ const ContactFormPopup = () => {
 
     try {
       let success = false;
+      const priorityString = formData.priorities.join(', ');
       
       try {
         const response = await fetch(
@@ -67,8 +80,9 @@ const ContactFormPopup = () => {
             body: JSON.stringify({
               destination: formData.destination,
               group_size: formData.groupSize,
-              priority: formData.priority,
+              priority: priorityString,
               contact: formData.contact,
+              notes: formData.notes,
             }),
           }
         );
@@ -83,8 +97,9 @@ const ContactFormPopup = () => {
           .insert({
             destination: formData.destination,
             group_size: formData.groupSize,
-            priority: formData.priority,
+            priority: priorityString,
             contact: formData.contact,
+            notes: formData.notes,
             status: 'new'
           });
         if (error) throw error;
@@ -99,7 +114,7 @@ const ContactFormPopup = () => {
         description: "Vinh Around sẽ liên hệ với bạn trong 24h"
       });
 
-      setFormData({ destination: "", groupSize: "", priority: "", contact: "" });
+      setFormData({ destination: "", groupSize: "", priorities: [], contact: "", notes: "" });
       handleClose();
     } catch (error) {
       toast({
@@ -135,56 +150,6 @@ const ContactFormPopup = () => {
 
   return (
     <>
-      {/* Floating Contact Bubbles - Always visible */}
-      <div className="fixed left-4 bottom-24 z-40 flex flex-col gap-3">
-        {/* Vinh's Phone bubble */}
-        <a 
-          href="tel:0901234567"
-          className="group flex items-center gap-2 animate-fade-in"
-          style={{ animationDelay: '0.5s' }}
-        >
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/30 hover:scale-110 transition-transform">
-            <Phone className="w-5 h-5 text-white" />
-          </div>
-          <div className="hidden group-hover:block bg-white px-3 py-1.5 rounded-lg shadow-lg text-xs">
-            <p className="font-bold text-primary">Anh Vinh</p>
-            <p className="text-primary/60">0901 234 567</p>
-          </div>
-        </a>
-
-        {/* Thuận's bubble */}
-        <a 
-          href="tel:0394180613"
-          className="group flex items-center gap-2 animate-fade-in"
-          style={{ animationDelay: '0.7s' }}
-        >
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center shadow-lg shadow-secondary/30 hover:scale-110 transition-transform">
-            <MessageCircle className="w-5 h-5 text-white" />
-          </div>
-          <div className="hidden group-hover:block bg-white px-3 py-1.5 rounded-lg shadow-lg text-xs">
-            <p className="font-bold text-primary">Thuận (Trợ lý)</p>
-            <p className="text-primary/60">0394 180 613</p>
-          </div>
-        </a>
-
-        {/* Facebook bubble */}
-        <a 
-          href="https://www.facebook.com/vinh.around.2025"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex items-center gap-2 animate-fade-in"
-          style={{ animationDelay: '0.9s' }}
-        >
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#1877F2] to-[#0866FF] flex items-center justify-center shadow-lg shadow-[#1877F2]/30 hover:scale-110 transition-transform">
-            <Facebook className="w-5 h-5 text-white" />
-          </div>
-          <div className="hidden group-hover:block bg-white px-3 py-1.5 rounded-lg shadow-lg text-xs">
-            <p className="font-bold text-primary">Facebook</p>
-            <p className="text-primary/60">Vinh Around</p>
-          </div>
-        </a>
-      </div>
-
       {/* Backdrop */}
       <div 
         className={`fixed inset-0 z-50 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -219,6 +184,18 @@ const ContactFormPopup = () => {
               Tư Vấn <span className="text-secondary">Miễn Phí</span>
             </h2>
             <p className="text-white/70 text-xs mt-0.5">30 giây • Vinh gọi lại trong 24h</p>
+            
+            {/* Quick contact in header */}
+            <div className="flex gap-3 mt-3 pt-3 border-t border-white/20">
+              <a href="tel:0933344646" className="flex items-center gap-1.5 text-white/90 hover:text-white text-xs">
+                <Phone className="w-3.5 h-3.5" />
+                <span>Anh Vinh: 0933 344 646</span>
+              </a>
+              <a href="tel:0394180613" className="flex items-center gap-1.5 text-white/90 hover:text-white text-xs">
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>Thuận: 0394 180 613</span>
+              </a>
+            </div>
           </div>
 
           {/* Form */}
@@ -288,33 +265,33 @@ const ContactFormPopup = () => {
               </RadioGroup>
             </div>
 
-            {/* Question 3 - Priority */}
+            {/* Question 3 - Priority (Multi-select) */}
             <div>
               <Label className="font-semibold text-xs text-primary flex items-center gap-1.5 mb-2">
                 <span className="w-4 h-4 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">3</span>
-                Ưu tiên?
+                Ưu tiên? <span className="text-primary/50 font-normal">(chọn nhiều)</span>
               </Label>
-              <RadioGroup 
-                value={formData.priority} 
-                onValueChange={value => setFormData({...formData, priority: value})} 
-                className="grid grid-cols-3 gap-2"
-              >
+              <div className="grid grid-cols-3 gap-2">
                 {priorities.map(pri => (
-                  <div key={pri.value}>
-                    <RadioGroupItem value={pri.value} id={`popup-priority-${pri.value}`} className="sr-only peer" />
-                    <Label 
-                      htmlFor={`popup-priority-${pri.value}`} 
-                      className={`block cursor-pointer py-2.5 px-2 rounded-xl border-2 text-center transition-all ${
-                        formData.priority === pri.value 
-                          ? 'border-primary bg-primary/5 shadow-sm' 
-                          : 'border-primary/10 hover:border-primary/30'
-                      }`}
-                    >
+                  <div 
+                    key={pri.value}
+                    onClick={() => togglePriority(pri.value)}
+                    className={`cursor-pointer py-2.5 px-2 rounded-xl border-2 text-center transition-all ${
+                      formData.priorities.includes(pri.value) 
+                        ? 'border-primary bg-primary/5 shadow-sm' 
+                        : 'border-primary/10 hover:border-primary/30'
+                    }`}
+                  >
+                    <div className="flex items-center justify-center gap-1.5">
+                      <Checkbox 
+                        checked={formData.priorities.includes(pri.value)}
+                        className="w-3.5 h-3.5 border-primary/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                      />
                       <p className="font-semibold text-primary text-xs">{pri.label}</p>
-                    </Label>
+                    </div>
                   </div>
                 ))}
-              </RadioGroup>
+              </div>
             </div>
 
             {/* Question 4 - Contact */}
@@ -329,6 +306,21 @@ const ContactFormPopup = () => {
                 value={formData.contact} 
                 onChange={e => setFormData({...formData, contact: e.target.value})}
                 className="w-full px-3 py-3 text-sm bg-primary/[0.02] border-2 border-primary/10 focus:border-primary rounded-xl text-primary placeholder:text-primary/30" 
+              />
+            </div>
+
+            {/* Question 5 - Notes */}
+            <div>
+              <Label className="font-semibold text-xs text-primary flex items-center gap-1.5 mb-2">
+                <span className="w-4 h-4 rounded-full bg-primary/60 text-white flex items-center justify-center text-[10px] font-bold">5</span>
+                Ghi chú <span className="text-primary/50 font-normal">(không bắt buộc)</span>
+              </Label>
+              <Textarea 
+                placeholder="Thời gian dự kiến, yêu cầu đặc biệt..." 
+                value={formData.notes} 
+                onChange={e => setFormData({...formData, notes: e.target.value})}
+                rows={2}
+                className="w-full px-3 py-2.5 text-sm bg-primary/[0.02] border-2 border-primary/10 focus:border-primary rounded-xl text-primary placeholder:text-primary/30 resize-none" 
               />
             </div>
 
