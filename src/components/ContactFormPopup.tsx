@@ -37,6 +37,7 @@ const ContactFormPopup = () => {
 
   const handleClose = () => {
     setIsOpen(false);
+    trackEvent('popup_close', 'Popup', 'Contact Popup Closed');
     setTimeout(() => setIsAnimating(false), 300);
     sessionStorage.setItem('contactPopupSeen', 'true');
   };
@@ -109,6 +110,8 @@ const ContactFormPopup = () => {
       if (!success) throw new Error('Failed to submit form');
 
       trackFormSubmit('Contact Form Popup');
+      trackEvent('conversion', 'Form', 'Lead Generated - Popup', 1);
+      
       toast({
         title: "Đã gửi thành công!",
         description: "Vinh Around sẽ liên hệ với bạn trong 24h"

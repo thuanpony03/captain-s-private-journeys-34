@@ -1,11 +1,25 @@
 import { Phone, MessageCircle, Facebook } from "lucide-react";
+import { trackPhoneClick, trackFacebookClick } from "@/lib/analytics";
 
 const FloatingContacts = () => {
+  const handleVinhPhoneClick = () => {
+    trackPhoneClick('Vinh');
+  };
+
+  const handleThuanPhoneClick = () => {
+    trackPhoneClick('Thuận');
+  };
+
+  const handleFacebookClick = () => {
+    trackFacebookClick();
+  };
+
   return (
     <div className="fixed left-4 bottom-24 z-40 flex flex-col gap-3">
       {/* Vinh's Phone bubble */}
       <a 
         href="tel:0933344646"
+        onClick={handleVinhPhoneClick}
         className="group flex items-center gap-2 animate-fade-in"
         style={{ animationDelay: '0.3s' }}
       >
@@ -21,6 +35,7 @@ const FloatingContacts = () => {
       {/* Thuận's bubble */}
       <a 
         href="tel:0394180613"
+        onClick={handleThuanPhoneClick}
         className="group flex items-center gap-2 animate-fade-in"
         style={{ animationDelay: '0.5s' }}
       >
@@ -38,6 +53,7 @@ const FloatingContacts = () => {
         href="https://www.facebook.com/vinh.around.2025"
         target="_blank"
         rel="noopener noreferrer"
+        onClick={handleFacebookClick}
         className="group flex items-center gap-2 animate-fade-in"
         style={{ animationDelay: '0.7s' }}
       >

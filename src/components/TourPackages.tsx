@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useTourPackages } from "@/hooks/useSiteContent";
+import { trackButtonClick, trackTourView, trackScrollToSection } from "@/lib/analytics";
 
 const TourPackages = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -25,10 +26,14 @@ const TourPackages = () => {
   }));
 
   const scrollToForm = () => {
+    trackButtonClick('Đặt lịch', 'Tour Packages');
+    trackScrollToSection('Contact Form');
     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const viewTourDetail = (tour: any) => {
+    trackTourView(tour.title);
+    trackButtonClick('Xem chi tiết', `Tour - ${tour.title}`);
     navigate(`/tour/${tour.slug || tour.id}`);
   };
 

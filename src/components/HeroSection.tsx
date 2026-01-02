@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
+import { trackButtonClick, trackScrollToSection } from "@/lib/analytics";
 
 const HeroSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -19,6 +20,8 @@ const HeroSection = () => {
   }, []);
 
   const scrollToForm = () => {
+    trackButtonClick('Nhận Tư Vấn Miễn Phí', 'Hero');
+    trackScrollToSection('Contact Form');
     document.getElementById('contact-form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
