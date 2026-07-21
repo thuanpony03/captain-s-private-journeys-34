@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { trackVideoPlay, trackEvent, trackSocialClick } from "@/lib/analytics";
 
@@ -103,10 +104,12 @@ const VinhVlogs = () => {
                         ></iframe>
                       ) : (
                         <>
-                          <img
+                          <Image
                             src={vlog.thumbnail}
                             alt={vlog.title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            fill
+                            sizes="280px"
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
 
@@ -178,10 +181,12 @@ const VinhVlogs = () => {
                       ></iframe>
                     ) : (
                       <>
-                        <img
+                        <Image
                           src={vlog.thumbnail}
                           alt={vlog.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          fill
+                          sizes="(max-width: 1024px) 50vw, 25vw"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
 

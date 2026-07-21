@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 const Footer = () => {
   const scrollToForm = () => {
     document.getElementById("contact-form")?.scrollIntoView({
@@ -12,10 +14,12 @@ const Footer = () => {
       <div className="relative py-20 md:py-28 lg:py-32">
         {/* Background Image - Premium beach/travel scene */}
         <div className="absolute inset-0">
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&q=80"
             alt="Travel destination"
-            className="w-full h-full object-cover"
+            fill
+            sizes="100vw"
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/60 to-primary/70"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>

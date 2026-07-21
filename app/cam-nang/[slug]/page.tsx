@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import BlogPostPage from "@/components/blog/BlogPostPage";
 import { getPostBySlug } from "@/lib/blog";
-import { absoluteUrl, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/seo";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -21,8 +21,9 @@ export async function generateMetadata({
 
   const title = post.title;
   const description = post.meta_description || post.excerpt || undefined;
-  const image = post.og_image || post.featured_image || DEFAULT_OG_IMAGE;
   const path = `/cam-nang/${post.slug}`;
+
+  const ogImage = absoluteUrl(`/og/cam-nang/${post.slug}`);
 
   return {
     title,
@@ -33,13 +34,13 @@ export async function generateMetadata({
       url: absoluteUrl(path),
       title: `${title} | Vinh Around`,
       description,
-      images: [{ url: image, width: 1200, height: 630, alt: post.title }],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | Vinh Around`,
       description,
-      images: [image],
+      images: [ogImage],
     },
   };
 }

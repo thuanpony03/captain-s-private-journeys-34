@@ -14,7 +14,7 @@ import { ShareButton, BookingCta } from "@/components/tour/TourActions";
 import TestimonialGallery, { type TestimonialData } from "@/components/testimonials/TestimonialGallery";
 import BlogCard from "@/components/blog/BlogCard";
 import { createPublicClient } from "@/lib/supabase/server";
-import { ORGANIZATION, absoluteUrl, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { ORGANIZATION, absoluteUrl } from "@/lib/seo";
 import type { BlogPostSummary } from "@/lib/blog";
 
 const FALLBACK_IMAGE =
@@ -157,7 +157,6 @@ export async function generateMetadata({
   const description =
     tour.description?.slice(0, 160) ||
     `Khám phá ${tour.title} cùng Vinh Around - Private tour cao cấp với xe riêng và lịch trình tùy chỉnh.`;
-  const image = tour.image_url || DEFAULT_OG_IMAGE;
   const path = `/tour/${tour.slug ?? slug}`;
 
   return {
@@ -171,18 +170,21 @@ export async function generateMetadata({
       tour.route ?? "",
     ].filter(Boolean),
     alternates: { canonical: path },
+    // Ảnh trỏ về app/og/tour/[slug]/route.tsx — ImageResponse có tên tour + giá,
+    // thiết kế riêng thay vì ảnh gốc. (File convention opengraph-image.tsx + edge
+    // runtime bị lỗi 500 trên OpenNext Cloudflare nên dùng Route Handler thường.)
     openGraph: {
       type: "article",
       url: absoluteUrl(path),
       title: ogTitle,
       description,
-      images: [{ url: image, width: 1200, height: 630, alt: tour.title }],
+      images: [{ url: absoluteUrl(`/og/tour/${tour.slug ?? slug}`), width: 1200, height: 630, alt: tour.title }],
     },
     twitter: {
       card: "summary_large_image",
       title: ogTitle,
       description,
-      images: [image],
+      images: [absoluteUrl(`/og/tour/${tour.slug ?? slug}`)],
     },
   };
 }

@@ -12,6 +12,7 @@ import LandCruiseExperience from "@/components/LandCruiseExperience";
 import ComparisonTable from "@/components/ComparisonTable";
 import SocialProof from "@/components/SocialProof";
 import LatestStories from "@/components/LatestStories";
+import FaqSection from "@/components/FaqSection";
 import ContactForm from "@/components/ContactForm";
 import ContactFormPopup from "@/components/ContactFormPopup";
 import Footer from "@/components/Footer";
@@ -35,6 +36,7 @@ const HomePage = ({ latestPosts = [] }: { latestPosts?: BlogPostSummary[] }) => 
       <TourPackages />
       <LatestStories posts={latestPosts} />
       <ContactForm />
+      <FaqSection />
       <Footer />
       <FloatingZalo />
       <FloatingContacts />

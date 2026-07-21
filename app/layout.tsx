@@ -1,10 +1,25 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { SITE_URL, SITE_NAME, ORGANIZATION } from "@/lib/seo";
 import Providers from "./providers";
 import UtmCapture from "@/components/UtmCapture";
 import StickyMobileBar from "@/components/StickyMobileBar";
+
+const inter = Inter({
+  subsets: ["latin", "vietnamese"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "700", "900"],
+  variable: "--font-playfair",
+  display: "swap",
+});
 
 const TITLE =
   "Private Tour Mỹ Úc Châu Âu - Đi như Người Nhà cùng Vinh Around | Passport Lounge";
@@ -99,19 +114,8 @@ export default function RootLayout({
   const orgJsonLd = { "@context": "https://schema.org", ...ORGANIZATION };
 
   return (
-    <html lang="vi">
+    <html lang="vi" className={`${inter.variable} ${playfair.variable}`}>
       <head>
-        {/*
-          Font nạp qua <link> để build không phụ thuộc mạng.
-          Nâng cấp nên làm sau: chuyển sang next/font/google để Next tự host
-          font, bỏ được 2 request cross-origin và loại layout shift do FOUT.
-        */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}

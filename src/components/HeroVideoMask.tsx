@@ -1,9 +1,18 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
+import { trackButtonClick } from "@/lib/analytics";
+
+const MARKETS = [
+  { href: "/tour/my", label: "Mỹ" },
+  { href: "/tour/uc", label: "Úc" },
+  { href: "/tour/chau-au", label: "Châu Âu" },
+];
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,10 +71,13 @@ const HeroVideoMask = () => {
               {/* Main image with clean frame */}
               <div className="relative w-64 sm:w-80 md:w-96 lg:w-[420px] h-80 sm:h-96 md:h-[460px] lg:h-[520px]">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden border-4 border-secondary/60 shadow-2xl">
-                  <img 
+                  <Image
                     src="/images/vinh-around-portrait.jpg"
                     alt="Vinh Around - Your Road Captain"
-                    className="w-full h-full object-cover"
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 384px, 420px"
+                    className="object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent"></div>
                 </div>
@@ -138,8 +150,22 @@ const HeroVideoMask = () => {
               <div className="inline-flex items-center gap-3 glass-effect px-6 py-3 rounded-2xl border border-white/20">
                 <div className="w-2 h-2 rounded-full bg-secondary"></div>
                 <span className="text-white/90 font-medium text-sm md:text-base">
-                  Còn 2 slot tháng này
+                  100+ gia đình đã đi · Còn 2 slot tháng này
                 </span>
+              </div>
+
+              {/* Chọn thị trường */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                {MARKETS.map((m) => (
+                  <Link
+                    key={m.href}
+                    href={m.href}
+                    onClick={() => trackButtonClick(`market_${m.label}`, "Hero")}
+                    className="px-5 py-2 rounded-full glass-effect border border-white/25 text-white text-sm font-semibold hover:border-secondary hover:text-secondary transition-colors"
+                  >
+                    {m.label}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
