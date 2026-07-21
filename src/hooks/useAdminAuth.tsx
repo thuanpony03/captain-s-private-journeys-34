@@ -1,5 +1,7 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
 
@@ -7,7 +9,7 @@ export const useAdminAuth = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     // Check initial session
@@ -16,7 +18,7 @@ export const useAdminAuth = () => {
         const { data: { session } } = await supabase.auth.getSession();
         
         if (!session) {
-          navigate("/auth");
+          router.push("/auth");
           return;
         }
 
@@ -32,14 +34,14 @@ export const useAdminAuth = () => {
 
         if (error || !roles) {
           setIsAdmin(false);
-          navigate("/");
+          router.push("/");
           return;
         }
 
         setIsAdmin(true);
       } catch (error) {
         console.error("Auth check error:", error);
-        navigate("/auth");
+        router.push("/auth");
       } finally {
         setLoading(false);
       }
@@ -53,7 +55,7 @@ export const useAdminAuth = () => {
         if (!session) {
           setUser(null);
           setIsAdmin(false);
-          navigate("/auth");
+          router.push("/auth");
           return;
         }
 
@@ -71,7 +73,7 @@ export const useAdminAuth = () => {
 
             if (!roles) {
               setIsAdmin(false);
-              navigate("/");
+              router.push("/");
             } else {
               setIsAdmin(true);
             }
@@ -83,7 +85,7 @@ export const useAdminAuth = () => {
     );
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [router]);
 
   return { user, isAdmin, loading };
 };

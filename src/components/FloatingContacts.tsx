@@ -1,3 +1,5 @@
+"use client";
+
 import { Phone, MessageCircle, Facebook } from "lucide-react";
 import { trackPhoneClick, trackFacebookClick } from "@/lib/analytics";
 

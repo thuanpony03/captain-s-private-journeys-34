@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -44,7 +46,7 @@ const Navbar = () => {
           {/* Navigation Items */}
           <div className="flex items-center gap-2 sm:gap-4">
             {/* Admin Link - Only in development */}
-            {import.meta.env.DEV && (
+            {process.env.NODE_ENV === "development" && (
               <Button
                 variant="ghost"
                 size="sm"

@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import vehicleImage from "@/assets/luxury-vehicle.jpg";
@@ -112,7 +114,7 @@ const LandCruiseExperience = () => {
                   {/* Image Section */}
                   <div className="relative h-56 md:h-64 lg:h-72 overflow-hidden">
                     <img 
-                      src={exp.image} 
+                      src={typeof exp.image === "string" ? exp.image : exp.image.src} 
                       alt={exp.title}
                       className={`w-full h-full object-cover transition-all duration-700 ${
                         activeCard === index ? 'scale-125 rotate-2' : 'scale-100'

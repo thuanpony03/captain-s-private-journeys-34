@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -62,12 +64,12 @@ const ContactForm = () => {
       
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-lead-notification`,
+          `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-lead-notification`,
           {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'apikey': import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+              'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
             },
             body: JSON.stringify({
               destination: formData.destination,

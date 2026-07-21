@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -61,7 +63,7 @@ const HeroVideoMask = () => {
               <div className="relative w-64 sm:w-80 md:w-96 lg:w-[420px] h-80 sm:h-96 md:h-[460px] lg:h-[520px]">
                 <div className="relative w-full h-full rounded-3xl overflow-hidden border-4 border-secondary/60 shadow-2xl">
                   <img 
-                    src="/lovable-uploads/576f0773-8f19-4601-901e-115efd9c4874.jpg"
+                    src="/images/vinh-around-portrait.jpg"
                     alt="Vinh Around - Your Road Captain"
                     className="w-full h-full object-cover"
                   />

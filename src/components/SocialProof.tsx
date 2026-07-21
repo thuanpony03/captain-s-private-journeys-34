@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 
@@ -466,7 +468,7 @@ const SocialProof = () => {
               {/* Main hub */}
               <div className="relative w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-secondary shadow-2xl shadow-secondary/20 group cursor-pointer hover:scale-110 transition-transform duration-300 bg-white">
                 <img
-                  src="/lovable-uploads/576f0773-8f19-4601-901e-115efd9c4874.jpg"
+                  src="/images/vinh-around-portrait.jpg"
                   alt="Vinh Around"
                   className="w-full h-full object-cover"
                 />
