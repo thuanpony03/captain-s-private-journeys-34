@@ -40,17 +40,29 @@ export function ShareButton({ title, description }: { title: string; description
   );
 }
 
-export function BookingCta({ tourTitle }: { tourTitle: string }) {
+export function BookingCta({
+  tourTitle,
+  destination,
+  label = "Đặt lịch ngay",
+  className,
+}: {
+  tourTitle: string;
+  destination?: string | null;
+  label?: string;
+  className?: string;
+}) {
   return (
     <Button
       onClick={() => {
         trackButtonClick("book_now", tourTitle);
-        window.location.href = "/#contact-form";
+        const params = new URLSearchParams({ tour: tourTitle });
+        if (destination) params.set("dest", destination);
+        window.location.href = `/lien-he?${params.toString()}#contact-form`;
       }}
       size="lg"
-      className="bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold"
+      className={className ?? "bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold"}
     >
-      Đặt lịch ngay
+      {label}
     </Button>
   );
 }

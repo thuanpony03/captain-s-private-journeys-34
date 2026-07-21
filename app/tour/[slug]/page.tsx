@@ -377,6 +377,18 @@ export default async function TourPage({
             )}
           </div>
 
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-12 p-5 rounded-2xl bg-secondary/10 border border-secondary/20">
+            <p className="text-primary/80 text-sm md:text-base font-medium text-center sm:text-left">
+              Ưng lịch trình này? Nhắn Vinh để được tư vấn theo đúng số người và ngày của gia đình bạn.
+            </p>
+            <BookingCta
+              tourTitle={tour.title}
+              destination={tour.destination}
+              label="Hỏi Vinh về tour này"
+              className="bg-primary text-white font-bold whitespace-nowrap"
+            />
+          </div>
+
           {tour.description && (
             <div className="mb-12">
               <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-4">
@@ -508,12 +520,15 @@ export default async function TourPage({
             </div>
           )}
 
-          {/* Gallery ảnh thật từ chuyến đã đi */}
+          {/* Gallery ảnh thật từ các chuyến Vinh đã dẫn — không phải minh hoạ đúng 1:1 từng điểm dừng trên */}
           {tour.gallery_urls.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-6 text-center">
-                Hình ảnh chuyến đi thật
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-3 text-center">
+                Khoảnh khắc thật từ các chuyến Vinh đã dẫn
               </h2>
+              <p className="text-muted-foreground text-sm text-center max-w-xl mx-auto mb-6">
+                Ảnh chụp từ những gia đình và cung đường Vinh từng trực tiếp cầm lái — lịch trình của bạn sẽ được thiết kế riêng, không rập khuôn.
+              </p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                 {tour.gallery_urls.map((url, i) => (
                   <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden">
@@ -561,6 +576,18 @@ export default async function TourPage({
               )}
             </div>
           )}
+
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-12 p-5 rounded-2xl bg-secondary/10 border border-secondary/20">
+            <p className="text-primary/80 text-sm md:text-base font-medium text-center sm:text-left">
+              Còn thắc mắc về chi phí hay lịch trình? Nhắn Zalo, Vinh trả lời trong ngày.
+            </p>
+            <BookingCta
+              tourTitle={tour.title}
+              destination={tour.destination}
+              label="Nhắn Zalo cho Vinh"
+              className="bg-primary text-white font-bold whitespace-nowrap"
+            />
+          </div>
 
           {/* Video vlog cùng tuyến */}
           {tour.video_url && (
@@ -636,7 +663,7 @@ export default async function TourPage({
               Liên hệ ngay để nhận tư vấn chi tiết và đặt lịch cho chuyến đi của bạn
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <BookingCta tourTitle={tour.title} />
+              <BookingCta tourTitle={tour.title} destination={tour.destination} />
               <Link href="/tour">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto">
                   Xem tour khác

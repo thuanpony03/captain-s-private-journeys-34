@@ -46,6 +46,19 @@ const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
     }
     return () => observer.disconnect();
   }, []);
+
+  // Đến từ nút "Đặt lịch ngay" trên trang tour thì điền sẵn ghi chú + điểm đến — đỡ khách phải gõ lại
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tourTitle = params.get("tour");
+    const dest = params.get("dest");
+    const destMap: Record<string, string> = { my: "usa", uc: "australia", "chau-au": "europe" };
+    setFormData((prev) => ({
+      ...prev,
+      notes: tourTitle ? `Quan tâm: ${tourTitle}` : prev.notes,
+      destination: (dest && destMap[dest]) || prev.destination,
+    }));
+  }, []);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const handleSubmit = async (e: React.FormEvent) => {
@@ -222,27 +235,27 @@ const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
         <div className={`text-center mb-10 md:mb-14 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-primary text-white border border-primary/20 shadow-md">
             <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-            <span className="font-bold text-xs uppercase tracking-wider">Giới hạn 2 đoàn / tháng</span>
+            <span className="font-bold text-xs uppercase tracking-wider">Mỗi tháng Vinh chỉ nhận 2 đoàn</span>
           </div>
-          
+
           <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-black text-primary mb-4 drop-shadow-sm">
             Sẵn Sàng Cho Chuyến Đi
             <span className="block text-secondary font-black">
               Đáng Nhớ Nhất?
             </span>
           </h2>
-          
+
           <p className="text-primary/80 text-base md:text-lg max-w-2xl mx-auto mb-6 font-medium">
             Chỉ cần 30 giây để Vinh hiểu nhu cầu và tư vấn lịch trình <span className="font-bold text-primary">hoàn hảo</span> cho gia đình bạn
           </p>
 
-          {/* Trust indicators */}
+          {/* Trust indicators — chỉ nêu chính sách thật, không bịa số liệu/đánh giá */}
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-sm">
             <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-primary/10">
               <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              <span className="text-primary font-semibold">100+ gia đình tin tưởng</span>
+              <span className="text-primary font-semibold">Vinh tư vấn trực tiếp, không qua đại lý</span>
             </div>
             <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-primary/10">
               <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
@@ -263,38 +276,29 @@ const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
         <div className={`max-w-6xl mx-auto transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="grid lg:grid-cols-5 gap-6 lg:gap-10">
             
-            {/* Left Column - Testimonial & Benefits */}
+            {/* Left Column - Lời hứa thật của Vinh & lý do chọn */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Featured Testimonial */}
+              {/* Trích lời Vinh — không phải quote bịa của khách */}
               <div className="relative bg-white rounded-2xl p-6 shadow-lg shadow-primary/5 border border-primary/5 overflow-hidden">
                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-secondary/10 to-transparent rounded-bl-full" />
-                
-                {/* Quote */}
+
                 <div className="relative">
                   <svg className="w-8 h-8 text-secondary/30 mb-3" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                   </svg>
                   <p className="text-primary/80 text-sm md:text-base leading-relaxed mb-4">
-                    "Đi với Vinh như đi với người nhà thật sự. Bố mẹ tôi 70 tuổi mà được chăm sóc chu đáo, không mệt một chút nào. <span className="font-semibold text-primary">Chuyến đi Mỹ tuyệt vời nhất từ trước đến giờ!</span>"
+                    "Tôi lái xe để bạn rảnh tay ngắm cảnh. Tôi chọn quán để bạn ấm bụng như ở nhà."
                   </p>
-                  
+
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-sm">
-                      NT
+                      V
                     </div>
                     <div>
-                      <p className="font-semibold text-primary text-sm">Chị Ngọc Trâm</p>
-                      <p className="text-primary/50 text-xs">Gia đình 6 người • Tour Mỹ 2024</p>
+                      <p className="font-semibold text-primary text-sm">Vinh</p>
+                      <p className="text-primary/50 text-xs">Người trực tiếp lái xe và tư vấn lịch trình</p>
                     </div>
                   </div>
-                </div>
-
-                {/* Rating */}
-                <div className="flex items-center gap-1 mt-4 pt-4 border-t border-primary/5">
-                  {[...Array(5)].map((_, i) => <svg key={i} className="w-4 h-4 text-secondary" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>)}
-                  <span className="text-primary/50 text-xs ml-2">5.0 từ 100+ đánh giá</span>
                 </div>
               </div>
 
@@ -302,7 +306,7 @@ const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
               <div className="hidden lg:block bg-gradient-to-br from-primary to-primary/90 rounded-2xl p-6 text-white">
                 <h3 className="font-display font-bold text-lg mb-4">Tại sao chọn Vinh Around?</h3>
                 <ul className="space-y-3">
-                  {["Xe riêng, lịch trình tùy chỉnh 100%", "Đã đưa 100+ gia đình đi an toàn", "Hỗ trợ 24/7 trong suốt chuyến đi", "Giá trọn gói, không phát sinh"].map((item, i) => <li key={i} className="flex items-start gap-3 text-sm">
+                  {["Xe riêng, lịch trình tùy chỉnh 100%", "Không shopping stop, không chạy show", "Hỗ trợ 24/7 trong suốt chuyến đi", "Giá trọn gói, không phát sinh"].map((item, i) => <li key={i} className="flex items-start gap-3 text-sm">
                       <svg className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                       </svg>
@@ -311,7 +315,7 @@ const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
                 </ul>
               </div>
 
-              {/* Urgency Banner - Hidden on mobile */}
+              {/* Lý do đặt sớm — chính sách thật (visa/khách sạn cần thời gian), không phải ưu đãi bịa */}
               <div className="hidden lg:flex items-center gap-4 bg-accent/10 border border-accent/20 rounded-xl p-4">
                 <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
                   <svg className="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -319,8 +323,8 @@ const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-semibold text-primary text-sm">Đặt sớm - Ưu đãi lớn</p>
-                  <p className="text-primary/60 text-xs">Giảm 5% khi đặt trước 3 tháng</p>
+                  <p className="font-semibold text-primary text-sm">Đặt sớm giúp Vinh chuẩn bị tốt hơn</p>
+                  <p className="text-primary/60 text-xs">Nhất là visa và khách sạn mùa cao điểm</p>
                 </div>
               </div>
             </div>
@@ -338,7 +342,7 @@ const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
                     <div className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm">
                       <p className="text-white font-semibold text-xs flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
-                        Còn 2 slot
+                        2 đoàn / tháng
                       </p>
                     </div>
                   </div>
