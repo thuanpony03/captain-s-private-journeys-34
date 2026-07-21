@@ -13,6 +13,8 @@ import ComparisonTable from "@/components/ComparisonTable";
 import SocialProof from "@/components/SocialProof";
 import LatestStories from "@/components/LatestStories";
 import FaqSection from "@/components/FaqSection";
+import TrustBar from "@/components/TrustBar";
+import MarketCards, { type MarketCardData } from "@/components/MarketCards";
 import ContactForm from "@/components/ContactForm";
 import ContactFormPopup from "@/components/ContactFormPopup";
 import Footer from "@/components/Footer";
@@ -20,13 +22,20 @@ import FloatingZalo from "@/components/FloatingZalo";
 import FloatingContacts from "@/components/FloatingContacts";
 import type { BlogPostSummary } from "@/lib/blog";
 
-const HomePage = ({ latestPosts = [] }: { latestPosts?: BlogPostSummary[] }) => (
+interface HomePageProps {
+  latestPosts?: BlogPostSummary[];
+  marketCards?: MarketCardData[];
+}
+
+const HomePage = ({ latestPosts = [], marketCards = [] }: HomePageProps) => (
   <SmoothScroll>
     <CustomCursor />
     <Navbar />
     <ContactFormPopup />
     <main className="min-h-screen">
       <HeroVideoMask />
+      <TrustBar />
+      <MarketCards markets={marketCards} />
       <PersonalStory />
       <VinhVlogs />
       <ScrollytellingRoadmap />
