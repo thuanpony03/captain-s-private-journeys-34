@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const ComparisonTable = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -128,10 +129,12 @@ const ComparisonTable = () => {
                   <div className="bg-card rounded-2xl border border-border/50 overflow-hidden shadow-sm hover:shadow-md transition-all group">
                     {/* Small Image */}
                     <div className="relative h-32 md:h-40 overflow-hidden">
-                      <img 
+                      <Image
                         src={item.traditional.image}
                         alt={item.traditional.title}
-                        className="w-full h-full object-cover grayscale-[50%] opacity-60 group-hover:opacity-70 transition-all"
+                        fill
+                        sizes="(max-width: 768px) 50vw, 300px"
+                        className="object-cover grayscale-[50%] opacity-60 group-hover:opacity-70 transition-all"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
                       
@@ -161,10 +164,12 @@ const ComparisonTable = () => {
                   <div className="bg-gradient-to-br from-card via-card to-secondary/5 rounded-2xl border-2 border-secondary/30 overflow-hidden shadow-elegant hover:shadow-glow transition-all group hover:scale-[1.02]">
                     {/* Small Image */}
                     <div className="relative h-32 md:h-40 overflow-hidden">
-                      <img 
+                      <Image
                         src={item.premium.image}
                         alt={item.premium.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+                        fill
+                        sizes="(max-width: 768px) 50vw, 300px"
+                        className="object-cover group-hover:scale-110 transition-all duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-card/30 to-transparent"></div>
                       

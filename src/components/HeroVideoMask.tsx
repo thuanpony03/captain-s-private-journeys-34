@@ -12,6 +12,7 @@ const MARKETS = [
   { href: "/tour/my", label: "Mỹ" },
   { href: "/tour/uc", label: "Úc" },
   { href: "/tour/chau-au", label: "Châu Âu" },
+  { href: "/tour/canada", label: "Canada" },
 ];
 
 gsap.registerPlugin(ScrollTrigger);

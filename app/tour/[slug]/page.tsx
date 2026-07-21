@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ShareButton, BookingCta } from "@/components/tour/TourActions";
+import TourViewTracker from "@/components/tour/TourViewTracker";
 import TestimonialGallery, { type TestimonialData } from "@/components/testimonials/TestimonialGallery";
 import BlogCard from "@/components/blog/BlogCard";
 import { createPublicClient } from "@/lib/supabase/server";
@@ -220,11 +221,19 @@ export default async function TourPage({
         price: tour.price || "Liên hệ",
         priceCurrency: "VND",
       },
-      itinerary: tour.stops.map((stop, i) => ({
-        "@type": "Place",
-        name: stop,
-        position: i + 1,
-      })),
+      itinerary:
+        tour.itinerary.length > 0
+          ? tour.itinerary.map((day) => ({
+              "@type": "Place",
+              name: day.title,
+              description: day.description || undefined,
+              position: day.day,
+            }))
+          : tour.stops.map((stop, i) => ({
+              "@type": "Place",
+              name: stop,
+              position: i + 1,
+            })),
       provider: ORGANIZATION,
     },
     {
@@ -257,6 +266,7 @@ export default async function TourPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <TourViewTracker tourName={tour.title} />
 
       <div className="min-h-screen bg-background">
         {/* Hero Image */}

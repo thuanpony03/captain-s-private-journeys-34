@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import vehicleImage from "@/assets/luxury-vehicle.jpg";
 import hotelImage from "@/assets/luxury-hotel.jpg";
@@ -113,10 +114,12 @@ const LandCruiseExperience = () => {
                 }`}>
                   {/* Image Section */}
                   <div className="relative h-56 md:h-64 lg:h-72 overflow-hidden">
-                    <img 
-                      src={typeof exp.image === "string" ? exp.image : exp.image.src} 
+                    <Image
+                      src={exp.image}
                       alt={exp.title}
-                      className={`w-full h-full object-cover transition-all duration-700 ${
+                      fill
+                      sizes="(max-width: 768px) 100vw, 400px"
+                      className={`object-cover transition-all duration-700 ${
                         activeCard === index ? 'scale-125 rotate-2' : 'scale-100'
                       }`}
                     />

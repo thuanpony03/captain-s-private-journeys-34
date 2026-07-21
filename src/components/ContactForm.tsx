@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -367,7 +368,13 @@ const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
                             `}>
                             {/* Image */}
                             <div className="relative h-20 md:h-24 overflow-hidden">
-                              <img src={dest.image} alt={dest.code} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                              <Image
+                                src={dest.image}
+                                alt={dest.code}
+                                fill
+                                sizes="200px"
+                                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                              />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                               <div className="absolute bottom-2 left-2 right-2">
                                 <p className="font-bold text-white text-sm md:text-base">{dest.code}</p>

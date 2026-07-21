@@ -9,7 +9,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 import TourCard, { type TourCardData } from "@/components/tour/TourCard";
+import BlogCard from "@/components/blog/BlogCard";
+import TestimonialGallery, { type TestimonialData } from "@/components/testimonials/TestimonialGallery";
 import { ShieldCheck } from "lucide-react";
+import type { BlogPostSummary } from "@/lib/blog";
 
 export interface MarketFaq {
   question: string;
@@ -23,13 +26,25 @@ export interface MarketLandingConfig {
   valueProps: { title: string; desc: string }[];
   visaBlock?: { title: string; body: string };
   faqs: MarketFaq[];
-  leadDestination: "usa" | "australia" | "europe";
+  leadDestination: "usa" | "australia" | "europe" | "other";
   tours: TourCardData[];
+  testimonials?: TestimonialData[];
+  relatedPosts?: BlogPostSummary[];
 }
 
 export default function MarketLandingPage({ config }: { config: MarketLandingConfig }) {
-  const { heroImage, heroHeadline, heroSubtext, valueProps, visaBlock, faqs, leadDestination, tours } =
-    config;
+  const {
+    heroImage,
+    heroHeadline,
+    heroSubtext,
+    valueProps,
+    visaBlock,
+    faqs,
+    leadDestination,
+    tours,
+    testimonials = [],
+    relatedPosts = [],
+  } = config;
 
   return (
     <>
@@ -97,6 +112,34 @@ export default function MarketLandingPage({ config }: { config: MarketLandingCon
                   {visaBlock.title}
                 </h2>
                 <p className="text-white/80 leading-relaxed">{visaBlock.body}</p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Review + ảnh gia đình đã đi đúng thị trường */}
+        {testimonials.length > 0 && (
+          <section className="py-14 md:py-20 bg-[#faf9f7]">
+            <div className="container mx-auto px-4 max-w-5xl">
+              <h2 className="font-display text-2xl md:text-4xl font-black text-primary text-center mb-10">
+                Gia đình đã đi nói gì
+              </h2>
+              <TestimonialGallery testimonials={testimonials} />
+            </div>
+          </section>
+        )}
+
+        {/* Cẩm nang liên quan */}
+        {relatedPosts.length > 0 && (
+          <section className="py-14 md:py-20 bg-white">
+            <div className="container mx-auto px-4">
+              <h2 className="font-display text-2xl md:text-4xl font-black text-primary text-center mb-10">
+                Cẩm nang liên quan
+              </h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                {relatedPosts.map((post) => (
+                  <BlogCard key={post.slug} post={post} basePath="cam-nang" />
+                ))}
               </div>
             </div>
           </section>

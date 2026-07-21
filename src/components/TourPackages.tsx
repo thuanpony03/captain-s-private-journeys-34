@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useTourPackages } from "@/hooks/useSiteContent";
 import { trackButtonClick, trackTourView, trackScrollToSection } from "@/lib/analytics";
@@ -112,10 +113,13 @@ const TourPackages = () => {
               index === activeRoute ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
             }`}
           >
-            <img 
+            <Image
               src={journey.video}
               alt={journey.title}
-              className="w-full h-full object-cover"
+              fill
+              sizes="100vw"
+              priority={index === 0}
+              className="object-cover"
             />
           </div>
         ))}
@@ -226,11 +230,13 @@ const TourPackages = () => {
                           : 'opacity-70'
                       }`}
                     >
-                      <div className="aspect-[4/3]">
-                        <img 
+                      <div className="relative aspect-[4/3]">
+                        <Image
                           src={journey.video}
                           alt={journey.title}
-                          className="w-full h-full object-cover"
+                          fill
+                          sizes="128px"
+                          className="object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent"></div>
                         <div className="absolute bottom-2 left-2 right-2">
@@ -342,10 +348,12 @@ const TourPackages = () => {
                     <div className="flex items-center gap-4">
                       {/* Thumbnail */}
                       <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                        <img 
+                        <Image
                           src={journey.video}
                           alt={journey.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          fill
+                          sizes="80px"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className={`absolute inset-0 bg-gradient-to-t ${index === activeRoute ? 'from-secondary/50' : 'from-primary/60'} to-transparent`}></div>
                         <div className="absolute bottom-1.5 left-1.5 text-white font-bold">0{index + 1}</div>

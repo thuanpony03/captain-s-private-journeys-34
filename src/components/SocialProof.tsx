@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { Card } from "@/components/ui/card";
 
 const SocialProof = () => {
@@ -467,10 +468,12 @@ const SocialProof = () => {
 
               {/* Main hub */}
               <div className="relative w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-secondary shadow-2xl shadow-secondary/20 group cursor-pointer hover:scale-110 transition-transform duration-300 bg-white">
-                <img
+                <Image
                   src="/images/vinh-around-portrait.jpg"
                   alt="Vinh Around"
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="160px"
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent"></div>
                 <div className="absolute bottom-2 left-0 right-0 text-center">
@@ -512,7 +515,7 @@ const SocialProof = () => {
                 <div
                   className={`relative w-full h-full rounded-2xl overflow-hidden border-3 bg-white transition-all duration-300 ${activeFamily === index ? "border-secondary shadow-2xl shadow-secondary/30 scale-110" : "border-white/60 shadow-lg"}`}
                 >
-                  <img src={family.image} alt={family.name} className="w-full h-full object-cover" />
+                  <Image src={family.image} alt={family.name} fill sizes="96px" className="object-cover" />
                   {/* Overlay gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>

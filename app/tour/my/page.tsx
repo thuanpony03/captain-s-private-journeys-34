@@ -31,6 +31,21 @@ export default async function MyMarketPage() {
     .eq("destination", "my")
     .order("order_index", { ascending: true });
 
+  const { data: testimonials } = await supabase
+    .from("testimonials")
+    .select("*")
+    .eq("status", "published")
+    .eq("destination", "usa")
+    .limit(6);
+
+  const { data: relatedPosts } = await supabase
+    .from("blog_posts")
+    .select("slug, title, excerpt, featured_image, category, destination, reading_time, published_at")
+    .eq("status", "published")
+    .eq("category", "cam-nang")
+    .eq("destination", "my")
+    .limit(3);
+
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -91,6 +106,8 @@ export default async function MyMarketPage() {
           ],
           leadDestination: "usa",
           tours: data ?? [],
+          testimonials: testimonials ?? [],
+          relatedPosts: relatedPosts ?? [],
         }}
       />
     </>
