@@ -7,6 +7,7 @@ import AboutChapter from "@/components/home/AboutChapter";
 import StoryChapter from "@/components/home/StoryChapter";
 import CompanionsChapter from "@/components/home/CompanionsChapter";
 import ProcessChapter from "@/components/home/ProcessChapter";
+import RoutesChapter from "@/components/home/RoutesChapter";
 import ClosingChapter from "@/components/home/ClosingChapter";
 import LatestStories from "@/components/LatestStories";
 import FaqSection from "@/components/FaqSection";
@@ -25,7 +26,7 @@ interface HomePageProps {
  * /tour/* — trang chủ chỉ có một lời mời nhắn Zalo (Chương VI) + nút Zalo
  * nhỏ trên Navbar. Không popup, không nút nổi lặp lại.
  */
-const HomePage = ({ latestPosts = [] }: HomePageProps) => (
+const HomePage = ({ latestPosts = [], marketCards = [] }: HomePageProps) => (
   <SmoothScroll>
     <Navbar />
     <main className="min-h-screen">
@@ -34,6 +35,7 @@ const HomePage = ({ latestPosts = [] }: HomePageProps) => (
       <StoryChapter />
       <CompanionsChapter />
       <ProcessChapter />
+      <RoutesChapter markets={marketCards} />
       <LatestStories posts={latestPosts} />
       <ClosingChapter />
       <FaqSection />

@@ -23,6 +23,9 @@ export default function AboutChapter() {
           </div>
 
           <div className="max-w-[38rem]">
+            <h2 className="text-primary/40 text-xs font-semibold uppercase tracking-widest mb-3">
+              Vinh là ai
+            </h2>
             <p className="text-primary/90 leading-[1.9] text-[15px] md:text-base mb-6">
               10 năm làm tour cho gia đình, điều mình hiểu rõ nhất là: một chuyến đi đẹp không nằm ở
               việc đi được bao nhiêu điểm, mà là cả nhà có thật sự thoải mái với nhau suốt hành trình

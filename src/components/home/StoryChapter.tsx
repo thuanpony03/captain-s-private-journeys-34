@@ -18,6 +18,9 @@ const DOHA_IMG_2 =
 export default function StoryChapter() {
   return (
     <section className="bg-[#faf7f0] py-20 md:py-28">
+      <h2 className="text-primary/40 text-xs font-semibold uppercase tracking-widest mb-10 md:mb-14 px-6 text-center">
+        Vài chuyến đã đi qua
+      </h2>
       {/* Mẩu 1 — Madrid: ảnh full-bleed, caption nghiêng, chữ bên dưới */}
       <div className="mb-24 md:mb-32">
         <div className="relative w-full h-[55vh] md:h-[70vh]">

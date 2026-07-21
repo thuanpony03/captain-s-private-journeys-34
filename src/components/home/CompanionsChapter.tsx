@@ -70,6 +70,9 @@ export default function CompanionsChapter() {
   return (
     <section className="bg-[#faf7f0] py-20 md:py-28">
       <div className="container mx-auto px-6 max-w-5xl">
+        <h2 className="text-primary/40 text-xs font-semibold uppercase tracking-widest mb-3">
+          Những người đồng hành
+        </h2>
         <p className="text-primary/50 text-sm mb-10 md:mb-14 max-w-md">
           Vài gia đình đã đi cùng mình. Ảnh nào cũng trả lời được: chụp ở đâu, chuyến nào.
         </p>

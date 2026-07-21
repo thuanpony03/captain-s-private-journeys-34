@@ -8,6 +8,9 @@ export default function ProcessChapter() {
   return (
     <section className="bg-white py-20 md:py-28">
       <div className="container mx-auto px-6 max-w-2xl">
+        <h2 className="text-primary/40 text-xs font-semibold uppercase tracking-widest mb-3">
+          Đi cùng Vinh như thế nào
+        </h2>
         <p className="text-primary/80 leading-[1.9] text-[15px] md:text-lg">
           Thường thì bắt đầu bằng một cuộc gọi Zalo, bạn kể nhà mình có ai, thích gì, ngại gì. Mình phác
           lịch trình, sửa tới khi ưng. Visa, vé, khách sạn mình lo. Tới ngày bay, việc của bạn chỉ là
