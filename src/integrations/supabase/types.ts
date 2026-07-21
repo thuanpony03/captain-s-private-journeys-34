@@ -14,120 +14,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      blog_posts: {
-        Row: {
-          author_id: string | null
-          category: string
-          content: string
-          created_at: string | null
-          destination: string | null
-          excerpt: string | null
-          featured_image: string | null
-          id: string
-          meta_description: string | null
-          og_image: string | null
-          published_at: string | null
-          reading_time: number | null
-          slug: string
-          status: string
-          title: string
-          tour_slug: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          author_id?: string | null
-          category?: string
-          content: string
-          created_at?: string | null
-          destination?: string | null
-          excerpt?: string | null
-          featured_image?: string | null
-          id?: string
-          meta_description?: string | null
-          og_image?: string | null
-          published_at?: string | null
-          reading_time?: number | null
-          slug: string
-          status?: string
-          title: string
-          tour_slug?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          author_id?: string | null
-          category?: string
-          content?: string
-          created_at?: string | null
-          destination?: string | null
-          excerpt?: string | null
-          featured_image?: string | null
-          id?: string
-          meta_description?: string | null
-          og_image?: string | null
-          published_at?: string | null
-          reading_time?: number | null
-          slug?: string
-          status?: string
-          title?: string
-          tour_slug?: string | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      testimonials: {
-        Row: {
-          content: string
-          created_at: string | null
-          customer_image: string | null
-          customer_name: string
-          destination: string | null
-          family_size: number | null
-          featured: boolean | null
-          highlight: string | null
-          id: string
-          rating: number | null
-          status: string
-          tour_date: string | null
-          tour_slug: string | null
-          updated_at: string | null
-          video_url: string | null
-        }
-        Insert: {
-          content: string
-          created_at?: string | null
-          customer_image?: string | null
-          customer_name: string
-          destination?: string | null
-          family_size?: number | null
-          featured?: boolean | null
-          highlight?: string | null
-          id?: string
-          rating?: number | null
-          status?: string
-          tour_date?: string | null
-          tour_slug?: string | null
-          updated_at?: string | null
-          video_url?: string | null
-        }
-        Update: {
-          content?: string
-          created_at?: string | null
-          customer_image?: string | null
-          customer_name?: string
-          destination?: string | null
-          family_size?: number | null
-          featured?: boolean | null
-          highlight?: string | null
-          id?: string
-          rating?: number | null
-          status?: string
-          tour_date?: string | null
-          tour_slug?: string | null
-          updated_at?: string | null
-          video_url?: string | null
-        }
-        Relationships: []
-      }
       lead_submissions: {
         Row: {
           contact: string
@@ -135,13 +21,9 @@ export type Database = {
           destination: string
           group_size: string
           id: string
-          landing_page: string | null
           notes: string | null
           priority: string
           status: string
-          utm_campaign: string | null
-          utm_medium: string | null
-          utm_source: string | null
         }
         Insert: {
           contact: string
@@ -149,13 +31,9 @@ export type Database = {
           destination: string
           group_size: string
           id?: string
-          landing_page?: string | null
           notes?: string | null
           priority: string
           status?: string
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
         }
         Update: {
           contact?: string
@@ -163,13 +41,9 @@ export type Database = {
           destination?: string
           group_size?: string
           id?: string
-          landing_page?: string | null
           notes?: string | null
           priority?: string
           status?: string
-          utm_campaign?: string | null
-          utm_medium?: string | null
-          utm_source?: string | null
         }
         Relationships: []
       }
@@ -254,84 +128,51 @@ export type Database = {
       tour_packages: {
         Row: {
           created_at: string | null
-          departure_note: string | null
           description: string | null
-          destination: string | null
           duration: string | null
-          exclusions: string[] | null
-          faqs: Json | null
-          gallery_urls: string[] | null
           id: string
           image_url: string | null
-          inclusions: string[] | null
           is_active: boolean | null
-          itinerary: Json | null
-          max_group_size: number | null
           order_index: number | null
           price: string | null
-          price_from: number | null
-          related_story_slugs: string[] | null
           route: string | null
           slug: string | null
           stops: Json | null
           tagline: string | null
           title: string
           updated_at: string | null
-          video_url: string | null
         }
         Insert: {
           created_at?: string | null
-          departure_note?: string | null
           description?: string | null
-          destination?: string | null
           duration?: string | null
-          exclusions?: string[] | null
-          faqs?: Json | null
-          gallery_urls?: string[] | null
           id?: string
           image_url?: string | null
-          inclusions?: string[] | null
           is_active?: boolean | null
-          itinerary?: Json | null
-          max_group_size?: number | null
           order_index?: number | null
           price?: string | null
-          price_from?: number | null
-          related_story_slugs?: string[] | null
           route?: string | null
           slug?: string | null
           stops?: Json | null
           tagline?: string | null
           title: string
           updated_at?: string | null
-          video_url?: string | null
         }
         Update: {
           created_at?: string | null
-          departure_note?: string | null
           description?: string | null
-          destination?: string | null
           duration?: string | null
-          exclusions?: string[] | null
-          faqs?: Json | null
-          gallery_urls?: string[] | null
           id?: string
           image_url?: string | null
-          inclusions?: string[] | null
           is_active?: boolean | null
-          itinerary?: Json | null
-          max_group_size?: number | null
           order_index?: number | null
           price?: string | null
-          price_from?: number | null
-          related_story_slugs?: string[] | null
           route?: string | null
           slug?: string | null
           stops?: Json | null
           tagline?: string | null
           title?: string
           updated_at?: string | null
-          video_url?: string | null
         }
         Relationships: []
       }
