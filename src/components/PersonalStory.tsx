@@ -39,7 +39,7 @@ const PersonalStory = () => {
                 <img 
                   alt="Vinh Around - Your trusted road captain"
                   className="w-full h-[400px] md:h-[500px] lg:h-[700px] object-cover" 
-                  src="/lovable-uploads/576f0773-8f19-4601-901e-115efd9c4874.jpg"
+                  src="/images/vinh-around-portrait.jpg"
                 />
                 
                 {/* Subtle Overlay */}
