@@ -1,6 +1,6 @@
 # BRIEF NÂNG CẤP VINHAROUND.COM
 
-*Brief cho Claude Code · 21/07/2026 · dựa trên audit codebase thật (nhánh `main`, Next.js 16)*
+*Brief cho Claude Code · 21/07/2026 · dựa trên audit codebase thật (nhánh `main`, Next.js 16) + nghiên cứu fanpage [DicungVinhAround](https://www.facebook.com/DicungVinhAround)*
 
 Mục tiêu kinh doanh: **bán private tour cho gia đình Việt khá giả đi Mỹ / Úc / Châu Âu.** Mọi quyết định trong brief này quy về một câu hỏi: *nó có làm một người mẹ/người bố 35–55 tuổi tin và nhắn Zalo không?*
 
@@ -31,6 +31,53 @@ Mục tiêu kinh doanh: **bán private tour cho gia đình Việt khá giả đi
 
 ---
 
+# PHẦN 0.5 — TÀI NGUYÊN TỪ FANPAGE (nghiên cứu trực tiếp 21/07/2026)
+
+Fanpage: [facebook.com/DicungVinhAround](https://www.facebook.com/DicungVinhAround) — 5,5K followers, đang hoạt động tích cực (bài mới nhất 5 giờ trước, Vinh đang ở Panama).
+
+## Dữ kiện lấy được — dùng ngay vào site
+
+| Dữ kiện | Giá trị | Dùng ở đâu |
+|---|---|---|
+| **Zalo/SĐT Vinh** | **0933 344 646** | Sticky bar, footer, `tel:` link, JSON-LD `telephone` — brief từng ghi "hỏi anh Vinh", giờ có rồi (vẫn xác nhận lại trước khi lên site) |
+| **Địa chỉ văn phòng** | 192 Trần Quang Khải, P. Tân Định, TP.HCM | JSON-LD `address` (nâng từ addressCountry chung chung lên địa chỉ đầy đủ → local SEO + niềm tin), footer, trang liên hệ, Google Business Profile |
+| **TikTok** | tiktok.com/@dicung.vinharound | `sameAs` trong ORGANIZATION (schema hiện ghi `tiktok.com/@vinharound` — **SAI, sửa lại**) |
+| **Facebook** | facebook.com/DicungVinhAround | `sameAs` (schema hiện ghi `facebook.com/vinharound` — **SAI, sửa lại**) |
+| **Thị trường thật** | Âu – Úc – Mỹ – **Canada** (+ Panama/Trung Mỹ đang đi) | Site hiện chỉ nói Mỹ/Úc/Châu Âu. Thêm landing `/tour/canada` (cover fanpage là hồ Peyto, Banff — có sẵn ảnh). Panama/Trung Mỹ chưa cần trang riêng, dùng làm content câu chuyện |
+| **Bio fanpage** | "Không chỉ là dẫn đường, Vinh là người đồng hành tận tâm cùng gia đình bạn trên mọi nẻo đường Âu - Úc - Mỹ - Canada… Founder Passport Lounge - Vinh Around" | Đây chính là câu định vị — dùng làm chuẩn copy toàn site, khớp với đề xuất Phần 1 |
+
+## Kho album ảnh theo nước (tài nguyên gallery + blog có sẵn)
+
+Đếm được trước khi Facebook ngừng tải (còn album nữa chưa hiện hết):
+
+Pháp 92 · Anh Quốc 78 · Thổ Nhĩ Kỳ 66 · Ireland 48 · Panama 33 · Slovakia 33 · Hungary 32 · Monaco 19 — **~400 ảnh thật, tổ chức sẵn theo nước.**
+
+Ý nghĩa cho dev & content:
+
+- Mỗi album = 1 nguồn `gallery_urls` cho tour cùng tuyến + 1 bài `/chuyen-di/` tiềm năng. Kho ảnh "việc của anh Vinh phải gom" hoá ra **đã được gom sẵn một nửa** — chỉ cần chọn lọc và chuyển lên Cloudinary.
+- Album nghiêng mạnh về **Châu Âu** (Pháp, Anh, Ireland, Đông Âu, Thổ) — trong khi site hiện nghiêng về Mỹ/Úc. Landing `/tour/chau-au` có nhiều "đạn" nhất, nên làm sâu nhất; cân nhắc thêm trang tuyến con (Tây Âu / Đông Âu / Thổ Nhĩ Kỳ) khi có tour tương ứng.
+
+## Giọng văn của Vinh (mẫu thật từ fanpage)
+
+> "Panama là một điểm dừng Vinh không kỳ vọng quá nhiều, nhưng dành trọn một ngày khám phá rồi mới thấy thành phố này rất thú vị…"
+
+Đúng như đề xuất Phần 1: ngôi thứ nhất xưng "Vinh", kể chuyện có nhận xét cá nhân, không giọng brochure. **Mọi copy trên site và bài blog phải giữ giọng này.** Bài fanpage có gắn nhãn "Nội dung do AI tạo" — nếu dùng AI nháp bài cho web thì để Vinh sửa lại theo giọng thật trước khi đăng, và không cần gắn nhãn AI trên web.
+
+## Điểm yếu fanpage phát hiện được
+
+- **Chỉ 1 lượt đánh giá, "Chưa xếp hạng"** — mâu thuẫn với thông điệp "100+ gia đình tin tưởng". Khách ads sẽ soi fanpage trước khi chuyển tiền. → Việc xin review khách cũ (checklist P12) phải nhắm **cả 3 nơi**: website (bảng `testimonials`), fanpage Facebook, và Google Business Profile.
+- Feed chủ yếu là bài Vinh đi các nước (dạng travelogue cá nhân) — tốt cho uy tín "người thật đi thật", nhưng **thiếu bài về chuyến đi CÙNG KHÁCH** — thứ trực tiếp bán tour. Chiến lược content web (P8) bù đúng chỗ này: `/chuyen-di/` ưu tiên câu chuyện có khách, fanpage share lại.
+
+## Vòng lặp Fanpage ↔ Website (thêm vào chiến lược MKT)
+
+1. Vinh đăng travelogue trên fanpage như hiện nay (đang làm tốt, giữ nhịp)
+2. Mỗi album/chuỗi bài fanpage → 1 bài `/chuyen-di/` chuẩn SEO trên web (nội dung dài hơn, ảnh chọn lọc, CTA tour)
+3. Fanpage share link bài web (OG image động làm link đẹp) → traffic + tín hiệu SEO
+4. Web nhúng Facebook page plugin ở footer/`/ve-vinh` → tăng follow ngược
+5. Pixel đã gắn trên web → người đọc bài từ fanpage thành audience remarketing
+
+---
+
 # PHẦN 1 — ĐỊNH VỊ & KHÁCH HÀNG
 
 ## Chân dung khách
@@ -58,7 +105,8 @@ Tông giọng: người anh/người bạn từng trải kể chuyện, KHÔNG p
 /tour/                         [MỚI] Trang danh sách tất cả tour
 /tour/my                       [MỚI] Landing thị trường Mỹ
 /tour/uc                       [MỚI] Landing thị trường Úc
-/tour/chau-au                  [MỚI] Landing thị trường Châu Âu
+/tour/chau-au                  [MỚI] Landing thị trường Châu Âu (nhiều ảnh nhất — làm sâu nhất)
+/tour/canada                   [MỚI] Landing Canada (fanpage xác nhận có tuyến này, site đang bỏ sót)
 /tour/[slug]                   Trang tour (nâng cấp lớn — xem P4)
 /chuyen-di/                    [MỚI] Blog câu chuyện chuyến đi
 /chuyen-di/[slug]              [MỚI] Bài viết
@@ -286,7 +334,7 @@ Việc cụ thể:
 
 ## Sprint 1 — Nền chuyển đổi (tuần 1) ← làm trước, ăn ngay
 
-1. Xoá video Rick Astley; điền SĐT thật (hỏi anh Vinh trước khi bắt đầu)
+1. Xoá video Rick Astley; điền SĐT **0933 344 646** (từ fanpage — xác nhận lại với anh Vinh); sửa `sameAs` trong `src/lib/seo.ts` thành link đúng (facebook.com/DicungVinhAround, tiktok.com/@dicung.vinharound); thêm địa chỉ 192 Trần Quang Khải vào JSON-LD
 2. Sticky bottom bar mobile (Zalo/Gọi/Tư vấn) + track event
 3. Trang `/cam-on` + redirect sau submit + conversion event
 4. Trang `/lien-he`
@@ -320,9 +368,9 @@ Việc cụ thể:
 
 ## Việc KHÔNG phải code (của anh Vinh, làm song song — code xong mà thiếu cái này là site rỗng)
 
-- [ ] Cung cấp SĐT chính thức + link Zalo OA/cá nhân
-- [ ] Gom ảnh thật theo chuyến (15-20 tấm/chuyến)
-- [ ] Xin 10 khách cũ: quote + ảnh + cho phép dùng tên (form Google)
+- [ ] Xác nhận SĐT 0933 344 646 là số dùng cho web + link Zalo OA/cá nhân
+- [ ] Chọn lọc ảnh từ 8+ album fanpage có sẵn (Pháp 92, Anh 78, Thổ 66, Ireland 48...) → Cloudinary theo cấu trúc `tuyến/chuyến/`; bổ sung ảnh Mỹ/Úc/Canada còn thiếu album
+- [ ] Xin 10 khách cũ: quote + ảnh + cho phép dùng tên (form Google) — đăng cả 3 nơi: web, fanpage (đang chỉ có 1 review!), Google Business Profile
 - [ ] Quay 3-5 video review khách 30s
 - [ ] Kể 4 câu chuyện chuyến đi đầu tiên (voice note cũng được, AI nháp lại)
 - [ ] Lập Google Business Profile
