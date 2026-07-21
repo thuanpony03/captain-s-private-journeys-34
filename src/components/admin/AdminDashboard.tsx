@@ -18,6 +18,8 @@ import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { ContentEditor } from "@/components/admin/ContentEditor";
 import { MediaManager } from "@/components/admin/MediaManager";
 import { TourManager } from "@/components/admin/TourManager";
+import { BlogManager } from "@/components/admin/BlogManager";
+import { TestimonialManager } from "@/components/admin/TestimonialManager";
 
 interface LeadSubmission {
   id: string;
@@ -489,7 +491,7 @@ const AdminDashboard = () => {
             {/* Content Management */}
             <TabsContent value="content" className="space-y-6">
               <Tabs value={contentTab} onValueChange={setContentTab} className="space-y-4">
-                <TabsList className="bg-white shadow-sm border grid grid-cols-3 w-full md:w-auto">
+                <TabsList className="bg-white shadow-sm border grid grid-cols-5 w-full md:w-auto">
                   <TabsTrigger value="text" className="flex items-center gap-2">
                     <FileText className="w-4 h-4" />
                     <span className="hidden md:inline">Nội dung</span>
@@ -501,6 +503,14 @@ const AdminDashboard = () => {
                   <TabsTrigger value="tours" className="flex items-center gap-2">
                     <MapPin className="w-4 h-4" />
                     <span className="hidden md:inline">Tours</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="blog" className="flex items-center gap-2">
+                    <FileText className="w-4 h-4" />
+                    <span className="hidden md:inline">Blog</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="testimonials" className="flex items-center gap-2">
+                    <MessageSquare className="w-4 h-4" />
+                    <span className="hidden md:inline">Đánh giá</span>
                   </TabsTrigger>
                 </TabsList>
 
@@ -514,6 +524,14 @@ const AdminDashboard = () => {
 
                 <TabsContent value="tours">
                   <TourManager />
+                </TabsContent>
+
+                <TabsContent value="blog">
+                  <BlogManager />
+                </TabsContent>
+
+                <TabsContent value="testimonials">
+                  <TestimonialManager />
                 </TabsContent>
               </Tabs>
             </TabsContent>

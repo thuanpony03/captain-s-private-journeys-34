@@ -14,6 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_posts: {
+        Row: {
+          author_id: string | null
+          category: string
+          content: string
+          created_at: string | null
+          destination: string | null
+          excerpt: string | null
+          featured_image: string | null
+          id: string
+          meta_description: string | null
+          og_image: string | null
+          published_at: string | null
+          reading_time: number | null
+          slug: string
+          status: string
+          title: string
+          tour_slug: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          author_id?: string | null
+          category?: string
+          content: string
+          created_at?: string | null
+          destination?: string | null
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          og_image?: string | null
+          published_at?: string | null
+          reading_time?: number | null
+          slug: string
+          status?: string
+          title: string
+          tour_slug?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          author_id?: string | null
+          category?: string
+          content?: string
+          created_at?: string | null
+          destination?: string | null
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          meta_description?: string | null
+          og_image?: string | null
+          published_at?: string | null
+          reading_time?: number | null
+          slug?: string
+          status?: string
+          title?: string
+          tour_slug?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          content: string
+          created_at: string | null
+          customer_image: string | null
+          customer_name: string
+          destination: string | null
+          family_size: number | null
+          featured: boolean | null
+          highlight: string | null
+          id: string
+          rating: number | null
+          status: string
+          tour_date: string | null
+          tour_slug: string | null
+          updated_at: string | null
+          video_url: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          customer_image?: string | null
+          customer_name: string
+          destination?: string | null
+          family_size?: number | null
+          featured?: boolean | null
+          highlight?: string | null
+          id?: string
+          rating?: number | null
+          status?: string
+          tour_date?: string | null
+          tour_slug?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          customer_image?: string | null
+          customer_name?: string
+          destination?: string | null
+          family_size?: number | null
+          featured?: boolean | null
+          highlight?: string | null
+          id?: string
+          rating?: number | null
+          status?: string
+          tour_date?: string | null
+          tour_slug?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+        }
+        Relationships: []
+      }
       lead_submissions: {
         Row: {
           contact: string

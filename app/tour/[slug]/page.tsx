@@ -11,8 +11,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ShareButton, BookingCta } from "@/components/tour/TourActions";
+import TestimonialGallery, { type TestimonialData } from "@/components/testimonials/TestimonialGallery";
+import BlogCard from "@/components/blog/BlogCard";
 import { createPublicClient } from "@/lib/supabase/server";
 import { ORGANIZATION, absoluteUrl, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import type { BlogPostSummary } from "@/lib/blog";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200&q=80";
@@ -51,6 +54,8 @@ interface Tour {
   departure_note: string | null;
   max_group_size: number | null;
   video_url: string | null;
+  destination: string | null;
+  related_story_slugs: string[];
 }
 
 async function getTour(slug: string): Promise<Tour | null> {
@@ -73,7 +78,31 @@ async function getTour(slug: string): Promise<Tour | null> {
     exclusions: Array.isArray(data.exclusions) ? data.exclusions : [],
     gallery_urls: Array.isArray(data.gallery_urls) ? data.gallery_urls : [],
     faqs: Array.isArray(data.faqs) ? (data.faqs as unknown as Faq[]) : [],
+    related_story_slugs: Array.isArray(data.related_story_slugs) ? data.related_story_slugs : [],
   };
+}
+
+async function getTourTestimonials(tourSlug: string, destination: string | null): Promise<TestimonialData[]> {
+  const supabase = createPublicClient();
+  let query = supabase.from("testimonials").select("*").eq("status", "published").limit(6);
+
+  query = destination
+    ? query.or(`tour_slug.eq.${tourSlug},destination.eq.${destination}`)
+    : query.eq("tour_slug", tourSlug);
+
+  const { data } = await query;
+  return (data ?? []) as TestimonialData[];
+}
+
+async function getRelatedStories(slugs: string[]): Promise<BlogPostSummary[]> {
+  if (slugs.length === 0) return [];
+  const supabase = createPublicClient();
+  const { data } = await supabase
+    .from("blog_posts")
+    .select("slug, title, excerpt, featured_image, category, destination, reading_time, published_at")
+    .in("slug", slugs)
+    .eq("status", "published");
+  return (data ?? []) as BlogPostSummary[];
 }
 
 /**
@@ -170,6 +199,10 @@ export default async function TourPage({
 
   const path = `/tour/${tour.slug ?? slug}`;
   const image = tour.image_url || FALLBACK_IMAGE;
+  const [testimonials, relatedStories] = await Promise.all([
+    getTourTestimonials(tour.slug ?? slug, tour.destination),
+    getRelatedStories(tour.related_story_slugs),
+  ]);
 
   const jsonLd = [
     {
@@ -539,6 +572,30 @@ export default async function TourPage({
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
+              </div>
+            </div>
+          )}
+
+          {/* Review của gia đình đã đi đúng tuyến này */}
+          {testimonials.length > 0 && (
+            <div className="mb-12">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-6 text-center">
+                Gia đình đã đi tuyến này nói gì
+              </h2>
+              <TestimonialGallery testimonials={testimonials} />
+            </div>
+          )}
+
+          {/* Bài viết chuyến đi thật cùng tuyến */}
+          {relatedStories.length > 0 && (
+            <div className="mb-12">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-6 text-center">
+                Câu chuyện chuyến đi cùng tuyến
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-6">
+                {relatedStories.map((story) => (
+                  <BlogCard key={story.slug} post={story} basePath="chuyen-di" />
+                ))}
               </div>
             </div>
           )}

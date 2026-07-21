@@ -11,13 +11,15 @@ import TourPackages from "@/components/TourPackages";
 import LandCruiseExperience from "@/components/LandCruiseExperience";
 import ComparisonTable from "@/components/ComparisonTable";
 import SocialProof from "@/components/SocialProof";
+import LatestStories from "@/components/LatestStories";
 import ContactForm from "@/components/ContactForm";
 import ContactFormPopup from "@/components/ContactFormPopup";
 import Footer from "@/components/Footer";
 import FloatingZalo from "@/components/FloatingZalo";
 import FloatingContacts from "@/components/FloatingContacts";
+import type { BlogPostSummary } from "@/lib/blog";
 
-const HomePage = () => (
+const HomePage = ({ latestPosts = [] }: { latestPosts?: BlogPostSummary[] }) => (
   <SmoothScroll>
     <CustomCursor />
     <Navbar />
@@ -31,6 +33,7 @@ const HomePage = () => (
       <LandCruiseExperience />
       <SocialProof />
       <TourPackages />
+      <LatestStories posts={latestPosts} />
       <ContactForm />
       <Footer />
       <FloatingZalo />

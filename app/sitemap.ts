@@ -43,6 +43,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${SITE_URL}/chuyen-di`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${SITE_URL}/cam-nang`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    {
+      url: `${SITE_URL}/khach-hang`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.6,
+    },
+    {
+      url: `${SITE_URL}/ve-vinh`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
   ];
 
   try {
@@ -59,6 +83,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: tour.updated_at ? new Date(tour.updated_at) : new Date(),
         changeFrequency: "weekly",
         priority: 0.9,
+      });
+    }
+  } catch {
+    // Mất kết nối Supabase thì vẫn trả sitemap trang tĩnh, không để build fail.
+  }
+
+  try {
+    const supabase = createPublicClient();
+    const { data } = await supabase
+      .from("blog_posts")
+      .select("slug, category, updated_at")
+      .eq("status", "published");
+
+    for (const post of data ?? []) {
+      routes.push({
+        url: `${SITE_URL}/${post.category}/${post.slug}`,
+        lastModified: post.updated_at ? new Date(post.updated_at) : new Date(),
+        changeFrequency: "monthly",
+        priority: 0.6,
       });
     }
   } catch {
