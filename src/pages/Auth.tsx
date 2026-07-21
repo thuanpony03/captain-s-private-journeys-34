@@ -11,6 +11,17 @@ import SEOHead from "@/components/SEOHead";
 import CustomCursor from "@/components/CustomCursor";
 import { ArrowLeft, Eye, EyeOff, Lock, Mail, User, Shield, Loader2 } from "lucide-react";
 
+// Đăng ký công khai bị TẮT mặc định.
+//
+// Lý do: trigger handle_new_user() từng cấp role 'admin' cho mọi tài khoản mới
+// (xem supabase/migrations/20260721000000_revoke_blanket_admin.sql), nên bất kỳ
+// ai cũng có thể tự tạo quyền admin. Tài khoản admin giờ được tạo thủ công
+// trong Supabase Dashboard → Authentication → Users.
+//
+// Đây chỉ là lớp chặn ở UI. Lớp chặn thật nằm ở Supabase Dashboard →
+// Authentication → Providers → Email → tắt "Allow new users to sign up".
+const ALLOW_PUBLIC_SIGNUP = import.meta.env.VITE_ALLOW_PUBLIC_SIGNUP === "true";
+
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +52,17 @@ const Auth = () => {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    if (!ALLOW_PUBLIC_SIGNUP) {
+      toast({
+        title: "Đăng ký đã bị tắt",
+        description:
+          "Tài khoản admin được tạo thủ công. Vui lòng liên hệ quản trị viên.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (!email || !password || !confirmPassword) {
       toast({
         title: "Lỗi",
@@ -124,7 +145,7 @@ const Auth = () => {
 
       toast({
         title: "Đăng nhập thành công",
-        description: "Chào mừng quay lại! Bạn có quyền admin đầy đủ.",
+        description: "Chào mừng quay lại!",
       });
 
       navigate("/admin");
@@ -144,6 +165,7 @@ const Auth = () => {
       <SEOHead 
         title="Đăng nhập Admin - Vinh Around Private Tours"
         description="Đăng nhập vào trang quản trị Vinh Around để quản lý tour du lịch riêng."
+        noIndex
       />
       <CustomCursor />
       
@@ -182,20 +204,22 @@ const Auth = () => {
 
             <CardContent>
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="grid w-full grid-cols-2 bg-white/10 backdrop-blur-xl">
-                  <TabsTrigger 
-                    value="signin" 
-                    className="text-white data-[state=active]:bg-white data-[state=active]:text-primary"
-                  >
-                    Đăng nhập
-                  </TabsTrigger>
-                  <TabsTrigger 
-                    value="signup" 
-                    className="text-white data-[state=active]:bg-white data-[state=active]:text-primary"
-                  >
-                    Đăng ký
-                  </TabsTrigger>
-                </TabsList>
+                {ALLOW_PUBLIC_SIGNUP && (
+                  <TabsList className="grid w-full grid-cols-2 bg-white/10 backdrop-blur-xl">
+                    <TabsTrigger
+                      value="signin"
+                      className="text-white data-[state=active]:bg-white data-[state=active]:text-primary"
+                    >
+                      Đăng nhập
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="signup"
+                      className="text-white data-[state=active]:bg-white data-[state=active]:text-primary"
+                    >
+                      Đăng ký
+                    </TabsTrigger>
+                  </TabsList>
+                )}
 
                 {/* Sign In Tab */}
                 <TabsContent value="signin" className="space-y-4 mt-6">
@@ -262,7 +286,7 @@ const Auth = () => {
                   </form>
                 </TabsContent>
 
-                {/* Sign Up Tab */}
+                {/* Sign Up Tab — chỉ hiện khi bật VITE_ALLOW_PUBLIC_SIGNUP */}
                 <TabsContent value="signup" className="space-y-4 mt-6">
                   <form onSubmit={handleSignUp} className="space-y-4">
                     <div className="space-y-2">

@@ -253,6 +253,7 @@ const Admin = () => {
       <SEOHead 
         title="Admin Dashboard - Vinh Around Private Tours"
         description="Quản lý hệ thống tour du lịch riêng Vinh Around"
+        noIndex
       />
       <CustomCursor />
       

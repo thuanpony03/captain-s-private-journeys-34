@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, MapPin, Clock, DollarSign, Share2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import SEOHead from "@/components/SEOHead";
+import { ORGANIZATION, absoluteUrl } from "@/lib/seo";
 
 interface Tour {
   id: string;
@@ -103,6 +104,8 @@ const TourDetail = () => {
     );
   }
 
+  const tourPath = `/tour/${tour.slug || slug}`;
+
   // Generate structured data for SEO
   const structuredData = {
     "@context": "https://schema.org",
@@ -121,11 +124,19 @@ const TourDetail = () => {
       "position": index + 1
     })),
     "duration": tour.duration,
-    "provider": {
-      "@type": "Organization",
-      "name": "Vinh Around Travel",
-      "url": "https://vinharound.com"
-    }
+    "provider": ORGANIZATION,
+    "url": absoluteUrl(tourPath)
+  };
+
+  // Breadcrumb giúp Google hiển thị đường dẫn phân cấp trên SERP
+  const breadcrumbData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", position: 1, name: "Trang chủ", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "Tour", item: absoluteUrl("/#tours") },
+      { "@type": "ListItem", position: 3, name: tour.title, item: absoluteUrl(tourPath) }
+    ]
   };
 
   return (
@@ -135,16 +146,11 @@ const TourDetail = () => {
         description={tour.description || `Khám phá ${tour.title} cùng Vinh Around - Tour du lịch cao cấp với dịch vụ tận tâm`}
         keywords={`${tour.title}, private tour, vinh around, du lịch cao cấp, ${tour.route || ''}`}
         image={tour.image_url || 'https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200&q=80'}
-        url={`https://vinharound.com/tour/${tour.slug || slug}`}
+        url={tourPath}
         type="article"
+        jsonLd={[structuredData, breadcrumbData]}
       />
-      
-      {/* Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-      
+
       <div className="min-h-screen bg-background">
         {/* Hero Image */}
         <div className="relative h-[50vh] md:h-[60vh] overflow-hidden">
