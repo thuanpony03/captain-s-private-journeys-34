@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { trackZaloClick } from "@/lib/analytics";
 
 interface Companion {
   image: string;
@@ -18,14 +19,14 @@ const COMPANIONS: Companion[] = [
     image:
       "https://res.cloudinary.com/dvu2csvsg/image/upload/w_800,q_auto,f_auto/v1784657497/vinharound/chuyen-di/gia-dinh-chi-lan-ka-mua-dong-o-my/gia-dinh-chi-lan-ka-mua-dong-o-my-1.jpg",
     caption:
-      "Nhà chị Lan Ka, New York mùa đông. Hai bạn nhỏ dán mắt vào cửa kính nhìn toà nhà cao dần — kiểu cảm giác 'mình đã đến thật rồi'.",
+      "Cả nhà chị Lan Ka trước thác Niagara đóng băng. 'Đây là tấm hình gia đình đẹp nhất từ trước tới giờ' — chị nói vậy.",
     href: "/chuyen-di/gia-dinh-chi-lan-ka-mua-dong-o-my",
     size: "lg",
   },
   {
     image:
       "https://res.cloudinary.com/dvu2csvsg/image/upload/w_800,q_auto,f_auto/v1784657519/vinharound/chuyen-di/bac-au-family-trip-chi-t/bac-au-family-trip-chi-t-1.jpg",
-    caption: "Gia đình chị T., Bắc Âu mùa Giáng Sinh. Không chạy lịch, không đông đúc.",
+    caption: "Gia đình chị T. trước nhà thờ Helsinki, Phần Lan — mùa Giáng Sinh, không chạy lịch, không đông đúc.",
     href: "/chuyen-di/bac-au-family-trip-chi-t",
     size: "md",
   },
@@ -38,15 +39,15 @@ const COMPANIONS: Companion[] = [
   },
   {
     image:
-      "https://res.cloudinary.com/dvu2csvsg/image/upload/w_800,q_auto,f_auto/v1784657499/vinharound/chuyen-di/gia-dinh-chi-lan-ka-mua-dong-o-my/gia-dinh-chi-lan-ka-mua-dong-o-my-2.jpg",
-    caption: "Buổi sáng ở Central Park, chocolate nóng cho ấm tay.",
+      "https://res.cloudinary.com/dvu2csvsg/image/upload/w_800,q_auto,f_auto/v1784657517/vinharound/chuyen-di/gia-dinh-chi-lan-ka-mua-dong-o-my/gia-dinh-chi-lan-ka-mua-dong-o-my-8.jpg",
+    caption: "'Thác nước đang đóng băng kìa mẹ' — hơi nước bốc lên mờ cả skyline phía xa thác Niagara.",
     href: "/chuyen-di/gia-dinh-chi-lan-ka-mua-dong-o-my",
     size: "sm",
   },
   {
     image:
-      "https://res.cloudinary.com/dvu2csvsg/image/upload/w_800,q_auto,f_auto/v1784657522/vinharound/chuyen-di/bac-au-family-trip-chi-t/bac-au-family-trip-chi-t-2.jpg",
-    caption: "Helsinki — những bước chân đầu tiên giữa mùa đông châu Âu.",
+      "https://res.cloudinary.com/dvu2csvsg/image/upload/w_800,q_auto,f_auto/v1784657538/vinharound/chuyen-di/bac-au-family-trip-chi-t/bac-au-family-trip-chi-t-8.jpg",
+    caption: "Stockholm, ga Centralstation — cả nhà tụ đủ trước giờ lên tàu.",
     href: "/chuyen-di/bac-au-family-trip-chi-t",
     size: "md",
   },
@@ -96,6 +97,19 @@ export default function CompanionsChapter() {
             </Link>
           ))}
         </div>
+
+        <p className="text-primary/50 text-sm mt-10 md:mt-14">
+          Gia đình bạn sẽ là chuyến tiếp theo?{" "}
+          <a
+            href="https://zalo.me/0933344646"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackZaloClick()}
+            className="text-secondary font-medium hover:underline"
+          >
+            Nhắn Zalo cho mình →
+          </a>
+        </p>
       </div>
     </section>
   );

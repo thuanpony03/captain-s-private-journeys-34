@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { trackZaloClick } from "@/lib/analytics";
 
 /**
  * Chương II — Vinh là ai. Dựng từ chính lời Vinh viết (bài "10 năm làm tour
@@ -45,9 +46,18 @@ export default function AboutChapter() {
               châu Âu, mỗi cung đường đều điều chỉnh được theo số lượng thành viên, độ tuổi và nhịp của
               từng nhà.
             </p>
-            <p className="font-display text-lg text-primary/90 italic">
+            <p className="font-display text-lg text-primary/90 italic mb-6">
               — Vinh
             </p>
+            <a
+              href="https://zalo.me/0933344646"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackZaloClick()}
+              className="inline-block text-secondary text-sm font-medium hover:underline"
+            >
+              kể mình nghe nhà bạn thế nào →
+            </a>
           </div>
         </div>
       </div>
