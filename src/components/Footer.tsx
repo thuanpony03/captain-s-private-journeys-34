@@ -1,3 +1,5 @@
+"use client";
+
 const Footer = () => {
   const scrollToForm = () => {
     document.getElementById("contact-form")?.scrollIntoView({

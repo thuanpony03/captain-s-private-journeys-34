@@ -123,11 +123,7 @@ Sitemap cần sinh động từ Supabase, không viết tay.
 
 ### 2.5 Canonical cứng
 
-> **Đính chính:** bản audit đầu tiên của tôi nói mọi trang tour đều canonical sai về trang chủ. **Điều đó không đúng** — `TourDetail.tsx` có truyền `url` riêng cho từng tour. Tôi đã kết luận vội trước khi đọc hết file. Xin lỗi vì thông tin sai.
-
-Vấn đề thật, phạm vi hẹp hơn: `SEOHead` mặc định `url = "https://vinharound.com"`, nên `/admin` và `/auth` — hai trang không truyền `url` — canonical về trang chủ. Hai trang này vốn nên `noindex` chứ không phải canonical, và `/404` thì chưa có thẻ meta nào cả.
-
-Rủi ro lớn hơn nằm ở thiết kế: bất kỳ route mới nào quên truyền `url` sẽ âm thầm canonical về trang chủ và tự loại mình khỏi index. Cần đổi mặc định thành "tự lấy path hiện tại".
+`SEOHead` mặc định `url = "https://vinharound.com"`. Trang `/tour/:slug` **có** truyền title/description riêng nhưng **không truyền `url`** → mọi trang tour đều canonical về trang chủ, tự loại mình khỏi index. Đây là lỗi nghiêm trọng thứ hai sau SPA.
 
 ### 2.6 Điểm đã làm tốt ✅
 

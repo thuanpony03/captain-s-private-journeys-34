@@ -1,73 +1,48 @@
-# Welcome to your Lovable project
+# Vinh Around — Private Tour Mỹ Úc Châu Âu
 
-## Project info
+Website [vinharound.com](https://vinharound.com). Next.js 16 (App Router) + Supabase, deploy trên Cloudflare Workers.
 
-**URL**: https://lovable.dev/projects/175116dd-8ccb-4a59-a5ad-d549b9dd5a18
+## Bắt đầu
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/175116dd-8ccb-4a59-a5ad-d549b9dd5a18) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+cp .env.example .env.local     # điền NEXT_PUBLIC_SUPABASE_URL và ANON_KEY
+npm install
+npm run dev                    # http://localhost:3000
 ```
 
-**Edit a file directly in GitHub**
+## Scripts
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+| Lệnh | Việc |
+|---|---|
+| `npm run dev` | Dev server |
+| `npm run build` | Build production |
+| `npm run lint` | ESLint |
+| `npm run preview` | Build OpenNext rồi chạy thử trên runtime Workers |
+| `npm run deploy` | Build và deploy lên Cloudflare |
 
-**Use GitHub Codespaces**
+## Cấu trúc
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+app/                      Route (App Router)
+  layout.tsx              Layout gốc, metadata mặc định, GA4 + Meta Pixel
+  page.tsx                Trang chủ (ISR 1h)
+  tour/[slug]/page.tsx    Trang tour — generateMetadata + ISR
+  admin/, auth/           Có guard phía server
+  sitemap.ts, robots.ts   Sinh động từ Supabase
+src/
+  components/             UI (shadcn trong ui/)
+  lib/seo.ts              Hằng số SEO dùng chung
+  lib/auth-guard.ts       Kiểm tra quyền admin phía server
+  lib/supabase/           Client cho browser và server
+supabase/migrations/      Schema và RLS policy
+```
 
-## What technologies are used for this project?
+## Tài liệu
 
-This project is built with:
+- **[DEPLOY.md](./DEPLOY.md)** — deploy Cloudflare, checklist, những gì đã/chưa kiểm chứng
+- **[FIXES_APPLIED.md](./FIXES_APPLIED.md)** — các lỗi bảo mật và SEO đã vá
+- **[ROADMAP.md](./ROADMAP.md)** — audit đầy đủ và kế hoạch dài hạn
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Lưu ý
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/175116dd-8ccb-4a59-a5ad-d549b9dd5a18) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Project này từng do Lovable sinh ra. Sau khi chuyển sang Next.js, **Lovable không còn sửa được** — mọi thay đổi làm trực tiếp trong repo. Bản Vite cũ vẫn còn ở nhánh `main`.

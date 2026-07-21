@@ -1,5 +1,7 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useTourPackages } from "@/hooks/useSiteContent";
 import { trackButtonClick, trackTourView, trackScrollToSection } from "@/lib/analytics";
@@ -9,7 +11,7 @@ const TourPackages = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeRoute, setActiveRoute] = useState(0);
   const { tours, loading } = useTourPackages();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Transform tours data for compatibility
   const journeys = tours.map(tour => ({
@@ -34,7 +36,7 @@ const TourPackages = () => {
   const viewTourDetail = (tour: any) => {
     trackTourView(tour.title);
     trackButtonClick('Xem chi tiết', `Tour - ${tour.title}`);
-    navigate(`/tour/${tour.slug || tour.id}`);
+    router.push(`/tour/${tour.slug || tour.id}`);
   };
 
   useEffect(() => {

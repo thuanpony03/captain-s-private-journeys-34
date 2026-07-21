@@ -1,5 +1,7 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,7 +9,6 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SEOHead from "@/components/SEOHead";
 import CustomCursor from "@/components/CustomCursor";
 import { ArrowLeft, Eye, EyeOff, Lock, Mail, User, Shield, Loader2 } from "lucide-react";
 
@@ -20,35 +21,35 @@ import { ArrowLeft, Eye, EyeOff, Lock, Mail, User, Shield, Loader2 } from "lucid
 //
 // Đây chỉ là lớp chặn ở UI. Lớp chặn thật nằm ở Supabase Dashboard →
 // Authentication → Providers → Email → tắt "Allow new users to sign up".
-const ALLOW_PUBLIC_SIGNUP = import.meta.env.VITE_ALLOW_PUBLIC_SIGNUP === "true";
+const ALLOW_PUBLIC_SIGNUP = process.env.NEXT_PUBLIC_ALLOW_PUBLIC_SIGNUP === "true";
 
-const Auth = () => {
+const AuthForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("signin");
-  const navigate = useNavigate();
+  const router = useRouter();
   const { toast } = useToast();
 
   useEffect(() => {
     // Check if user is already logged in
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
-        navigate("/admin");
+        router.push("/admin");
       }
     });
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        navigate("/admin");
+        router.push("/admin");
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [router]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -148,7 +149,7 @@ const Auth = () => {
         description: "Chào mừng quay lại!",
       });
 
-      navigate("/admin");
+      router.push("/admin");
     } catch (error: any) {
       toast({
         title: "Lỗi đăng nhập",
@@ -162,11 +163,6 @@ const Auth = () => {
 
   return (
     <>
-      <SEOHead 
-        title="Đăng nhập Admin - Vinh Around Private Tours"
-        description="Đăng nhập vào trang quản trị Vinh Around để quản lý tour du lịch riêng."
-        noIndex
-      />
       <CustomCursor />
       
       <div className="min-h-screen bg-gradient-to-br from-primary via-primary/95 to-primary/90 flex items-center justify-center p-4">
@@ -181,7 +177,7 @@ const Auth = () => {
           {/* Back Button */}
           <Button 
             variant="ghost" 
-            onClick={() => navigate("/")}
+            onClick={() => router.push("/")}
             className="mb-6 text-white hover:bg-white/10 group"
           >
             <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
@@ -392,4 +388,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default AuthForm;

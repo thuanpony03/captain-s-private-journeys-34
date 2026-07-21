@@ -26,6 +26,18 @@ dist-ssr
 # Environment variables
 .env
 .env.local
+.dev.vars
+.env.local
 .env.*.local
 !.env.example
-vite.config.ts.timestamp-*
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Cloudflare
+.open-next/
+.wrangler/
+.dev.vars
+cloudflare-env.d.ts

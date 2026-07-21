@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,8 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, RefreshCw, LogOut, Users, MessageSquare, Settings, BarChart3, Calendar, Phone, Clock, Trash2, Image, FileText, MapPin } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import SEOHead from "@/components/SEOHead";
+import { useRouter } from "next/navigation";
 import CustomCursor from "@/components/CustomCursor";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { ContentEditor } from "@/components/admin/ContentEditor";
@@ -29,7 +30,7 @@ interface LeadSubmission {
   notes: string | null;
 }
 
-const Admin = () => {
+const AdminDashboard = () => {
   const { user, isAdmin, loading: authLoading } = useAdminAuth();
   const [leads, setLeads] = useState<LeadSubmission[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,7 +44,7 @@ const Admin = () => {
   const [activeTab, setActiveTab] = useState("leads");
   const [contentTab, setContentTab] = useState("text");
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const createTestLead = async () => {
     try {
@@ -199,7 +200,7 @@ const Admin = () => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    navigate("/");
+    router.push("/");
   };
 
   const getStatusBadge = (status: string) => {
@@ -250,11 +251,6 @@ const Admin = () => {
 
   return (
     <>
-      <SEOHead 
-        title="Admin Dashboard - Vinh Around Private Tours"
-        description="Quản lý hệ thống tour du lịch riêng Vinh Around"
-        noIndex
-      />
       <CustomCursor />
       
       <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-primary/5">
@@ -263,7 +259,7 @@ const Admin = () => {
           <div className="container mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <Button variant="ghost" onClick={() => navigate("/")} className="text-primary hover:bg-primary/10">
+                <Button variant="ghost" onClick={() => router.push("/")} className="text-primary hover:bg-primary/10">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Về trang chủ
                 </Button>
@@ -571,4 +567,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default AdminDashboard;

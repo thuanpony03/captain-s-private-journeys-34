@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { trackZaloClick } from "@/lib/analytics";
@@ -35,7 +37,7 @@ const FloatingZalo = () => {
             className="relative bg-white hover:bg-white/90 rounded-full w-16 h-16 md:w-20 md:h-20 shadow-float hover-lift flex items-center justify-center group p-0 overflow-hidden"
             aria-label="Chat qua Zalo"
           >
-            <img src={zaloLogo} alt="Zalo" className="w-full h-full object-scale-down" />
+            <img src={zaloLogo.src} alt="Zalo" className="w-full h-full object-scale-down" />
 
             {/* Badge */}
             <div className="absolute -top-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-red-500 rounded-full animate-pulse shadow-float"></div>

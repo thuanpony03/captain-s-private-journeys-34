@@ -1,6 +1,7 @@
+"use client";
+
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
-import SEOHead from "@/components/SEOHead";
 import Navbar from "@/components/Navbar";
 import HeroVideoMask from "@/components/HeroVideoMask";
 import PersonalStory from "@/components/PersonalStory";
@@ -16,29 +17,26 @@ import Footer from "@/components/Footer";
 import FloatingZalo from "@/components/FloatingZalo";
 import FloatingContacts from "@/components/FloatingContacts";
 
-const Index = () => {
-  return (
-    <SmoothScroll>
-      <SEOHead />
-      <CustomCursor />
-      <Navbar />
-      <ContactFormPopup />
-      <main className="min-h-screen">
-        <HeroVideoMask />
-        <PersonalStory />
-        <VinhVlogs />
-        <ScrollytellingRoadmap />
-        <ComparisonTable />
-        <LandCruiseExperience />
-        <SocialProof />
-        <TourPackages />
-        <ContactForm />
-        <Footer />
-        <FloatingZalo />
-        <FloatingContacts />
-      </main>
-    </SmoothScroll>
-  );
-};
+const HomePage = () => (
+  <SmoothScroll>
+    <CustomCursor />
+    <Navbar />
+    <ContactFormPopup />
+    <main className="min-h-screen">
+      <HeroVideoMask />
+      <PersonalStory />
+      <VinhVlogs />
+      <ScrollytellingRoadmap />
+      <ComparisonTable />
+      <LandCruiseExperience />
+      <SocialProof />
+      <TourPackages />
+      <ContactForm />
+      <Footer />
+      <FloatingZalo />
+      <FloatingContacts />
+    </main>
+  </SmoothScroll>
+);
 
-export default Index;
+export default HomePage;

@@ -1,0 +1,5 @@
+# Biến môi trường cho `wrangler dev` / preview trên Cloudflare.
+# Copy thành .dev.vars (đã có trong .gitignore).
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SITE_URL=https://vinharound.com
