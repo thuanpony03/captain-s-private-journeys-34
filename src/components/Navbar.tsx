@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -11,6 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { trackZaloClick } from "@/lib/analytics";
 
 const NAV_LINKS = [
   { href: "/tour", label: "Tour" },
@@ -33,14 +33,6 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const scrollToForm = () => {
-    if (window.location.pathname !== "/") {
-      window.location.href = "/#contact-form";
-      return;
-    }
-    document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <nav
@@ -86,17 +78,21 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Right side: CTA + mobile menu trigger */}
+          {/* Right side: Zalo nhỏ + mobile menu trigger */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <Button
-              onClick={scrollToForm}
-              className="bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 rounded-full shadow-elegant hover:shadow-glow hover-lift text-xs sm:text-sm md:text-base border-2 border-white/30 transition-all hover:scale-105"
+            <a
+              href="https://zalo.me/0933344646"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackZaloClick()}
+              className={`text-sm font-medium px-3 py-1.5 rounded-full border transition-colors ${
+                isScrolled
+                  ? "border-primary/20 text-primary hover:border-secondary hover:text-secondary"
+                  : "border-white/30 text-white hover:border-secondary hover:text-secondary"
+              }`}
             >
-              <span className="flex items-center gap-1.5 sm:gap-2">
-                <span className="hidden sm:inline">ĐẶT LỊCH NGAY</span>
-                <span className="sm:hidden">Liên hệ ngay</span>
-              </span>
-            </Button>
+              Zalo
+            </a>
 
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
