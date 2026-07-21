@@ -10,6 +10,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, RefreshCw, Trash2, Edit, Save, X, MapPin } from "lucide-react";
 
+interface ItineraryDay {
+  day: number;
+  title: string;
+  description?: string;
+  image_url?: string;
+  meals?: string;
+  hotel?: string;
+}
+
+interface TourFaq {
+  question: string;
+  answer: string;
+}
+
 interface TourPackage {
   id: string;
   title: string;
@@ -23,7 +37,29 @@ interface TourPackage {
   stops: any; // JSONB from database
   is_active: boolean;
   order_index: number;
+  destination: string | null;
+  price_from: number | null;
+  departure_note: string | null;
+  max_group_size: number | null;
+  video_url: string | null;
+  inclusions: string[] | null;
+  exclusions: string[] | null;
+  gallery_urls: string[] | null;
+  related_story_slugs: string[] | null;
+  itinerary: ItineraryDay[] | null;
+  faqs: TourFaq[] | null;
 }
+
+const emptyItineraryDay = (day: number): ItineraryDay => ({
+  day,
+  title: "",
+  description: "",
+  image_url: "",
+  meals: "",
+  hotel: "",
+});
+
+const emptyFaq = (): TourFaq => ({ question: "", answer: "" });
 
 export const TourManager = () => {
   const [tours, setTours] = useState<TourPackage[]>([]);
@@ -52,7 +88,7 @@ export const TourManager = () => {
         .order('order_index', { ascending: true });
 
       if (error) throw error;
-      setTours(data || []);
+      setTours((data || []) as unknown as TourPackage[]);
     } catch (error: any) {
       toast({
         title: "Lỗi",
@@ -92,7 +128,7 @@ export const TourManager = () => {
 
       const { error } = await supabase
         .from('tour_packages')
-        .update(updatedForm)
+        .update(updatedForm as any)
         .eq('id', editing);
 
       if (error) throw error;
@@ -320,6 +356,216 @@ export const TourManager = () => {
                       rows={5}
                       placeholder="San Francisco&#10;Los Angeles&#10;Las Vegas"
                     />
+                  </div>
+
+                  <div className="border-t pt-4 mt-2">
+                    <p className="text-sm font-semibold text-primary mb-3">Nâng cấp trang tour (tuỳ chọn)</p>
+
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <Label>Thị trường (cho landing page)</Label>
+                        <select
+                          className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+                          value={editForm.destination || ''}
+                          onChange={(e) => setEditForm({ ...editForm, destination: e.target.value || null })}
+                        >
+                          <option value="">— Chưa gắn —</option>
+                          <option value="my">Mỹ</option>
+                          <option value="uc">Úc</option>
+                          <option value="chau-au">Châu Âu</option>
+                          <option value="canada">Canada</option>
+                        </select>
+                      </div>
+                      <div>
+                        <Label>Cỡ nhóm tối đa</Label>
+                        <Input
+                          type="number"
+                          value={editForm.max_group_size ?? ''}
+                          onChange={(e) => setEditForm({ ...editForm, max_group_size: e.target.value ? parseInt(e.target.value) : null })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mb-4">
+                      <Label>Ghi chú khởi hành</Label>
+                      <Input
+                        placeholder="Khởi hành theo lịch gia đình bạn"
+                        value={editForm.departure_note || ''}
+                        onChange={(e) => setEditForm({ ...editForm, departure_note: e.target.value })}
+                      />
+                    </div>
+
+                    <div className="mb-4">
+                      <Label>Video URL (embed, vd: youtube.com/embed/...)</Label>
+                      <Input
+                        value={editForm.video_url || ''}
+                        onChange={(e) => setEditForm({ ...editForm, video_url: e.target.value })}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <Label>Bao gồm (mỗi dòng 1 ý)</Label>
+                        <Textarea
+                          rows={4}
+                          value={(editForm.inclusions || []).join('\n')}
+                          onChange={(e) => setEditForm({ ...editForm, inclusions: e.target.value.split('\n').filter(s => s.trim()) })}
+                        />
+                      </div>
+                      <div>
+                        <Label>Không bao gồm (mỗi dòng 1 ý)</Label>
+                        <Textarea
+                          rows={4}
+                          value={(editForm.exclusions || []).join('\n')}
+                          onChange={(e) => setEditForm({ ...editForm, exclusions: e.target.value.split('\n').filter(s => s.trim()) })}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mb-4">
+                      <Label>Ảnh gallery (mỗi dòng 1 URL)</Label>
+                      <Textarea
+                        rows={4}
+                        value={(editForm.gallery_urls || []).join('\n')}
+                        onChange={(e) => setEditForm({ ...editForm, gallery_urls: e.target.value.split('\n').filter(s => s.trim()) })}
+                        placeholder="https://res.cloudinary.com/..."
+                      />
+                    </div>
+
+                    <div className="mb-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <Label>Lịch trình ngày-theo-ngày</Label>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            const current = editForm.itinerary || [];
+                            setEditForm({ ...editForm, itinerary: [...current, emptyItineraryDay(current.length + 1)] });
+                          }}
+                        >
+                          <Plus className="w-3.5 h-3.5 mr-1" /> Thêm ngày
+                        </Button>
+                      </div>
+                      <div className="space-y-3">
+                        {(editForm.itinerary || []).map((day, i) => (
+                          <div key={i} className="border rounded-lg p-3 space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-semibold text-muted-foreground">Ngày {day.day}</span>
+                              <Button
+                                type="button"
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => {
+                                  const next = (editForm.itinerary || []).filter((_, idx) => idx !== i);
+                                  setEditForm({ ...editForm, itinerary: next });
+                                }}
+                              >
+                                <Trash2 className="w-3.5 h-3.5 text-destructive" />
+                              </Button>
+                            </div>
+                            <Input
+                              placeholder="Tiêu đề ngày"
+                              value={day.title}
+                              onChange={(e) => {
+                                const next = [...(editForm.itinerary || [])];
+                                next[i] = { ...next[i], title: e.target.value };
+                                setEditForm({ ...editForm, itinerary: next });
+                              }}
+                            />
+                            <Textarea
+                              placeholder="Mô tả chi tiết"
+                              rows={2}
+                              value={day.description || ''}
+                              onChange={(e) => {
+                                const next = [...(editForm.itinerary || [])];
+                                next[i] = { ...next[i], description: e.target.value };
+                                setEditForm({ ...editForm, itinerary: next });
+                              }}
+                            />
+                            <div className="grid grid-cols-3 gap-2">
+                              <Input
+                                placeholder="Ảnh URL"
+                                value={day.image_url || ''}
+                                onChange={(e) => {
+                                  const next = [...(editForm.itinerary || [])];
+                                  next[i] = { ...next[i], image_url: e.target.value };
+                                  setEditForm({ ...editForm, itinerary: next });
+                                }}
+                              />
+                              <Input
+                                placeholder="Bữa ăn"
+                                value={day.meals || ''}
+                                onChange={(e) => {
+                                  const next = [...(editForm.itinerary || [])];
+                                  next[i] = { ...next[i], meals: e.target.value };
+                                  setEditForm({ ...editForm, itinerary: next });
+                                }}
+                              />
+                              <Input
+                                placeholder="Khách sạn"
+                                value={day.hotel || ''}
+                                onChange={(e) => {
+                                  const next = [...(editForm.itinerary || [])];
+                                  next[i] = { ...next[i], hotel: e.target.value };
+                                  setEditForm({ ...editForm, itinerary: next });
+                                }}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <Label>FAQ riêng của tour</Label>
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setEditForm({ ...editForm, faqs: [...(editForm.faqs || []), emptyFaq()] })}
+                        >
+                          <Plus className="w-3.5 h-3.5 mr-1" /> Thêm câu hỏi
+                        </Button>
+                      </div>
+                      <div className="space-y-3">
+                        {(editForm.faqs || []).map((faq, i) => (
+                          <div key={i} className="border rounded-lg p-3 space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-semibold text-muted-foreground">Câu {i + 1}</span>
+                              <Button
+                                type="button"
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => setEditForm({ ...editForm, faqs: (editForm.faqs || []).filter((_, idx) => idx !== i) })}
+                              >
+                                <Trash2 className="w-3.5 h-3.5 text-destructive" />
+                              </Button>
+                            </div>
+                            <Input
+                              placeholder="Câu hỏi"
+                              value={faq.question}
+                              onChange={(e) => {
+                                const next = [...(editForm.faqs || [])];
+                                next[i] = { ...next[i], question: e.target.value };
+                                setEditForm({ ...editForm, faqs: next });
+                              }}
+                            />
+                            <Textarea
+                              placeholder="Câu trả lời"
+                              rows={2}
+                              value={faq.answer}
+                              onChange={(e) => {
+                                const next = [...(editForm.faqs || [])];
+                                next[i] = { ...next[i], answer: e.target.value };
+                                setEditForm({ ...editForm, faqs: next });
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </>
               ) : (

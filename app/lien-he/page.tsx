@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 import { SITE_URL, absoluteUrl } from "@/lib/seo";
 
-const TITLE = "Liên hệ Vinh Around - Tư vấn Private Tour miễn phí";
+const TITLE = "Liên hệ - Tư vấn Private Tour miễn phí";
 const DESCRIPTION =
   "Liên hệ Vinh Around qua Zalo, hotline hoặc để lại thông tin — tư vấn private tour Mỹ, Úc, Châu Âu miễn phí trong 24h.";
 
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: absoluteUrl("/lien-he"),
-    title: TITLE,
+    title: `${TITLE} | Vinh Around`,
     description: DESCRIPTION,
   },
 };

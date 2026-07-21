@@ -140,51 +140,84 @@ export type Database = {
       tour_packages: {
         Row: {
           created_at: string | null
+          departure_note: string | null
           description: string | null
+          destination: string | null
           duration: string | null
+          exclusions: string[] | null
+          faqs: Json | null
+          gallery_urls: string[] | null
           id: string
           image_url: string | null
+          inclusions: string[] | null
           is_active: boolean | null
+          itinerary: Json | null
+          max_group_size: number | null
           order_index: number | null
           price: string | null
+          price_from: number | null
+          related_story_slugs: string[] | null
           route: string | null
           slug: string | null
           stops: Json | null
           tagline: string | null
           title: string
           updated_at: string | null
+          video_url: string | null
         }
         Insert: {
           created_at?: string | null
+          departure_note?: string | null
           description?: string | null
+          destination?: string | null
           duration?: string | null
+          exclusions?: string[] | null
+          faqs?: Json | null
+          gallery_urls?: string[] | null
           id?: string
           image_url?: string | null
+          inclusions?: string[] | null
           is_active?: boolean | null
+          itinerary?: Json | null
+          max_group_size?: number | null
           order_index?: number | null
           price?: string | null
+          price_from?: number | null
+          related_story_slugs?: string[] | null
           route?: string | null
           slug?: string | null
           stops?: Json | null
           tagline?: string | null
           title: string
           updated_at?: string | null
+          video_url?: string | null
         }
         Update: {
           created_at?: string | null
+          departure_note?: string | null
           description?: string | null
+          destination?: string | null
           duration?: string | null
+          exclusions?: string[] | null
+          faqs?: Json | null
+          gallery_urls?: string[] | null
           id?: string
           image_url?: string | null
+          inclusions?: string[] | null
           is_active?: boolean | null
+          itinerary?: Json | null
+          max_group_size?: number | null
           order_index?: number | null
           price?: string | null
+          price_from?: number | null
+          related_story_slugs?: string[] | null
           route?: string | null
           slug?: string | null
           stops?: Json | null
           tagline?: string | null
           title?: string
           updated_at?: string | null
+          video_url?: string | null
         }
         Relationships: []
       }

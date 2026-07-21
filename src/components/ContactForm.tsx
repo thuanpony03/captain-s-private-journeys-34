@@ -11,7 +11,12 @@ import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmit, trackEvent } from "@/lib/analytics";
 import { supabase } from "@/integrations/supabase/client";
 import { getStoredUtm } from "@/lib/utm";
-const ContactForm = () => {
+interface ContactFormProps {
+  /** Điền sẵn điểm đến khi nhúng ở landing page thị trường (P5.8). */
+  defaultDestination?: "usa" | "australia" | "europe" | "other";
+}
+
+const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
   const {
     toast
   } = useToast();
@@ -19,7 +24,7 @@ const ContactForm = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
-    destination: "",
+    destination: defaultDestination || "",
     groupSize: "",
     priorities: [] as string[],
     contact: "",

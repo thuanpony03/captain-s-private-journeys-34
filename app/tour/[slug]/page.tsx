@@ -2,14 +2,34 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, MapPin, Clock, DollarSign } from "lucide-react";
+import { ArrowLeft, MapPin, Clock, DollarSign, Users, CalendarClock, Check, X as XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { ShareButton, BookingCta } from "@/components/tour/TourActions";
 import { createPublicClient } from "@/lib/supabase/server";
 import { ORGANIZATION, absoluteUrl, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1449034446853-66c86144b0ad?w=1200&q=80";
+
+interface ItineraryDay {
+  day: number;
+  title: string;
+  description?: string;
+  image_url?: string;
+  meals?: string;
+  hotel?: string;
+}
+
+interface Faq {
+  question: string;
+  answer: string;
+}
 
 interface Tour {
   id: string;
@@ -22,6 +42,15 @@ interface Tour {
   image_url: string | null;
   slug: string | null;
   stops: string[];
+  itinerary: ItineraryDay[];
+  inclusions: string[];
+  exclusions: string[];
+  gallery_urls: string[];
+  faqs: Faq[];
+  price_from: number | null;
+  departure_note: string | null;
+  max_group_size: number | null;
+  video_url: string | null;
 }
 
 async function getTour(slug: string): Promise<Tour | null> {
@@ -39,6 +68,11 @@ async function getTour(slug: string): Promise<Tour | null> {
   return {
     ...(data as unknown as Tour),
     stops: Array.isArray(data.stops) ? data.stops.map((s) => String(s)) : [],
+    itinerary: Array.isArray(data.itinerary) ? (data.itinerary as unknown as ItineraryDay[]) : [],
+    inclusions: Array.isArray(data.inclusions) ? data.inclusions : [],
+    exclusions: Array.isArray(data.exclusions) ? data.exclusions : [],
+    gallery_urls: Array.isArray(data.gallery_urls) ? data.gallery_urls : [],
+    faqs: Array.isArray(data.faqs) ? (data.faqs as unknown as Faq[]) : [],
   };
 }
 
@@ -87,7 +121,10 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${tour.title} | Vinh Around Travel`;
+  // title đi qua template "%s | Vinh Around" của root layout — không tự thêm brand ở đây
+  // kẻo bị lặp "Vinh Around" 2 lần. OG/Twitter không dùng template nên cần bản đầy đủ riêng.
+  const title = tour.title;
+  const ogTitle = `${tour.title} | Vinh Around Travel`;
   const description =
     tour.description?.slice(0, 160) ||
     `Khám phá ${tour.title} cùng Vinh Around - Private tour cao cấp với xe riêng và lịch trình tùy chỉnh.`;
@@ -108,13 +145,13 @@ export async function generateMetadata({
     openGraph: {
       type: "article",
       url: absoluteUrl(path),
-      title,
+      title: ogTitle,
       description,
       images: [{ url: image, width: 1200, height: 630, alt: tour.title }],
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: ogTitle,
       description,
       images: [image],
     },
@@ -160,10 +197,23 @@ export default async function TourPage({
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Trang chủ", item: absoluteUrl("/") },
-        { "@type": "ListItem", position: 2, name: "Tour", item: absoluteUrl("/#tours") },
+        { "@type": "ListItem", position: 2, name: "Tour", item: absoluteUrl("/tour") },
         { "@type": "ListItem", position: 3, name: tour.title, item: absoluteUrl(path) },
       ],
     },
+    ...(tour.faqs.length > 0
+      ? [
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: tour.faqs.map((faq) => ({
+              "@type": "Question",
+              name: faq.question,
+              acceptedAnswer: { "@type": "Answer", text: faq.answer },
+            })),
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -204,6 +254,12 @@ export default async function TourPage({
 
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
             <div className="container mx-auto max-w-4xl">
+              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20">
+                <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
+                <span className="text-white text-xs font-bold uppercase tracking-wide">
+                  Private 100% · Không shopping stop
+                </span>
+              </div>
               {tour.tagline && (
                 <p className="text-secondary text-sm md:text-base font-semibold mb-2">
                   {tour.tagline}
@@ -221,7 +277,7 @@ export default async function TourPage({
 
         {/* Content */}
         <div className="container mx-auto max-w-4xl px-6 py-12 md:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
             {tour.duration && (
               <div className="glass-effect p-5 rounded-xl border border-primary/20">
                 <div className="flex items-center gap-3 mb-2">
@@ -246,18 +302,42 @@ export default async function TourPage({
               </div>
             )}
 
-            {tour.stops.length > 0 && (
+            {tour.max_group_size && (
               <div className="glass-effect p-5 rounded-xl border border-primary/20">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-primary" />
+                    <Users className="w-5 h-5 text-primary" />
                   </div>
-                  <p className="text-sm text-muted-foreground">Điểm đến</p>
+                  <p className="text-sm text-muted-foreground">Cỡ nhóm tối đa</p>
                 </div>
-                <p className="text-xl font-bold text-primary">
-                  {tour.stops.length} địa điểm
-                </p>
+                <p className="text-xl font-bold text-primary">{tour.max_group_size} khách</p>
               </div>
+            )}
+
+            {tour.departure_note ? (
+              <div className="glass-effect p-5 rounded-xl border border-secondary/20">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
+                    <CalendarClock className="w-5 h-5 text-secondary" />
+                  </div>
+                  <p className="text-sm text-muted-foreground">Khởi hành</p>
+                </div>
+                <p className="text-base font-bold text-secondary">{tour.departure_note}</p>
+              </div>
+            ) : (
+              tour.stops.length > 0 && (
+                <div className="glass-effect p-5 rounded-xl border border-primary/20">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <MapPin className="w-5 h-5 text-primary" />
+                    </div>
+                    <p className="text-sm text-muted-foreground">Điểm đến</p>
+                  </div>
+                  <p className="text-xl font-bold text-primary">
+                    {tour.stops.length} địa điểm
+                  </p>
+                </div>
+              )
             )}
           </div>
 
@@ -272,7 +352,66 @@ export default async function TourPage({
             </div>
           )}
 
-          {tour.stops.length > 0 && (
+          {/* Lịch trình ngày-theo-ngày — dữ liệu mới, ưu tiên khi có */}
+          {tour.itinerary.length > 0 && (
+            <div className="mb-12">
+              <div className="text-center mb-8">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-3">
+                  Lịch trình chi tiết
+                </h2>
+                <p className="text-muted-foreground max-w-2xl mx-auto">
+                  {tour.itinerary.length} ngày, từng ngày đều có bữa ăn và khách sạn cụ thể
+                </p>
+              </div>
+
+              <Accordion type="single" collapsible defaultValue="day-1" className="space-y-3">
+                {tour.itinerary.map((day) => (
+                  <AccordionItem
+                    key={day.day}
+                    value={`day-${day.day}`}
+                    className="glass-effect rounded-2xl border border-primary/10 px-5 md:px-6"
+                  >
+                    <AccordionTrigger className="hover:no-underline py-5">
+                      <div className="flex items-center gap-4 text-left">
+                        <div className="w-10 h-10 flex-shrink-0 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center text-white font-bold">
+                          {day.day}
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground font-medium">Ngày {day.day}</p>
+                          <h3 className="text-base md:text-lg font-bold text-foreground">{day.title}</h3>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-6">
+                      {day.image_url && (
+                        <div className="relative w-full h-48 md:h-64 rounded-xl overflow-hidden mb-4">
+                          <Image
+                            src={day.image_url}
+                            alt={day.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 800px"
+                            className="object-cover"
+                          />
+                        </div>
+                      )}
+                      {day.description && (
+                        <p className="text-foreground/80 leading-relaxed whitespace-pre-line mb-4">
+                          {day.description}
+                        </p>
+                      )}
+                      <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                        {day.meals && <span>🍽 {day.meals}</span>}
+                        {day.hotel && <span>🏨 {day.hotel}</span>}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          )}
+
+          {/* Fallback: tour chưa có itinerary chi tiết, hiện danh sách điểm dừng cũ */}
+          {tour.itinerary.length === 0 && tour.stops.length > 0 && (
             <div className="mb-12">
               <div className="text-center mb-8">
                 <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-3">
@@ -330,6 +469,102 @@ export default async function TourPage({
                   <div className="w-px h-12 bg-gradient-to-b from-transparent via-primary to-transparent" />
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* Gallery ảnh thật từ chuyến đã đi */}
+          {tour.gallery_urls.length > 0 && (
+            <div className="mb-12">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-6 text-center">
+                Hình ảnh chuyến đi thật
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                {tour.gallery_urls.map((url, i) => (
+                  <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden">
+                    <Image
+                      src={url}
+                      alt={`${tour.title} - ảnh ${i + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                      className="object-cover hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Bao gồm / Không bao gồm */}
+          {(tour.inclusions.length > 0 || tour.exclusions.length > 0) && (
+            <div className="grid md:grid-cols-2 gap-6 mb-12">
+              {tour.inclusions.length > 0 && (
+                <div className="glass-effect p-6 rounded-2xl border border-primary/10">
+                  <h3 className="font-display text-lg font-bold text-primary mb-4">Bao gồm</h3>
+                  <ul className="space-y-2.5">
+                    {tour.inclusions.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/80">
+                        <Check className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {tour.exclusions.length > 0 && (
+                <div className="glass-effect p-6 rounded-2xl border border-primary/10">
+                  <h3 className="font-display text-lg font-bold text-primary mb-4">Không bao gồm</h3>
+                  <ul className="space-y-2.5">
+                    {tour.exclusions.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/80">
+                        <XIcon className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Video vlog cùng tuyến */}
+          {tour.video_url && (
+            <div className="mb-12">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-6 text-center">
+                Video chuyến đi thật
+              </h2>
+              <div className="relative aspect-video rounded-2xl overflow-hidden max-w-3xl mx-auto glass-effect border border-primary/10">
+                <iframe
+                  src={tour.video_url}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          )}
+
+          {/* FAQ riêng của tour */}
+          {tour.faqs.length > 0 && (
+            <div className="mb-12">
+              <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-6 text-center">
+                Câu hỏi thường gặp
+              </h2>
+              <Accordion type="single" collapsible className="max-w-2xl mx-auto space-y-3">
+                {tour.faqs.map((faq, i) => (
+                  <AccordionItem
+                    key={i}
+                    value={`faq-${i}`}
+                    className="glass-effect rounded-xl border border-primary/10 px-5"
+                  >
+                    <AccordionTrigger className="hover:no-underline text-left font-semibold text-foreground">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-foreground/70 leading-relaxed">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </div>
           )}
 
