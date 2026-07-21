@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, MapPin, Clock, DollarSign, Users, CalendarClock, Check, X as XIcon } from "lucide-react";
+import { MapPin, Clock, DollarSign, Users, CalendarClock, Check, X as XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import {
   Accordion,
   AccordionContent,
@@ -267,6 +269,7 @@ export default async function TourPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <TourViewTracker tourName={tour.title} />
+      <Navbar />
 
       <div className="min-h-screen bg-background">
         {/* Hero Image */}
@@ -281,19 +284,7 @@ export default async function TourPage({
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent" />
 
-          <div className="absolute top-6 left-6 z-10">
-            <Link href="/">
-              <Button
-                variant="outline"
-                className="glass-effect border-white/40 text-white hover:bg-white/20"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Về trang chủ
-              </Button>
-            </Link>
-          </div>
-
-          <div className="absolute top-6 right-6 z-10">
+          <div className="absolute top-20 md:top-24 right-6 z-10">
             <ShareButton title={tour.title} description={tour.description ?? undefined} />
           </div>
 
@@ -646,7 +637,7 @@ export default async function TourPage({
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <BookingCta tourTitle={tour.title} />
-              <Link href="/">
+              <Link href="/tour">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto">
                   Xem tour khác
                 </Button>
@@ -655,6 +646,7 @@ export default async function TourPage({
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
