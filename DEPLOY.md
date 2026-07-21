@@ -4,17 +4,13 @@ Next.js 16 + OpenNext adapter. Nhánh `security-seo-fixes`.
 
 ---
 
-## ⚠️ Đọc trước: migrate này cắt đứt Lovable
+## Trạng thái
 
-`vinharound.com` đang deploy qua Lovable, và Lovable tự commit thẳng vào repo này. Sau khi merge nhánh Next.js:
+Đã merge vào `main`. Từ commit `9981c25`, **Lovable không còn sửa được project này** — nó làm việc với Vite SPA, không hiểu App Router.
 
-- **Lovable không sửa được project nữa.** Lovable làm việc với Vite + React SPA; cấu trúc App Router nó không hiểu.
-- **Nút Publish của Lovable ngừng là kênh deploy.** Thay bằng Cloudflare Workers.
-- **Nếu ai đó vẫn prompt trên Lovable,** nó sẽ commit code Vite vào repo và gây xung đột.
+Bản Vite cuối cùng vẫn ở commit `81e2f1f`, quay lại được bất cứ lúc nào.
 
-Nếu bạn vẫn cần Lovable, dừng lại và nói tôi biết — có phương án khác (giữ Vite + prerender). Nếu chấp nhận bỏ Lovable thì làm tiếp bên dưới.
-
-Bản Vite cũ vẫn nằm nguyên ở nhánh `main`, quay lại được bất cứ lúc nào.
+**Các bước deploy cụ thể xem [DEPLOY_NOW.md](./DEPLOY_NOW.md).** File này là tài liệu tham khảo.
 
 ---
 
