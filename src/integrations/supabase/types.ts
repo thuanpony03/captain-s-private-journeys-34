@@ -21,9 +21,13 @@ export type Database = {
           destination: string
           group_size: string
           id: string
+          landing_page: string | null
           notes: string | null
           priority: string
           status: string
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
         }
         Insert: {
           contact: string
@@ -31,9 +35,13 @@ export type Database = {
           destination: string
           group_size: string
           id?: string
+          landing_page?: string | null
           notes?: string | null
           priority: string
           status?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
         }
         Update: {
           contact?: string
@@ -41,9 +49,13 @@ export type Database = {
           destination?: string
           group_size?: string
           id?: string
+          landing_page?: string | null
           notes?: string | null
           priority?: string
           status?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
         }
         Relationships: []
       }

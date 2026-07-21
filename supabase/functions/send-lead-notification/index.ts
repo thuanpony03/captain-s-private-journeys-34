@@ -15,6 +15,10 @@ interface LeadSubmission {
   priority: string;
   contact: string;
   notes?: string;
+  utm_source?: string | null;
+  utm_medium?: string | null;
+  utm_campaign?: string | null;
+  landing_page?: string | null;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -43,6 +47,10 @@ const handler = async (req: Request): Promise<Response> => {
         contact: leadData.contact,
         notes: leadData.notes || null,
         status: "new",
+        utm_source: leadData.utm_source || null,
+        utm_medium: leadData.utm_medium || null,
+        utm_campaign: leadData.utm_campaign || null,
+        landing_page: leadData.landing_page || null,
       })
       .select()
       .single();

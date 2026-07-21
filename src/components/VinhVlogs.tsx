@@ -50,16 +50,6 @@ const VinhVlogs = () => {
       videoUrl: "https://www.youtube.com/embed/wEmQ40jV8ss",
       description: "3h sáng ở New York bị lệch múi giờ",
     },
-    {
-      id: 4,
-      title: "Tips Chuẩn Bị Hành Lý",
-      thumbnail: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=700&fit=crop",
-      duration: "2:30",
-      views: "9K",
-      topic: "Tips",
-      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      description: "Checklist cho chuyến đi dài ngày",
-    },
   ];
 
   return (
@@ -173,7 +163,7 @@ const VinhVlogs = () => {
           </div>
 
           {/* Desktop/Tablet: Grid */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {vlogs.map((vlog) => (
               <div key={vlog.id} className="group cursor-pointer" onClick={() => handleVideoClick(vlog)}>
                 <Card className="overflow-hidden border-2 border-primary/10 hover:border-secondary/30 transition-all duration-300 hover:shadow-2xl hover:scale-105 bg-white">

@@ -11,7 +11,7 @@ const FloatingZalo = () => {
     window.open("https://zalo.me/0933344646", "_blank");
   };
   return (
-    <div className="fixed bottom-8 right-8 z-50 animate-slide-up">
+    <div className="hidden md:block fixed bottom-8 right-8 z-50 animate-slide-up">
       <div className="relative" onMouseEnter={() => setShowTooltip(true)} onMouseLeave={() => setShowTooltip(false)}>
         {/* Tooltip */}
         <div

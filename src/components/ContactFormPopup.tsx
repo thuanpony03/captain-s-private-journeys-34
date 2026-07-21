@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -10,10 +11,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmit, trackEvent } from "@/lib/analytics";
 import { supabase } from "@/integrations/supabase/client";
+import { getStoredUtm } from "@/lib/utm";
 import { X, Phone, MessageCircle } from "lucide-react";
 
 const ContactFormPopup = () => {
   const { toast } = useToast();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [formData, setFormData] = useState({
@@ -70,7 +73,8 @@ const ContactFormPopup = () => {
     try {
       let success = false;
       const priorityString = formData.priorities.join(', ');
-      
+      const utm = getStoredUtm();
+
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-lead-notification`,
@@ -86,6 +90,7 @@ const ContactFormPopup = () => {
               priority: priorityString,
               contact: formData.contact,
               notes: formData.notes,
+              ...utm,
             }),
           }
         );
@@ -93,7 +98,7 @@ const ContactFormPopup = () => {
       } catch (edgeError) {
         console.warn('Edge function error:', edgeError);
       }
-      
+
       if (!success) {
         const { error } = await supabase
           .from('lead_submissions')
@@ -103,24 +108,21 @@ const ContactFormPopup = () => {
             priority: priorityString,
             contact: formData.contact,
             notes: formData.notes,
-            status: 'new'
+            status: 'new',
+            ...utm,
           });
         if (error) throw error;
         success = true;
       }
-      
+
       if (!success) throw new Error('Failed to submit form');
 
       trackFormSubmit('Contact Form Popup');
       trackEvent('conversion', 'Form', 'Lead Generated - Popup', 1);
-      
-      toast({
-        title: "Đã gửi thành công!",
-        description: "Vinh Around sẽ liên hệ với bạn trong 24h"
-      });
 
       setFormData({ destination: "", groupSize: "", priorities: [], contact: "", notes: "" });
       handleClose();
+      router.push('/cam-on');
     } catch (error) {
       toast({
         title: "Có lỗi xảy ra",

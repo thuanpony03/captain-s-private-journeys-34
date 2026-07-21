@@ -17,7 +17,7 @@ const FloatingContacts = () => {
   };
 
   return (
-    <div className="fixed left-4 bottom-24 z-40 flex flex-col gap-3">
+    <div className="hidden md:flex fixed left-4 bottom-24 z-40 flex-col gap-3">
       {/* Vinh's Phone bubble */}
       <a 
         href="tel:0933344646"

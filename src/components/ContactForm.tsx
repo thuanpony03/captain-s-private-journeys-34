@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -9,10 +10,12 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { trackFormSubmit, trackEvent } from "@/lib/analytics";
 import { supabase } from "@/integrations/supabase/client";
+import { getStoredUtm } from "@/lib/utm";
 const ContactForm = () => {
   const {
     toast
   } = useToast();
+  const router = useRouter();
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
@@ -56,12 +59,13 @@ const ContactForm = () => {
 
     try {
       console.log('Submitting form data:', formData);
-      
+
       // Try edge function first
       let success = false;
       let result = null;
       const priorityString = formData.priorities.join(', ');
-      
+      const utm = getStoredUtm();
+
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/send-lead-notification`,
@@ -77,6 +81,7 @@ const ContactForm = () => {
               priority: priorityString,
               contact: formData.contact,
               notes: formData.notes,
+              ...utm,
             }),
           }
         );
@@ -91,7 +96,7 @@ const ContactForm = () => {
       } catch (edgeError) {
         console.warn('Edge function error:', edgeError);
       }
-      
+
       // Fallback: Direct database insert
       if (!success) {
         const { data, error } = await supabase
@@ -102,21 +107,22 @@ const ContactForm = () => {
             priority: priorityString,
             contact: formData.contact,
             notes: formData.notes,
-            status: 'new'
+            status: 'new',
+            ...utm,
           })
           .select()
           .single();
-          
+
         if (error) {
           console.error('Database insert error:', error);
           throw error;
         }
-        
+
         result = { leadId: data.id };
         success = true;
         console.log("Direct DB insert success:", data);
       }
-      
+
       if (!success) {
         throw new Error('Failed to submit form');
       }
@@ -125,11 +131,6 @@ const ContactForm = () => {
       trackFormSubmit('Contact Form');
       trackEvent('conversion', 'Form', 'Lead Generated', 1);
 
-      toast({
-        title: "Đã gửi thành công!",
-        description: "Vinh Around sẽ liên hệ với bạn trong 24h qua Zalo/SĐT đã cung cấp."
-      });
-
       setFormData({
         destination: "",
         groupSize: "",
@@ -137,6 +138,8 @@ const ContactForm = () => {
         contact: "",
         notes: ""
       });
+
+      router.push('/cam-on');
     } catch (error) {
       console.error("Error submitting form:", error);
       toast({

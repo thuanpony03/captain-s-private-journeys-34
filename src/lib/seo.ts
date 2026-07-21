@@ -38,14 +38,17 @@ export const ORGANIZATION = {
   logo: `${SITE_URL}/logo.png`,
   image: `${SITE_URL}${DEFAULT_OG_IMAGE}`,
   priceRange: "$$$",
+  telephone: "+84933344646",
   address: {
     "@type": "PostalAddress",
+    streetAddress: "192 Trần Quang Khải",
+    addressLocality: "Phường Tân Định",
+    addressRegion: "Thành phố Hồ Chí Minh",
     addressCountry: "VN",
-    addressLocality: "Việt Nam",
   },
   sameAs: [
     "https://youtube.com/@vinharound",
-    "https://tiktok.com/@vinharound",
-    "https://facebook.com/vinharound",
+    "https://tiktok.com/@dicung.vinharound",
+    "https://facebook.com/DicungVinhAround",
   ],
 } as const;
