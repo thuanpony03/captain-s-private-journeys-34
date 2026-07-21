@@ -10,7 +10,7 @@ import ScrollytellingRoadmap from "@/components/ScrollytellingRoadmap";
 import TourPackages from "@/components/TourPackages";
 import LandCruiseExperience from "@/components/LandCruiseExperience";
 import ComparisonTable from "@/components/ComparisonTable";
-import SocialProof from "@/components/SocialProof";
+import StoryChapter from "@/components/home/StoryChapter";
 import LatestStories from "@/components/LatestStories";
 import FaqSection from "@/components/FaqSection";
 import TrustBar from "@/components/TrustBar";
@@ -37,11 +37,11 @@ const HomePage = ({ latestPosts = [], marketCards = [] }: HomePageProps) => (
       <TrustBar />
       <MarketCards markets={marketCards} />
       <PersonalStory />
+      <StoryChapter />
       <VinhVlogs />
       <ScrollytellingRoadmap />
       <ComparisonTable />
       <LandCruiseExperience />
-      <SocialProof />
       <TourPackages />
       <LatestStories posts={latestPosts} />
       <ContactForm />
