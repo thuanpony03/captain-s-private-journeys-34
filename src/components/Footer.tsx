@@ -1,13 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
-  const scrollToForm = () => {
-    document.getElementById("contact-form")?.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
   return (
     <footer className="relative overflow-hidden">
       {/* Hero-style CTA Section with Background Image */}
@@ -41,15 +37,15 @@ const Footer = () => {
               Hãy để Vinh Around đồng hành cùng gia đình bạn trên mọi cung đường
             </p>
 
-            <button
-              onClick={scrollToForm}
+            <Link
+              href="/lien-he"
               className="inline-flex items-center gap-3 bg-gradient-to-r from-secondary to-accent font-bold text-lg px-10 py-5 rounded-2xl hover:scale-105 transition-all duration-300 shadow-2xl shadow-secondary/30 text-white"
             >
               Đặt lịch tư vấn ngay
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -139,8 +135,24 @@ const Footer = () => {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-white/50 text-xs mb-0.5">Hotline 24/7</p>
-                      <p className="text-white font-semibold text-sm">0933344646</p>
+                      <p className="text-white/50 text-xs mb-0.5">Hotline</p>
+                      <p className="text-white font-semibold text-sm">1900 63 65 63</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-4 h-4 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                        />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-white/50 text-xs mb-0.5">Zalo</p>
+                      <p className="text-white font-semibold text-sm">0933 344 646</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
@@ -179,7 +191,10 @@ const Footer = () => {
                     <div>
                       <p className="text-white/50 text-xs mb-0.5">Văn phòng</p>
                       <p className="text-white font-semibold text-sm">
-                        192 Trần Quang Khải, Phường Tân Định, Quận 1, TP Hồ Chí Minh.
+                        192 Trần Quang Khải, Phường Tân Định, TP Hồ Chí Minh
+                      </p>
+                      <p className="text-white font-semibold text-sm mt-1">
+                        01 phố Đào Duy Anh, Hà Nội
                       </p>
                     </div>
                   </li>
@@ -245,15 +260,12 @@ const Footer = () => {
                   © 2024 Passport Lounge. All rights reserved.
                 </p>
                 <div className="flex items-center gap-6 text-xs text-white/50">
-                  <a href="#" className="hover:text-secondary transition-colors">
-                    Điều khoản
-                  </a>
-                  <a href="#" className="hover:text-secondary transition-colors">
-                    Chính sách
-                  </a>
-                  <a href="#" className="hover:text-secondary transition-colors">
+                  <Link href="/chinh-sach" className="hover:text-secondary transition-colors">
+                    Chính sách &amp; Điều khoản
+                  </Link>
+                  <Link href="/#faq" className="hover:text-secondary transition-colors">
                     FAQ
-                  </a>
+                  </Link>
                 </div>
                 <p className="text-secondary/80 font-medium text-xs text-center md:text-right italic">
                   Operated by Vinh Around & Team

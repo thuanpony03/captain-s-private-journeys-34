@@ -357,6 +357,12 @@ export default async function TourPage({
                 )}
               </div>
 
+              {tour.price && (
+                <p className="text-muted-foreground text-xs mb-8 lg:hidden -mt-4">
+                  Giá tham khảo cho tối thiểu 4 khách, ngày thường — Vinh gửi báo giá chính xác sau khi kiểm tra vé và dịch vụ thực tế.
+                </p>
+              )}
+
               {/* Điểm nổi bật — lấy từ chính danh sách "bao gồm", giúp lướt nhanh */}
               {highlights.length > 0 && (
                 <div className="flex flex-wrap gap-x-6 gap-y-3 mb-10 pb-8 border-b border-primary/10">
@@ -667,7 +673,10 @@ export default async function TourPage({
                 {tour.price && (
                   <>
                     <p className="text-sm text-muted-foreground mb-1">Giá từ</p>
-                    <p className="text-3xl font-bold text-secondary mb-5">{tour.price}</p>
+                    <p className="text-3xl font-bold text-secondary mb-1.5">{tour.price}</p>
+                    <p className="text-xs text-muted-foreground mb-5">
+                      Tham khảo cho tối thiểu 4 khách, ngày thường
+                    </p>
                   </>
                 )}
 

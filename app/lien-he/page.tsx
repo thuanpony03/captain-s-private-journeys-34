@@ -49,7 +49,19 @@ export default function LienHePage() {
               thông tin — Vinh gọi lại trong 2h làm việc.
             </p>
 
-            <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto text-left">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
+              <a
+                href="tel:1900636563"
+                className="flex items-center gap-3 bg-white p-4 rounded-xl border border-primary/10 shadow-sm hover:border-secondary/40 transition-colors"
+              >
+                <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-5 h-5 text-secondary" />
+                </div>
+                <div>
+                  <p className="text-primary/50 text-xs">Hotline</p>
+                  <p className="text-primary font-semibold text-sm">1900 63 65 63</p>
+                </div>
+              </a>
               <a
                 href="https://zalo.me/0933344646"
                 target="_blank"
@@ -82,7 +94,7 @@ export default function LienHePage() {
                 </div>
                 <div>
                   <p className="text-primary/50 text-xs">Văn phòng</p>
-                  <p className="text-primary font-semibold text-sm">192 Trần Quang Khải, Tân Định, TP.HCM</p>
+                  <p className="text-primary font-semibold text-sm">TP.HCM &amp; Hà Nội</p>
                 </div>
               </div>
             </div>
