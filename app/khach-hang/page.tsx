@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TestimonialGallery from "@/components/testimonials/TestimonialGallery";
 import { createPublicClient } from "@/lib/supabase/server";
-import { absoluteUrl } from "@/lib/seo";
+import { SITE_URL, absoluteUrl } from "@/lib/seo";
 
 const TITLE = "Khách hàng nói gì - Review Vinh Around";
 const DESCRIPTION =
@@ -35,8 +35,21 @@ export default async function KhachHangPage() {
 
   const testimonials = data ?? [];
 
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Trang chủ", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Khách hàng", item: absoluteUrl("/khach-hang") },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <Navbar />
       <main className="min-h-screen">
         <section className="pt-32 pb-10 md:pt-40 md:pb-14 bg-gradient-to-b from-primary/5 via-white to-white">

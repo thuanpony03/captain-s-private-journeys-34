@@ -1,14 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Upload, RefreshCw, Trash2, Image as ImageIcon, Video } from "lucide-react";
+import { Upload, RefreshCw, Trash2, Image as ImageIcon, Video, Loader2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+async function uploadToStorage(file: File): Promise<string> {
+  const ext = file.name.split(".").pop() || "bin";
+  const path = `media/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const { error } = await supabase.storage.from("images").upload(path, file, {
+    cacheControl: "31536000",
+    upsert: false,
+  });
+  if (error) throw error;
+  const { data } = supabase.storage.from("images").getPublicUrl(path);
+  return data.publicUrl;
+}
 
 interface MediaItem {
   id: string;
@@ -24,7 +36,22 @@ export const MediaManager = () => {
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const [fileUploading, setFileUploading] = useState(false);
+  const urlInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  const handleFileUpload = async (file: File | undefined) => {
+    if (!file) return;
+    setFileUploading(true);
+    try {
+      const url = await uploadToStorage(file);
+      if (urlInputRef.current) urlInputRef.current.value = url;
+    } catch (error: any) {
+      toast({ title: "Lỗi upload", description: error.message, variant: "destructive" });
+    } finally {
+      setFileUploading(false);
+    }
+  };
 
   const fetchMedia = async () => {
     setLoading(true);
@@ -210,13 +237,29 @@ export const MediaManager = () => {
               </div>
               <div>
                 <Label htmlFor="media_url">URL</Label>
-                <Input 
-                  id="media_url" 
-                  name="media_url" 
-                  type="url" 
-                  placeholder="https://..." 
-                  required 
-                />
+                <div className="flex items-center gap-2">
+                  <Input
+                    id="media_url"
+                    name="media_url"
+                    type="url"
+                    placeholder="https://... hoặc bấm Upload"
+                    required
+                    ref={urlInputRef}
+                  />
+                  <label className="flex-shrink-0">
+                    <input
+                      type="file"
+                      accept="image/*,video/*"
+                      className="hidden"
+                      onChange={(e) => handleFileUpload(e.target.files?.[0])}
+                    />
+                    <Button type="button" variant="outline" size="icon" disabled={fileUploading} asChild>
+                      <span className="cursor-pointer">
+                        {fileUploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                      </span>
+                    </Button>
+                  </label>
+                </div>
               </div>
             </div>
 

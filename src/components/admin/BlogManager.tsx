@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +10,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, RefreshCw, Trash2, Edit, Save, X, FileText } from "lucide-react";
+import { Plus, RefreshCw, Trash2, Edit, Save, X, FileText, Upload, Loader2 } from "lucide-react";
+import { estimateReadingTime } from "@/lib/reading-time";
+
+async function uploadImage(file: File): Promise<string> {
+  const ext = file.name.split(".").pop() || "jpg";
+  const path = `blog/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const { error } = await supabase.storage.from("images").upload(path, file, {
+    cacheControl: "31536000",
+    upsert: false,
+  });
+  if (error) throw error;
+  const { data } = supabase.storage.from("images").getPublicUrl(path);
+  return data.publicUrl;
+}
 
 interface BlogPostRow {
   id: string;
@@ -25,6 +39,7 @@ interface BlogPostRow {
   reading_time: number | null;
   meta_description: string | null;
   og_image: string | null;
+  published_at: string | null;
 }
 
 const emptyPost = (): Partial<BlogPostRow> => ({
@@ -33,6 +48,7 @@ const emptyPost = (): Partial<BlogPostRow> => ({
   content: "",
   excerpt: "",
   featured_image: "",
+  og_image: "",
   status: "draft",
   category: "cam-nang",
   destination: "",
@@ -104,10 +120,31 @@ export const BlogManager = () => {
       return;
     }
 
+    const slug = editForm.slug || generateSlug(editForm.title);
+
+    // Kiểm tra trùng slug trước khi lưu — slug unique toàn bảng, không báo lỗi
+    // Postgres thô cho người viết bài
+    let dupQuery = supabase.from("blog_posts").select("id").eq("slug", slug);
+    if (editing !== "new") dupQuery = dupQuery.neq("id", editing as string);
+    const { data: dup } = await dupQuery.maybeSingle();
+    if (dup) {
+      toast({
+        title: "Trùng slug",
+        description: `Đường dẫn "${slug}" đã được dùng cho bài khác — đổi tiêu đề hoặc slug.`,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // published_at chỉ set lần đầu chuyển sang "Đăng ngay" — trước đây mỗi lần
+    // sửa bài đã đăng đều bị ghi đè ngày đăng thành hiện tại, làm sai lịch sử
+    // xuất bản và trông như "làm mới" ngày tháng cho SEO một cách giả tạo.
     const payload = {
       ...editForm,
-      slug: editForm.slug || generateSlug(editForm.title),
-      published_at: editForm.status === "published" ? new Date().toISOString() : null,
+      slug,
+      reading_time: estimateReadingTime(editForm.content || ""),
+      published_at:
+        editForm.status === "published" ? editForm.published_at || new Date().toISOString() : null,
     };
 
     try {
@@ -317,11 +354,16 @@ function PostEditor({
           />
         </div>
 
-        <div>
-          <Label>Ảnh đại diện (URL)</Label>
-          <Input
+        <div className="grid md:grid-cols-2 gap-4">
+          <ImageField
+            label="Ảnh đại diện"
             value={form.featured_image || ""}
-            onChange={(e) => setForm({ ...form, featured_image: e.target.value })}
+            onChange={(url) => setForm({ ...form, featured_image: url })}
+          />
+          <ImageField
+            label="Ảnh chia sẻ mạng xã hội (OG, để trống dùng ảnh đại diện)"
+            value={form.og_image || ""}
+            onChange={(url) => setForm({ ...form, og_image: url })}
           />
         </div>
 
@@ -355,5 +397,62 @@ function PostEditor({
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function ImageField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (url: string) => void;
+}) {
+  const [uploading, setUploading] = useState(false);
+  const { toast } = useToast();
+
+  const handleFile = async (file: File | undefined) => {
+    if (!file) return;
+    setUploading(true);
+    try {
+      const url = await uploadImage(file);
+      onChange(url);
+    } catch (error: any) {
+      toast({ title: "Lỗi upload", description: error.message, variant: "destructive" });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div>
+      <Label>{label}</Label>
+      <div className="flex items-center gap-2 mt-1">
+        {value && (
+          <div className="relative w-14 h-14 rounded-md overflow-hidden border border-input flex-shrink-0 bg-muted">
+            <Image src={value} alt="" fill sizes="56px" className="object-cover" />
+          </div>
+        )}
+        <Input
+          placeholder="https://... hoặc bấm Upload"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+        <label className="flex-shrink-0">
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => handleFile(e.target.files?.[0])}
+          />
+          <Button type="button" variant="outline" size="sm" disabled={uploading} asChild>
+            <span className="cursor-pointer">
+              {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+            </span>
+          </Button>
+        </label>
+      </div>
+    </div>
   );
 }

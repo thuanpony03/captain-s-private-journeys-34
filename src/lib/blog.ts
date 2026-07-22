@@ -1,4 +1,5 @@
 import { createPublicClient } from "@/lib/supabase/server";
+export { estimateReadingTime } from "@/lib/reading-time";
 
 export type BlogCategory = "chuyen-di" | "cam-nang";
 
@@ -54,10 +55,4 @@ export async function getPostBySlug(
 
   if (error || !data) return null;
   return data as unknown as BlogPost;
-}
-
-/** ~200 từ/phút — chỉ dùng khi admin chưa nhập tay reading_time. */
-export function estimateReadingTime(content: string): number {
-  const words = content.trim().split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.ceil(words / 200));
 }
