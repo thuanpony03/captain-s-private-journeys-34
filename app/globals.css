@@ -129,6 +129,18 @@ All colors MUST be HSL.
     font-weight: 700;
     letter-spacing: -0.02em;
   }
+
+  /* Admin/auth là công cụ nội bộ, không phải trang marketing — dùng font
+     sans-serif rõ ràng thay vì serif trang trí, dễ đọc hơn cho dữ liệu. */
+  .admin-shell h1,
+  .admin-shell h2,
+  .admin-shell h3,
+  .admin-shell h4,
+  .admin-shell h5,
+  .admin-shell h6 {
+    font-family: var(--font-inter), -apple-system, sans-serif;
+    letter-spacing: normal;
+  }
 }
 
 @layer utilities {

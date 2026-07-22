@@ -11,9 +11,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, RefreshCw, LogOut, Users, MessageSquare, Settings, BarChart3, Calendar, Phone, Clock, Trash2, Image, FileText, MapPin } from "lucide-react";
+import { ArrowLeft, RefreshCw, LogOut, Users, MessageSquare, BarChart3, Calendar, Phone, Clock, Trash2, Image, FileText, MapPin, Heart, Sparkles, Gem, Star, type LucideIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import CustomCursor from "@/components/CustomCursor";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { ContentEditor } from "@/components/admin/ContentEditor";
 import { MediaManager } from "@/components/admin/MediaManager";
@@ -47,38 +46,6 @@ const AdminDashboard = () => {
   const [contentTab, setContentTab] = useState("text");
   const { toast } = useToast();
   const router = useRouter();
-
-  const createTestLead = async () => {
-    try {
-      const testLead = {
-        destination: 'usa',
-        group_size: '4-6',
-        priority: 'luxury',
-        contact: 'Test User - 0987654321'
-      };
-
-      const { data, error } = await supabase
-        .from('lead_submissions')
-        .insert(testLead)
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      toast({
-        title: "Tạo test lead thành công",
-        description: `Lead ID: ${data.id}`,
-      });
-
-      fetchLeads(); // Refresh the list
-    } catch (error: any) {
-      toast({
-        title: "Lỗi tạo test lead",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
-  };
 
   const fetchLeads = async () => {
     setLoading(true);
@@ -220,25 +187,16 @@ const AdminDashboard = () => {
 
   const getPriorityIcon = (priority: string) => {
     switch (priority) {
-      case 'health': return '🏥';
-      case 'experience': return '🎭';
-      case 'luxury': return '💎';
-      default: return '🌟';
-    }
-  };
-
-  const getDestinationFlag = (destination: string) => {
-    switch (destination) {
-      case 'usa': return '🇺🇸';
-      case 'australia': return '🇦🇺';
-      case 'europe': return '🇪🇺';
-      default: return '🌍';
+      case 'health': return Heart;
+      case 'experience': return Sparkles;
+      case 'luxury': return Gem;
+      default: return Star;
     }
   };
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-primary/5 flex items-center justify-center">
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center">
           <RefreshCw className="w-8 h-8 animate-spin text-primary mx-auto mb-4" />
           <p className="text-primary/80">Đang tải dữ liệu...</p>
@@ -253,9 +211,7 @@ const AdminDashboard = () => {
 
   return (
     <>
-      <CustomCursor />
-      
-      <div className="min-h-screen bg-gradient-to-br from-primary/5 via-white to-primary/5">
+      <div className="admin-shell min-h-screen bg-muted/30">
         {/* Header */}
         <header className="bg-white border-b shadow-sm">
           <div className="container mx-auto px-6 py-4">
@@ -288,58 +244,11 @@ const AdminDashboard = () => {
 
         <div className="container mx-auto px-6 py-8">
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium opacity-90">Tổng Leads</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">{stats.totalLeads}</div>
-                <div className="flex items-center text-xs opacity-90 mt-1">
-                  <Users className="w-3 h-3 mr-1" />
-                  Khách hàng tiềm năng
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium opacity-90">Leads Mới</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">{stats.newLeads}</div>
-                <div className="flex items-center text-xs opacity-90 mt-1">
-                  <Clock className="w-3 h-3 mr-1" />
-                  Cần xử lý
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gradient-to-r from-green-500 to-emerald-600 text-white">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium opacity-90">Đã Chốt</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">{stats.convertedLeads}</div>
-                <div className="flex items-center text-xs opacity-90 mt-1">
-                  <BarChart3 className="w-3 h-3 mr-1" />
-                  Thành công
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium opacity-90">Tỷ Lệ Chốt</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">{stats.conversionRate.toFixed(1)}%</div>
-                <div className="flex items-center text-xs opacity-90 mt-1">
-                  <Calendar className="w-3 h-3 mr-1" />
-                  Hiệu quả
-                </div>
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <StatCard icon={Users} label="Tổng leads" value={stats.totalLeads} hint="Khách hàng tiềm năng" color="text-blue-600 bg-blue-50" />
+            <StatCard icon={Clock} label="Leads mới" value={stats.newLeads} hint="Cần xử lý" color="text-amber-600 bg-amber-50" />
+            <StatCard icon={BarChart3} label="Đã chốt" value={stats.convertedLeads} hint="Thành công" color="text-emerald-600 bg-emerald-50" />
+            <StatCard icon={Calendar} label="Tỷ lệ chốt" value={`${stats.conversionRate.toFixed(1)}%`} hint="Hiệu quả" color="text-violet-600 bg-violet-50" />
           </div>
 
           {/* Main Content */}
@@ -347,15 +256,11 @@ const AdminDashboard = () => {
             <TabsList className="bg-white shadow-sm border">
               <TabsTrigger value="leads" className="flex items-center gap-2">
                 <Users className="w-4 h-4" />
-                Quản Lý Leads
+                Quản lý Leads
               </TabsTrigger>
               <TabsTrigger value="content" className="flex items-center gap-2">
                 <MessageSquare className="w-4 h-4" />
-                Content Management
-              </TabsTrigger>
-              <TabsTrigger value="settings" className="flex items-center gap-2">
-                <Settings className="w-4 h-4" />
-                Cài Đặt
+                Quản lý nội dung
               </TabsTrigger>
             </TabsList>
 
@@ -363,16 +268,13 @@ const AdminDashboard = () => {
             <TabsContent value="leads" className="space-y-6">
               <div className="flex justify-between items-center mb-4">
                 <div>
-                  <h3 className="text-lg font-semibold">Quản Lý Leads</h3>
+                  <h3 className="text-lg font-semibold">Quản lý Leads</h3>
                   <p className="text-sm text-gray-600">Tổng cộng: {leads.length} leads</p>
                 </div>
                 <div className="space-x-2">
                   <Button onClick={fetchLeads} variant="outline" size="sm">
                     <RefreshCw className="w-4 h-4 mr-2" />
                     Làm mới
-                  </Button>
-                  <Button onClick={createTestLead} variant="outline" size="sm">
-                    Tạo Test Lead
                   </Button>
                 </div>
               </div>
@@ -393,8 +295,8 @@ const AdminDashboard = () => {
                       <CardHeader>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="text-2xl">
-                              {getDestinationFlag(lead.destination)}
+                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                              <MapPin className="w-5 h-5 text-primary" />
                             </div>
                             <div>
                               <CardTitle className="text-lg">
@@ -412,8 +314,11 @@ const AdminDashboard = () => {
                                   })}
                                 </span>
                                 <span className="flex items-center gap-1">
-                                  {getPriorityIcon(lead.priority)}
-                                  {lead.priority === 'health' ? 'Sức khỏe' : 
+                                  {(() => {
+                                    const PriorityIcon = getPriorityIcon(lead.priority);
+                                    return <PriorityIcon className="w-3 h-3" />;
+                                  })()}
+                                  {lead.priority === 'health' ? 'Sức khỏe' :
                                    lead.priority === 'experience' ? 'Trải nghiệm' : 'Sang trọng'}
                                 </span>
                               </CardDescription>
@@ -454,11 +359,11 @@ const AdminDashboard = () => {
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="new">🔵 Mới</SelectItem>
-                                <SelectItem value="contacted">🟡 Đã liên hệ</SelectItem>
-                                <SelectItem value="quoted">🟣 Đã báo giá</SelectItem>
-                                <SelectItem value="converted">🟢 Đã chốt</SelectItem>
-                                <SelectItem value="lost">🔴 Thất bại</SelectItem>
+                                <SelectItem value="new">Mới</SelectItem>
+                                <SelectItem value="contacted">Đã liên hệ</SelectItem>
+                                <SelectItem value="quoted">Đã báo giá</SelectItem>
+                                <SelectItem value="converted">Đã chốt</SelectItem>
+                                <SelectItem value="lost">Thất bại</SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
@@ -535,54 +440,40 @@ const AdminDashboard = () => {
                 </TabsContent>
               </Tabs>
             </TabsContent>
-
-            {/* Settings */}
-            <TabsContent value="settings" className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Cài Đặt Hệ Thống</CardTitle>
-                  <CardDescription>
-                    Quản lý cài đặt website và tài khoản admin
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-lg font-semibold mb-4">Thông Tin Website</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <Label>Tên công ty</Label>
-                          <Input defaultValue="Vinh Around Private Tours" />
-                        </div>
-                        <div>
-                          <Label>Email liên hệ</Label>
-                          <Input defaultValue="admin@passport.cafe" />
-                        </div>
-                        <div>
-                          <Label>Số điện thoại</Label>
-                          <Input placeholder="Nhập số điện thoại" />
-                        </div>
-                        <div>
-                          <Label>Địa chỉ</Label>
-                          <Input placeholder="Nhập địa chỉ công ty" />
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="pt-4 border-t">
-                      <Button className="bg-primary hover:bg-primary/90">
-                        Lưu Cài Đặt
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
           </Tabs>
         </div>
       </div>
     </>
   );
 };
+
+function StatCard({
+  icon: Icon,
+  label,
+  value,
+  hint,
+  color,
+}: {
+  icon: LucideIcon;
+  label: string;
+  value: string | number;
+  hint: string;
+  color: string;
+}) {
+  return (
+    <Card>
+      <CardContent className="p-5">
+        <div className="flex items-center gap-3 mb-3">
+          <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${color}`}>
+            <Icon className="w-4.5 h-4.5" />
+          </div>
+          <p className="text-sm text-muted-foreground font-medium">{label}</p>
+        </div>
+        <p className="text-2xl font-semibold text-foreground">{value}</p>
+        <p className="text-xs text-muted-foreground mt-0.5">{hint}</p>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default AdminDashboard;

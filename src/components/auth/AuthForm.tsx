@@ -9,7 +9,6 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import CustomCursor from "@/components/CustomCursor";
 import { ArrowLeft, Eye, EyeOff, Lock, Mail, User, Shield, Loader2 } from "lucide-react";
 
 // Đăng ký công khai bị TẮT mặc định.
@@ -163,8 +162,6 @@ const AuthForm = () => {
 
   return (
     <>
-      <CustomCursor />
-      
       <div className="min-h-screen bg-gradient-to-br from-primary via-primary/95 to-primary/90 flex items-center justify-center p-4">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
