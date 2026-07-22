@@ -25,11 +25,11 @@
       "binding": "NEXT_INC_CACHE_KV",
       "id": "505f4c4f54044fb2b34e2ce8fb72677b"
     }
-  ]
+  ],
 
-  // Domain thật: bỏ comment sau khi đã trỏ DNS về Cloudflare
-  // "routes": [
-  //   { "pattern": "vinharound.com", "custom_domain": true },
-  //   { "pattern": "www.vinharound.com", "custom_domain": true }
-  // ]
+  // Domain thật — zone vinharound.com đã Active trên Cloudflare (22/07/2026).
+  "routes": [
+    { "pattern": "vinharound.com", "custom_domain": true },
+    { "pattern": "www.vinharound.com", "custom_domain": true }
+  ]
 }
