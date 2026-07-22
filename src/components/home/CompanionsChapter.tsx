@@ -101,18 +101,20 @@ export default function CompanionsChapter() {
           ))}
         </div>
 
-        <p className="text-primary/50 text-sm mt-10 md:mt-14">
-          Gia đình bạn sẽ là chuyến tiếp theo?{" "}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-10 md:mt-14 p-6 rounded-2xl bg-white border border-primary/10">
+          <p className="text-primary/70 text-sm md:text-base font-medium text-center sm:text-left">
+            Gia đình bạn sẽ là chuyến tiếp theo?
+          </p>
           <a
             href="https://zalo.me/0933344646"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackZaloClick()}
-            className="text-secondary font-medium hover:underline"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-white text-sm font-bold hover:bg-secondary hover:text-primary hover:scale-[1.03] transition-all duration-300 whitespace-nowrap"
           >
             Nhắn Zalo cho mình →
           </a>
-        </p>
+        </div>
       </div>
     </section>
   );

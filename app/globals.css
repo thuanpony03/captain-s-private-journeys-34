@@ -129,16 +129,6 @@ All colors MUST be HSL.
     font-weight: 700;
     letter-spacing: -0.02em;
   }
-  
-  /* Custom cursor only on desktop */
-  @media (min-width: 768px) {
-    body {
-      cursor: none;
-    }
-    * {
-      cursor: none !important;
-    }
-  }
 }
 
 @layer utilities {

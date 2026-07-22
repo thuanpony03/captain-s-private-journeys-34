@@ -14,8 +14,8 @@ export default function AboutChapter() {
         <div className="md:grid md:grid-cols-[minmax(0,280px)_1fr] md:gap-12 lg:gap-16">
           <div className="relative w-40 h-52 sm:w-48 sm:h-64 md:w-full md:h-80 mx-auto md:mx-0 mb-8 md:mb-0 rounded-sm overflow-hidden">
             <Image
-              src="/images/vinh-around-portrait.jpg"
-              alt="Vinh"
+              src="https://res.cloudinary.com/dvu2csvsg/image/upload/w_600,q_auto,f_auto/v1784657529/vinharound/chuyen-di/bac-au-family-trip-chi-t/bac-au-family-trip-chi-t-5.jpg"
+              alt="Vinh, chuyến Bắc Âu"
               fill
               sizes="(max-width: 768px) 200px, 280px"
               className="object-cover grayscale-[15%]"
@@ -57,9 +57,9 @@ export default function AboutChapter() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackZaloClick()}
-              className="inline-block text-secondary text-sm font-medium hover:underline"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-white text-sm font-bold hover:bg-secondary hover:text-primary hover:scale-[1.03] transition-all duration-300"
             >
-              kể mình nghe nhà bạn thế nào →
+              Kể mình nghe nhà bạn thế nào →
             </a>
           </div>
         </div>

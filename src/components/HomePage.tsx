@@ -13,6 +13,7 @@ import LatestStories from "@/components/LatestStories";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
 import ContactFormPopup from "@/components/ContactFormPopup";
+import RevealOnScroll from "@/components/RevealOnScroll";
 import type { BlogPostSummary } from "@/lib/blog";
 import type { MarketCardData } from "@/components/MarketCards";
 
@@ -34,12 +35,12 @@ const HomePage = ({ latestPosts = [], marketCards = [] }: HomePageProps) => (
     <Navbar />
     <main className="min-h-screen">
       <OpeningChapter />
-      <AboutChapter />
-      <StoryChapter />
-      <CompanionsChapter />
-      <ProcessChapter />
-      <RoutesChapter markets={marketCards} />
-      <LatestStories posts={latestPosts} />
+      <RevealOnScroll><AboutChapter /></RevealOnScroll>
+      <RevealOnScroll><StoryChapter /></RevealOnScroll>
+      <RevealOnScroll><CompanionsChapter /></RevealOnScroll>
+      <RevealOnScroll><ProcessChapter /></RevealOnScroll>
+      <RevealOnScroll><RoutesChapter markets={marketCards} /></RevealOnScroll>
+      <RevealOnScroll><LatestStories posts={latestPosts} /></RevealOnScroll>
       <ClosingChapter />
       <FaqSection />
       <Footer />
