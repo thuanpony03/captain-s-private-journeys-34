@@ -9,18 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Upload, RefreshCw, Trash2, Image as ImageIcon, Video, Loader2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-async function uploadToStorage(file: File): Promise<string> {
-  const ext = file.name.split(".").pop() || "bin";
-  const path = `media/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const { error } = await supabase.storage.from("images").upload(path, file, {
-    cacheControl: "31536000",
-    upsert: false,
-  });
-  if (error) throw error;
-  const { data } = supabase.storage.from("images").getPublicUrl(path);
-  return data.publicUrl;
-}
+import { uploadToImagesBucket } from "@/lib/storage-upload";
 
 interface MediaItem {
   id: string;
@@ -44,7 +33,7 @@ export const MediaManager = () => {
     if (!file) return;
     setFileUploading(true);
     try {
-      const url = await uploadToStorage(file);
+      const url = await uploadToImagesBucket(file, "media");
       if (urlInputRef.current) urlInputRef.current.value = url;
     } catch (error: any) {
       toast({ title: "Lỗi upload", description: error.message, variant: "destructive" });

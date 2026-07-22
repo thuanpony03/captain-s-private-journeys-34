@@ -12,18 +12,8 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Plus, RefreshCw, Trash2, Edit, Save, X, FileText, Upload, Loader2 } from "lucide-react";
 import { estimateReadingTime } from "@/lib/reading-time";
-
-async function uploadImage(file: File): Promise<string> {
-  const ext = file.name.split(".").pop() || "jpg";
-  const path = `blog/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const { error } = await supabase.storage.from("images").upload(path, file, {
-    cacheControl: "31536000",
-    upsert: false,
-  });
-  if (error) throw error;
-  const { data } = supabase.storage.from("images").getPublicUrl(path);
-  return data.publicUrl;
-}
+import { uploadToImagesBucket } from "@/lib/storage-upload";
+import MarkdownEditor from "@/components/admin/MarkdownEditor";
 
 interface BlogPostRow {
   id: string;
@@ -77,6 +67,7 @@ export const BlogManager = () => {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<string | "new" | null>(null);
   const [editForm, setEditForm] = useState<Partial<BlogPostRow>>({});
+  const [search, setSearch] = useState("");
   const { toast } = useToast();
 
   const fetchPosts = async () => {
@@ -208,8 +199,19 @@ export const BlogManager = () => {
         <PostEditor form={editForm} setForm={setEditForm} onSave={savePost} onCancel={cancelEdit} isNew />
       )}
 
+      {editing !== "new" && posts.length > 0 && (
+        <Input
+          placeholder="Tìm bài viết theo tiêu đề..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="max-w-sm"
+        />
+      )}
+
       <div className="grid gap-4">
-        {posts.map((post) =>
+        {posts
+          .filter((post) => post.title.toLowerCase().includes(search.toLowerCase()))
+          .map((post) =>
           editing === post.id ? (
             <PostEditor
               key={post.id}
@@ -220,29 +222,34 @@ export const BlogManager = () => {
             />
           ) : (
             <Card key={post.id}>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-2 text-base">
-                    <FileText className="w-4 h-4" />
-                    {post.title}
-                  </CardTitle>
-                  <div className="flex items-center gap-2">
-                    <Badge variant={post.status === "published" ? "default" : "outline"}>
-                      {STATUS_LABEL[post.status] || post.status}
-                    </Badge>
-                    <Badge variant="outline">{post.category}</Badge>
-                    <Button onClick={() => startEdit(post)} variant="outline" size="sm">
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                    <Button onClick={() => deletePost(post.id)} variant="destructive" size="sm">
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
+              <CardContent className="flex items-center gap-4 py-4">
+                <div className="relative w-16 h-16 rounded-md overflow-hidden bg-muted flex-shrink-0">
+                  {post.featured_image ? (
+                    <Image src={post.featured_image} alt="" fill sizes="64px" className="object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <FileText className="w-6 h-6 text-muted-foreground" />
+                    </div>
+                  )}
                 </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">/{post.category}/{post.slug}</p>
-                {post.excerpt && <p className="text-sm mt-2">{post.excerpt}</p>}
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold truncate">{post.title}</p>
+                  <p className="text-sm text-muted-foreground truncate">/{post.category}/{post.slug}</p>
+                </div>
+                <Badge variant={post.status === "published" ? "default" : "outline"} className="flex-shrink-0">
+                  {STATUS_LABEL[post.status] || post.status}
+                </Badge>
+                <Badge variant="outline" className="flex-shrink-0 hidden sm:inline-flex">
+                  {post.category}
+                </Badge>
+                <div className="flex gap-2 flex-shrink-0">
+                  <Button onClick={() => startEdit(post)} variant="outline" size="sm">
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                  <Button onClick={() => deletePost(post.id)} variant="destructive" size="sm">
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           )
@@ -291,21 +298,17 @@ function PostEditor({
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Label>Tiêu đề</Label>
-            <Input
-              value={form.title || ""}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
-            />
-          </div>
-          <div>
-            <Label>Slug (để trống để tự tạo)</Label>
-            <Input value={form.slug || ""} onChange={(e) => setForm({ ...form, slug: e.target.value })} />
-          </div>
+        <div>
+          <Label>Tiêu đề</Label>
+          <Input
+            className="text-lg font-medium"
+            placeholder="Tiêu đề bài viết"
+            value={form.title || ""}
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
+          />
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <Label>Chuyên mục</Label>
             <select
@@ -329,72 +332,83 @@ function PostEditor({
               <option value="archived">Lưu trữ</option>
             </select>
           </div>
-          <div>
-            <Label>Thị trường (tuỳ chọn)</Label>
-            <select
-              className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
-              value={form.destination || ""}
-              onChange={(e) => setForm({ ...form, destination: e.target.value || null })}
-            >
-              <option value="">—</option>
-              <option value="my">Mỹ</option>
-              <option value="uc">Úc</option>
-              <option value="chau-au">Châu Âu</option>
-              <option value="canada">Canada</option>
-            </select>
-          </div>
         </div>
+
+        <ImageField
+          label="Ảnh đại diện"
+          value={form.featured_image || ""}
+          onChange={(url) => setForm({ ...form, featured_image: url })}
+        />
 
         <div>
-          <Label>Slug tour liên quan (tuỳ chọn — để hiện link "muốn đi chuyến giống vậy")</Label>
-          <Input
-            placeholder="us-west-coast"
-            value={form.tour_slug || ""}
-            onChange={(e) => setForm({ ...form, tour_slug: e.target.value })}
-          />
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-4">
-          <ImageField
-            label="Ảnh đại diện"
-            value={form.featured_image || ""}
-            onChange={(url) => setForm({ ...form, featured_image: url })}
-          />
-          <ImageField
-            label="Ảnh chia sẻ mạng xã hội (OG, để trống dùng ảnh đại diện)"
-            value={form.og_image || ""}
-            onChange={(url) => setForm({ ...form, og_image: url })}
-          />
-        </div>
-
-        <div>
-          <Label>Mô tả ngắn (excerpt, hiện ở card)</Label>
+          <Label>Mô tả ngắn (hiện ở card, để trống thì tự lấy đoạn đầu bài)</Label>
           <Textarea
             rows={2}
+            placeholder="Một câu tóm tắt ngắn cho bài viết..."
             value={form.excerpt || ""}
             onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
           />
         </div>
 
         <div>
-          <Label>Meta description (SEO, để trống dùng excerpt)</Label>
-          <Textarea
-            rows={2}
-            value={form.meta_description || ""}
-            onChange={(e) => setForm({ ...form, meta_description: e.target.value })}
+          <Label>Nội dung</Label>
+          <MarkdownEditor
+            value={form.content || ""}
+            onChange={(v) => setForm({ ...form, content: v })}
           />
         </div>
 
-        <div>
-          <Label>Nội dung (Markdown)</Label>
-          <Textarea
-            rows={16}
-            className="font-mono text-sm"
-            placeholder={"## Tiêu đề\n\nViết nội dung ở đây, hỗ trợ **markdown**."}
-            value={form.content || ""}
-            onChange={(e) => setForm({ ...form, content: e.target.value })}
-          />
-        </div>
+        <details className="group border border-input rounded-md">
+          <summary className="cursor-pointer select-none px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground">
+            Tuỳ chọn nâng cao (slug, thị trường, SEO...)
+          </summary>
+          <div className="p-4 pt-0 space-y-4 border-t border-input">
+            <div className="grid grid-cols-2 gap-4 pt-4">
+              <div>
+                <Label>Slug (để trống để tự tạo)</Label>
+                <Input value={form.slug || ""} onChange={(e) => setForm({ ...form, slug: e.target.value })} />
+              </div>
+              <div>
+                <Label>Thị trường (tuỳ chọn)</Label>
+                <select
+                  className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+                  value={form.destination || ""}
+                  onChange={(e) => setForm({ ...form, destination: e.target.value || null })}
+                >
+                  <option value="">—</option>
+                  <option value="my">Mỹ</option>
+                  <option value="uc">Úc</option>
+                  <option value="chau-au">Châu Âu</option>
+                  <option value="canada">Canada</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <Label>Slug tour liên quan (tuỳ chọn — để hiện link "muốn đi chuyến giống vậy")</Label>
+              <Input
+                placeholder="us-west-coast"
+                value={form.tour_slug || ""}
+                onChange={(e) => setForm({ ...form, tour_slug: e.target.value })}
+              />
+            </div>
+
+            <ImageField
+              label="Ảnh chia sẻ mạng xã hội (OG, để trống dùng ảnh đại diện)"
+              value={form.og_image || ""}
+              onChange={(url) => setForm({ ...form, og_image: url })}
+            />
+
+            <div>
+              <Label>Meta description (SEO, để trống dùng mô tả ngắn)</Label>
+              <Textarea
+                rows={2}
+                value={form.meta_description || ""}
+                onChange={(e) => setForm({ ...form, meta_description: e.target.value })}
+              />
+            </div>
+          </div>
+        </details>
       </CardContent>
     </Card>
   );
@@ -416,7 +430,7 @@ function ImageField({
     if (!file) return;
     setUploading(true);
     try {
-      const url = await uploadImage(file);
+      const url = await uploadToImagesBucket(file, "blog");
       onChange(url);
     } catch (error: any) {
       toast({ title: "Lỗi upload", description: error.message, variant: "destructive" });
