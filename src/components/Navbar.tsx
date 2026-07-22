@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { Menu, Car } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -51,7 +51,7 @@ const Navbar = () => {
                 isScrolled ? "shadow-secondary/50" : "shadow-secondary/30"
               }`}
             >
-              <span className="text-lg sm:text-xl md:text-2xl">👨‍✈️</span>
+              <Car className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" strokeWidth={2.25} />
             </div>
             <div>
               <span className="font-display text-base sm:text-xl md:text-2xl font-black bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">

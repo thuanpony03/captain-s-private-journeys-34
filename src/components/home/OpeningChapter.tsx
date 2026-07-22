@@ -5,12 +5,13 @@ import Image from "next/image";
 import { trackZaloClick } from "@/lib/analytics";
 
 const HERO_IMAGE =
-  "https://res.cloudinary.com/dvu2csvsg/image/upload/w_1920,q_auto,f_auto/v1784656743/vinharound/chuyen-di/my-bo-tay-chuyen-di-gia-dinh/my-bo-tay-chuyen-di-gia-dinh-1.jpg";
+  "https://res.cloudinary.com/dvu2csvsg/image/upload/w_1440,c_limit,q_auto,f_auto/v1784657051/vinharound/chuyen-di/cau-chuyen-visa-uc/cau-chuyen-visa-uc-4.jpg";
 
 /**
  * Chương I — một khung cảnh thật, không phải khẩu hiệu. Ảnh thật của Vinh
- * (Antelope Canyon, chuyến Mỹ bờ Tây cùng một gia đình khách) thay cho video
- * stock chung chung trước đó — đúng người, đúng chuyến, đẹp và có thật.
+ * (Wave Rock, Tây Úc) thay cho video stock chung chung trước đó — thấy rõ
+ * mặt Vinh, tư thế vui, màu sắc rực. Overlay nhẹ tay hơn bản trước (bản cũ
+ * chồng 3 lớp tối làm ảnh nhìn "mờ" theo phản hồi).
  */
 export default function OpeningChapter() {
   const [stage, setStage] = useState(0);
@@ -64,16 +65,15 @@ export default function OpeningChapter() {
       >
         <Image
           src={HERO_IMAGE}
-          alt="Vinh cùng một gia đình khách tại Antelope Canyon, chuyến Mỹ bờ Tây"
+          alt="Vinh tại Wave Rock, Tây Úc"
           fill
           priority
           sizes="100vw"
           className="object-cover"
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/15" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
-      <div className="absolute inset-0 shadow-[inset_0_0_180px_60px_rgba(0,0,0,0.5)]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/5" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
 
       <div className="relative z-10 w-full px-6 md:px-12 pb-16 md:pb-0">
         <div className="max-w-2xl">

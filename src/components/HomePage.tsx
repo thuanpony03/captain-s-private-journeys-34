@@ -12,6 +12,7 @@ import ClosingChapter from "@/components/home/ClosingChapter";
 import LatestStories from "@/components/LatestStories";
 import FaqSection from "@/components/FaqSection";
 import Footer from "@/components/Footer";
+import ContactFormPopup from "@/components/ContactFormPopup";
 import type { BlogPostSummary } from "@/lib/blog";
 import type { MarketCardData } from "@/components/MarketCards";
 
@@ -23,8 +24,10 @@ interface HomePageProps {
 /**
  * Brief v2 — "tạp chí hành trình": trang chủ là nhật ký đang mở, dịch vụ là
  * ghi chú bên lề. Form đa bước và mọi CTA "bán" chuyển về /lien-he và
- * /tour/* — trang chủ chỉ có một lời mời nhắn Zalo (Chương VI) + nút Zalo
- * nhỏ trên Navbar. Không popup, không nút nổi lặp lại.
+ * /tour/* — trang chủ chỉ có lời mời nhắn Zalo rải rác + nút Zalo nhỏ trên
+ * Navbar. ContactFormPopup chỉ bật khi khách đã cuộn qua ~65% trang (không
+ * phải ngay khi vào trang) — vừa là CTA nổi bật xuất hiện đúng lúc, vừa giữ
+ * kênh lead có gửi email qua Resend cho việc theo dõi nội bộ.
  */
 const HomePage = ({ latestPosts = [], marketCards = [] }: HomePageProps) => (
   <SmoothScroll>
@@ -41,6 +44,7 @@ const HomePage = ({ latestPosts = [], marketCards = [] }: HomePageProps) => (
       <FaqSection />
       <Footer />
     </main>
+    <ContactFormPopup />
   </SmoothScroll>
 );
 
