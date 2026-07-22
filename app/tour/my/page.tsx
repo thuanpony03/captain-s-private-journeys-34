@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import MarketLandingPage from "@/components/tour/MarketLandingPage";
 import { createPublicClient } from "@/lib/supabase/server";
 import { SITE_URL, absoluteUrl } from "@/lib/seo";
+import { PILLAR_MY } from "@/content/pillars";
 
 const TITLE = "Private Tour Mỹ Gia Đình - Xe Riêng, Hỗ Trợ Visa";
 const DESCRIPTION =
@@ -10,11 +11,15 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: ["private tour mỹ", "tour mỹ gia đình", "du lịch mỹ tự túc có người dẫn"],
   alternates: { canonical: "/tour/my" },
   openGraph: {
     type: "website",
     url: absoluteUrl("/tour/my"),
+    title: `${TITLE} | Vinh Around`,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
     title: `${TITLE} | Vinh Around`,
     description: DESCRIPTION,
   },
@@ -82,32 +87,33 @@ export default async function MyMarketPage() {
               desc: "Lịch nghỉ ngơi hợp lý, xe riêng thoải mái cho hành trình dài ở Mỹ — ba thế hệ cùng đi vẫn khỏe.",
             },
           ],
-          visaBlock: {
-            title: "Vinh hỗ trợ visa Mỹ thế nào?",
-            body:
-              "Trước chuyến đi, Vinh cùng bạn rà lại hồ sơ, tư vấn cách chuẩn bị phỏng vấn lãnh sự quán, và chia sẻ kinh nghiệm thực tế từ hàng chục gia đình đã đi cùng Vinh. Đây là bước tư vấn miễn phí khi bạn đăng ký tour.",
-          },
           faqs: [
             {
-              question: "Visa Mỹ khó vậy có nên đi tự túc không?",
+              question: "Visa Mỹ khó vậy có nên đi tour tự túc không?",
               answer:
-                "Nếu chưa từng làm visa Mỹ, đi cùng người có kinh nghiệm giúp bạn tránh những lỗi hồ sơ phổ biến. Vinh hỗ trợ tư vấn hồ sơ và chia sẻ kinh nghiệm phỏng vấn thực tế.",
+                "Visa Mỹ là phần khó nhất của chuyến đi Mỹ — phỏng vấn trực tiếp, xét cả hồ sơ lẫn cách trả lời. Đi cùng Vinh, bạn vẫn phải tự phỏng vấn (không ai làm thay được), nhưng hồ sơ được rà kỹ và bạn được chuẩn bị trước những câu lãnh sự hay hỏi. Lệ phí hiện là 185 USD/người, cộng phí Visa Integrity Fee 250 USD dự kiến áp dụng trong năm 2026 — nên ngân sách visa cứ chuẩn bị khoảng 435 USD/người cho chắc.",
             },
             {
               question: "Chi phí tour Mỹ cho gia đình 4-6 người khoảng bao nhiêu?",
               answer:
-                "Tùy lịch trình và số ngày, chi phí dao động 150-500 triệu cho cả đoàn. Nhắn Zalo để Vinh báo giá cụ thể theo nhu cầu của bạn.",
+                "Tour trọn gói từ 85 triệu/khách cho hành trình 12 ngày Đông – Tây (chưa gồm vé máy bay quốc tế). Con số chính xác Vinh chỉ báo sau khi biết nhà bạn mấy người, đi bao nhiêu ngày, thích ở kiểu gì — nhắn Zalo, Vinh tính miễn phí.",
             },
             {
               question: "Có phù hợp với người lớn tuổi không?",
               answer:
-                "Có. Lịch trình được thiết kế nhẹ nhàng, xe riêng nghỉ dừng linh hoạt, không chạy đua điểm đến như tour đoàn.",
+                "Chặng Mỹ dài và nhiều di chuyển, nhưng xe riêng giải quyết gần hết vấn đề: ông bà mệt thì nghỉ, lịch mỗi ngày chỉ 1-2 điểm chính thay vì chạy 5-6 điểm như tour đoàn. Nhiều đoàn có thành viên trên 75 tuổi vẫn đi trọn 12 ngày thoải mái.",
+            },
+            {
+              question: "Đặt cọc bao nhiêu, khi nào?",
+              answer:
+                "Đợt 1 (50%) trong 24 giờ sau khi ký hợp đồng để giữ vé và mở hồ sơ visa; đợt 2 (30%) khi có visa hoặc chậm nhất 45 ngày trước khởi hành; đợt 3 (20%) chậm nhất 21 ngày trước khởi hành. Chi tiết đầy đủ và chính sách hủy/đổi xem tại trang Chính sách.",
             },
           ],
           leadDestination: "usa",
           tours: data ?? [],
           testimonials: testimonials ?? [],
           relatedPosts: relatedPosts ?? [],
+          pillarContent: PILLAR_MY,
         }}
       />
     </>

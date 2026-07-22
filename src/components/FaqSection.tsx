@@ -16,22 +16,22 @@ const FAQS = [
   {
     question: "Giá tour bao gồm những gì?",
     answer:
-      "Xe riêng, khách sạn, hầu hết bữa ăn theo lịch trình, và Vinh dẫn đoàn xuyên suốt. Vé máy bay quốc tế và một số bữa tự do thường không bao gồm — chi tiết cụ thể theo từng tour.",
+      "Giá trọn gói gồm vé máy bay theo hành trình, khách sạn, xe riêng suốt hành trình, vé tham quan trong lịch trình chính thức, phí visa và bảo hiểm du lịch. Các bữa ăn, tiền tip và chi phí cá nhân không bao gồm trừ khi được ghi rõ bằng văn bản trong báo giá. Không có phụ phí ẩn, không shopping stop ăn hoa hồng — báo giá sao, đi đúng vậy.",
   },
   {
     question: "Đặt cọc bao nhiêu, khi nào?",
     answer:
-      "Thường đặt cọc một phần để giữ lịch, phần còn lại thanh toán trước ngày khởi hành. Vinh sẽ trao đổi cụ thể khi tư vấn theo tour bạn chọn.",
+      "Thanh toán chia 3 đợt: đợt 1 (50%) trong 24 giờ sau khi ký hợp đồng để giữ vé và mở hồ sơ visa; đợt 2 (30%) khi có visa hoặc chậm nhất 45 ngày trước khởi hành; đợt 3 (20%) chậm nhất 21 ngày trước khởi hành. Sau khi chốt lịch trình, Vinh gửi hợp đồng rõ ràng từng khoản trước khi bạn chuyển bất kỳ đồng nào — chi tiết đầy đủ xem tại trang Chính sách.",
   },
   {
     question: "Đi cùng trẻ nhỏ hoặc người lớn tuổi có ổn không?",
     answer:
-      "Rất ổn — đây là thế mạnh của private tour. Lịch trình linh hoạt theo sức khỏe cả đoàn, xe riêng nghỉ dừng khi cần, không chạy đua điểm đến như tour đoàn.",
+      "Đây chính là kiểu đoàn Vinh nhận nhiều nhất. Xe riêng nên muốn dừng nghỉ lúc nào cũng được, lịch mỗi ngày xếp theo sức của người yếu nhất đoàn chứ không theo người khỏe nhất. Nhà có ông bà trên 70 tuổi hay bé dưới 2 tuổi, cứ nói trước để Vinh xếp khách sạn có thang máy, quán ăn có ghế em bé, và chặng lái ngắn lại.",
   },
   {
     question: "Lỡ có việc phải huỷ thì sao?",
     answer:
-      "Chính sách huỷ/đổi lịch cụ thể tùy thời điểm và tour — nhắn Zalo cho Vinh để được tư vấn trước khi đặt, tránh phát sinh không mong muốn.",
+      "Mức khấu trừ chuẩn tính theo thời điểm trước ngày khởi hành: từ 60 ngày trở lên 10%, 45-59 ngày 25%, 30-44 ngày 50%, 15-29 ngày 75%, dưới 15 ngày hoặc không khởi hành 100% giá trị tour của người hủy. Mọi điều khoản nằm trong hợp đồng ký trước chuyến, Vinh giải thích từng dòng trước khi bạn đặt cọc — xem đầy đủ tại trang Chính sách.",
   },
 ];
 

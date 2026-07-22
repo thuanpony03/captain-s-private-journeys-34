@@ -37,10 +37,15 @@ AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
 const AccordionContent = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+>(({ className, children, forceMount = true, ...props }, ref) => (
+  // forceMount: giữ nội dung câu trả lời trong DOM/HTML kể cả khi đang đóng
+  // (mặc định Radix unmount hẳn), để Google/crawler đọc được full text FAQ
+  // ngay trong SSR HTML thay vì chỉ thấy câu hỏi. data-[state=closed]:h-0 giữ
+  // đúng hành vi thu gọn về mặt hình ảnh sau khi animation kết thúc.
   <AccordionPrimitive.Content
     ref={ref}
-    className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    forceMount={forceMount}
+    className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down data-[state=closed]:h-0"
     {...props}
   >
     <div className={cn("pb-4 pt-0", className)}>{children}</div>

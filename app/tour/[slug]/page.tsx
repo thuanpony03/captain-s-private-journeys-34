@@ -165,13 +165,6 @@ export async function generateMetadata({
   return {
     title,
     description,
-    keywords: [
-      tour.title,
-      "private tour",
-      "vinh around",
-      "du lịch cao cấp",
-      tour.route ?? "",
-    ].filter(Boolean),
     alternates: { canonical: path },
     // Ảnh trỏ về app/og/tour/[slug]/route.tsx — ImageResponse có tên tour + giá,
     // thiết kế riêng thay vì ảnh gốc. (File convention opengraph-image.tsx + edge

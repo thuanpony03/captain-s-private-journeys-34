@@ -11,6 +11,7 @@ import ContactForm from "@/components/ContactForm";
 import TourCard, { type TourCardData } from "@/components/tour/TourCard";
 import BlogCard from "@/components/blog/BlogCard";
 import TestimonialGallery, { type TestimonialData } from "@/components/testimonials/TestimonialGallery";
+import PillarContent from "@/components/tour/PillarContent";
 import { ShieldCheck } from "lucide-react";
 import type { BlogPostSummary } from "@/lib/blog";
 
@@ -30,6 +31,8 @@ export interface MarketLandingConfig {
   tours: TourCardData[];
   testimonials?: TestimonialData[];
   relatedPosts?: BlogPostSummary[];
+  /** Nội dung dài dạng markdown (xem src/content/pillars.ts) — render giữa value props và tour grid. */
+  pillarContent?: string;
 }
 
 export default function MarketLandingPage({ config }: { config: MarketLandingConfig }) {
@@ -44,10 +47,30 @@ export default function MarketLandingPage({ config }: { config: MarketLandingCon
     tours,
     testimonials = [],
     relatedPosts = [],
+    pillarContent,
   } = config;
+
+  const faqJsonLd =
+    faqs.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((faq) => ({
+            "@type": "Question",
+            name: faq.question,
+            acceptedAnswer: { "@type": "Answer", text: faq.answer },
+          })),
+        }
+      : null;
 
   return (
     <>
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       <Navbar />
       <main className="min-h-screen">
         {/* Hero */}
@@ -84,6 +107,9 @@ export default function MarketLandingPage({ config }: { config: MarketLandingCon
           </div>
         </section>
 
+        {/* Nội dung dài — lịch trình mẫu, giá, visa, mùa đẹp, câu chuyện thật */}
+        {pillarContent && <PillarContent markdown={pillarContent} />}
+
         {/* Tour grid */}
         {tours.length > 0 && (
           <section className="py-14 md:py-20 bg-[#faf9f7]">
@@ -100,8 +126,8 @@ export default function MarketLandingPage({ config }: { config: MarketLandingCon
           </section>
         )}
 
-        {/* Visa block */}
-        {visaBlock && (
+        {/* Visa block ngắn — chỉ hiện khi trang chưa có pillarContent (đã có mục Visa riêng, chi tiết hơn) */}
+        {visaBlock && !pillarContent && (
           <section className="py-14 md:py-20 bg-primary">
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto text-center">

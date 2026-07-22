@@ -85,35 +85,37 @@ const Footer = () => {
                 <h4 className="font-display text-lg font-bold text-secondary">Điểm đến</h4>
                 <ul className="space-y-3">
                   {[
-                    "USA - West Coast",
-                    "Australia - Great Ocean Road",
-                    "Europe - Châu Âu",
-                    "Canada - Rocky Mountains",
-                  ].map((item, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center gap-2 text-white/70 text-sm hover:text-secondary transition-colors cursor-pointer group"
-                    >
-                      <svg
-                        className="w-4 h-4 text-secondary/50 group-hover:text-secondary transition-colors"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                    { label: "Mỹ — Đông & Tây Hoa Kỳ", href: "/tour/my" },
+                    { label: "Úc — Sydney & Great Ocean Road", href: "/tour/uc" },
+                    { label: "Châu Âu — Pháp, Ý, Thụy Sĩ", href: "/tour/chau-au" },
+                    { label: "Canada — Rocky Mountains", href: "/tour/canada" },
+                  ].map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="flex items-center gap-2 text-white/70 text-sm hover:text-secondary transition-colors group"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                      </svg>
-                      <span>{item}</span>
+                        <svg
+                          className="w-4 h-4 text-secondary/50 group-hover:text-secondary transition-colors flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                        </svg>
+                        <span>{item.label}</span>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -206,7 +208,9 @@ const Footer = () => {
                 <h4 className="font-display text-lg font-bold text-secondary">Kết nối</h4>
                 <div className="flex gap-3">
                   <a
-                    href="#"
+                    href="https://facebook.com/DicungVinhAround"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-11 h-11 bg-white/5 rounded-xl flex items-center justify-center hover:bg-secondary transition-all group border border-white/10"
                     aria-label="Facebook"
                   >
@@ -219,7 +223,9 @@ const Footer = () => {
                     </svg>
                   </a>
                   <a
-                    href="#"
+                    href="https://youtube.com/@vinharound"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-11 h-11 bg-white/5 rounded-xl flex items-center justify-center hover:bg-secondary transition-all group border border-white/10"
                     aria-label="YouTube"
                   >
@@ -232,7 +238,24 @@ const Footer = () => {
                     </svg>
                   </a>
                   <a
-                    href="#"
+                    href="https://tiktok.com/@dicung.vinharound"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-11 h-11 bg-white/5 rounded-xl flex items-center justify-center hover:bg-secondary transition-all group border border-white/10"
+                    aria-label="TikTok"
+                  >
+                    <svg
+                      className="w-5 h-5 text-white/70 group-hover:text-primary transition-colors"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z" />
+                    </svg>
+                  </a>
+                  <a
+                    href="https://zalo.me/0933344646"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-11 h-11 bg-white/5 rounded-xl flex items-center justify-center hover:bg-secondary transition-all group border border-white/10"
                     aria-label="Zalo"
                   >
@@ -257,7 +280,7 @@ const Footer = () => {
             <div className="border-t border-white/10 pt-8">
               <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                 <p className="text-white/50 text-xs text-center md:text-left">
-                  © 2024 Passport Lounge. All rights reserved.
+                  © {new Date().getFullYear()} Passport Lounge. All rights reserved.
                 </p>
                 <div className="flex items-center gap-6 text-xs text-white/50">
                   <Link href="/chinh-sach" className="hover:text-secondary transition-colors">

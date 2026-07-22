@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import MarketLandingPage from "@/components/tour/MarketLandingPage";
 import { createPublicClient } from "@/lib/supabase/server";
 import { SITE_URL, absoluteUrl } from "@/lib/seo";
+import { PILLAR_CANADA } from "@/content/pillars";
 
 const TITLE = "Private Tour Canada Gia Đình - Rocky Mountains, Xe Riêng";
 const DESCRIPTION =
@@ -10,11 +11,15 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: ["private tour canada", "tour canada gia đình", "du lịch canada"],
   alternates: { canonical: "/tour/canada" },
   openGraph: {
     type: "website",
     url: absoluteUrl("/tour/canada"),
+    title: `${TITLE} | Vinh Around`,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
     title: `${TITLE} | Vinh Around`,
     description: DESCRIPTION,
   },
@@ -84,19 +89,19 @@ export default async function CanadaMarketPage() {
           ],
           faqs: [
             {
-              question: "Visa Canada có khó không?",
+              question: "Visa Canada có khó hơn visa Mỹ không?",
               answer:
-                "Hồ sơ cần chuẩn bị kỹ tương tự Mỹ. Vinh hỗ trợ tư vấn hồ sơ khi bạn đăng ký tour.",
+                "Khác kiểu: Canada không phỏng vấn, xét hồ sơ online kèm sinh trắc học. Thời gian xét thường lâu hơn nên cần nộp sớm trước chuyến đi vài tháng. Ai đã có visa Mỹ còn hạn thì hồ sơ Canada thường thuận hơn đáng kể.",
             },
             {
-              question: "Mùa nào đẹp để đi Canada?",
+              question: "Canada mùa nào đẹp nhất?",
               answer:
-                "Tháng 6-9 là mùa hè, thời tiết đẹp nhất để ngắm Rocky Mountains và các hồ nước — tuyết tan, cây cối xanh tươi.",
+                "Mùa thu (cuối tháng 9 – giữa tháng 10) lá vàng lá đỏ khắp Rocky Mountains — mùa đẹp nhất nhưng phải đặt trước 4-6 tháng. Mùa hè (6-8) hồ xanh ngọc, thời tiết dễ nhất cho ông bà. Mùa đông có thác Niagara đóng băng.",
             },
             {
-              question: "Chi phí tour Canada gia đình 4-6 người khoảng bao nhiêu?",
+              question: "Có kết hợp Mỹ và Canada một chuyến được không?",
               answer:
-                "Tùy lịch trình và số ngày, nhắn Zalo để Vinh báo giá cụ thể theo nhu cầu của bạn.",
+                "Được và rất đáng — New York lên Niagara rồi qua Toronto chỉ vài tiếng lái. Cần cả visa Mỹ lẫn Canada, Vinh xếp lịch xin hai visa song song để không lỡ chuyến.",
             },
           ],
           // ContactForm chỉ hỗ trợ 4 giá trị destination có sẵn (usa/australia/europe/other) —
@@ -105,6 +110,7 @@ export default async function CanadaMarketPage() {
           tours: data ?? [],
           testimonials: testimonials ?? [],
           relatedPosts: relatedPosts ?? [],
+          pillarContent: PILLAR_CANADA,
         }}
       />
     </>

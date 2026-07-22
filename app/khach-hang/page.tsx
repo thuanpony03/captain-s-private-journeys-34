@@ -12,11 +12,15 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: ["review vinh around", "đánh giá passport lounge"],
   alternates: { canonical: "/khach-hang" },
   openGraph: {
     type: "website",
     url: absoluteUrl("/khach-hang"),
+    title: `${TITLE} | Vinh Around`,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
     title: `${TITLE} | Vinh Around`,
     description: DESCRIPTION,
   },

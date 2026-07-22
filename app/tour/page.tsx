@@ -20,6 +20,11 @@ export const metadata: Metadata = {
     title: `${TITLE} | Vinh Around`,
     description: DESCRIPTION,
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${TITLE} | Vinh Around`,
+    description: DESCRIPTION,
+  },
 };
 
 export const revalidate = 3600;

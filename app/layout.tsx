@@ -33,17 +33,6 @@ export const metadata: Metadata = {
     template: "%s | Vinh Around",
   },
   description: DESCRIPTION,
-  keywords: [
-    "private tour mỹ",
-    "private tour úc",
-    "private tour châu âu",
-    "du lịch mỹ",
-    "du lịch úc",
-    "vinh around",
-    "passport lounge",
-    "tour cao cấp",
-    "xe riêng du lịch",
-  ],
   authors: [{ name: "Passport Lounge - Vinh Around" }],
   alternates: { canonical: "/" },
   robots: {

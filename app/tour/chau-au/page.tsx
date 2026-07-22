@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import MarketLandingPage from "@/components/tour/MarketLandingPage";
 import { createPublicClient } from "@/lib/supabase/server";
 import { SITE_URL, absoluteUrl } from "@/lib/seo";
+import { PILLAR_CHAU_AU } from "@/content/pillars";
 
 const TITLE = "Private Tour Châu Âu Gia Đình - Đa Quốc Gia, Xe Riêng";
 const DESCRIPTION =
@@ -10,11 +11,15 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: ["private tour châu âu", "tour châu âu gia đình"],
   alternates: { canonical: "/tour/chau-au" },
   openGraph: {
     type: "website",
     url: absoluteUrl("/tour/chau-au"),
+    title: `${TITLE} | Vinh Around`,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
     title: `${TITLE} | Vinh Around`,
     description: DESCRIPTION,
   },
@@ -84,25 +89,26 @@ export default async function ChauAuMarketPage() {
           ],
           faqs: [
             {
-              question: "Visa Châu Âu (Schengen) có khó không?",
+              question: "Visa Schengen xin một nước đi được bao nhiêu nước?",
               answer:
-                "Visa Schengen cho phép đi nhiều nước cùng lúc nhưng hồ sơ cần chuẩn bị kỹ. Vinh hỗ trợ tư vấn khi bạn đăng ký tour.",
+                "Một visa Schengen đi được cả khối 29 nước. Nộp vào nước ở lâu nhất trong lịch trình. Lệ phí hiện là 90 euro người lớn, 45 euro trẻ 6-11 tuổi, dưới 6 tuổi miễn phí, cộng phí trung tâm tiếp nhận khoảng 16-24 euro. Lịch trình và booking để nộp hồ sơ Vinh lo trọn.",
             },
             {
-              question: "Đi qua nhiều nước có mệt không?",
+              question: "Đi nhiều nước một chuyến có mệt không?",
               answer:
-                "Lịch trình được thiết kế để không phải di chuyển liên tục — mỗi điểm dừng đủ thời gian nghỉ ngơi trước khi qua nước tiếp theo.",
+                "Mệt hay không nằm ở cách di chuyển. Tour đoàn mệt vì ngày nào cũng 5h sáng lên xe ca. Đi xe riêng, mỗi chặng 2-4 tiếng là có điểm dừng đẹp để nghỉ, khách sạn xếp 2-3 đêm một chỗ thay vì mỗi đêm một thành phố. 12 ngày qua 3-4 nước mà nhịp vẫn thong thả.",
             },
             {
-              question: "Chi phí tour Châu Âu gia đình 4-6 người khoảng bao nhiêu?",
+              question: "Trẻ em có cần visa riêng không?",
               answer:
-                "Tùy số nước và số ngày, dao động 180-500 triệu cho cả đoàn. Nhắn Zalo để Vinh báo giá theo lịch trình cụ thể.",
+                "Có — mỗi thành viên một bộ hồ sơ, trẻ em cần thêm giấy khai sinh và giấy đồng ý của bố/mẹ nếu không đi cùng đủ cả hai. Phần giấy tờ này nhiều nhà làm sai nhất, Vinh sẽ gửi checklist theo đúng độ tuổi từng bé.",
             },
           ],
           leadDestination: "europe",
           tours: data ?? [],
           testimonials: testimonials ?? [],
           relatedPosts: relatedPosts ?? [],
+          pillarContent: PILLAR_CHAU_AU,
         }}
       />
     </>

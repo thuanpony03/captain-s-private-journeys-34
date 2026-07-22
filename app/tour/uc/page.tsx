@@ -10,11 +10,15 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  keywords: ["private tour úc", "tour úc gia đình", "du lịch úc gia đình"],
   alternates: { canonical: "/tour/uc" },
   openGraph: {
     type: "website",
     url: absoluteUrl("/tour/uc"),
+    title: `${TITLE} | Vinh Around`,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
     title: `${TITLE} | Vinh Around`,
     description: DESCRIPTION,
   },
@@ -84,19 +88,19 @@ export default async function UcMarketPage() {
           ],
           faqs: [
             {
-              question: "Visa Úc có khó không?",
+              question: "Visa Úc có cần phỏng vấn không?",
               answer:
-                "Nhìn chung thuận lợi hơn Mỹ và Châu Âu với hồ sơ đầy đủ. Vinh hỗ trợ tư vấn chuẩn bị hồ sơ khi bạn đăng ký tour.",
+                "Không. Visa du lịch Úc (subclass 600) xét hoàn toàn trên hồ sơ nộp online qua ImmiAccount, thỉnh thoảng lãnh sự gọi điện xác minh. Từ 1/7/2026 lệ phí là 250 AUD/người, cộng phí trung tâm VFS khoảng 270 nghìn đồng. Hồ sơ mạnh nằm ở chứng minh tài chính và ràng buộc ở Việt Nam — Vinh hướng dẫn bạn chuẩn bị từng mục.",
             },
             {
-              question: "Mùa nào đẹp để đi Úc?",
+              question: "Úc có hợp với nhà có trẻ nhỏ không?",
               answer:
-                "Tháng 9-11 (mùa xuân) và tháng 3-5 (mùa thu) thời tiết dễ chịu nhất, tránh nắng gắt mùa hè Úc (tháng 12-2).",
+                "Rất hợp — bay đêm 8-9 tiếng là tới, không lệch múi giờ nhiều như đi Mỹ, khí hậu dễ chịu, đường sá lái êm. Great Ocean Road là cung Vinh chạy thuộc lòng: cảnh đẹp mà chặng lái ngắn, dừng nghỉ liên tục được.",
             },
             {
-              question: "Chi phí tour Úc gia đình 4 người khoảng bao nhiêu?",
+              question: "Đi Úc mùa nào đẹp?",
               answer:
-                "Tùy số ngày và lịch trình, dao động 120-350 triệu cho cả đoàn. Nhắn Zalo để Vinh báo giá theo nhu cầu cụ thể.",
+                "Úc ngược mùa với Việt Nam: tháng 12-2 là hè bên đó, hợp tắm biển Sydney; tháng 3-5 và 9-11 mát mẻ, hợp ông bà. Tháng 6-8 là đông, lạnh nhưng ít khách, giá tốt.",
             },
           ],
           leadDestination: "australia",
