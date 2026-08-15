@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { MapPin, Clock, Users, CalendarClock, Check, X as XIcon, MessageCircle } from "lucide-react";
+import { MapPin, Clock, Users, CalendarClock, Check, X as XIcon, MessageCircle, Car, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -37,6 +37,11 @@ interface Faq {
   answer: string;
 }
 
+interface CancellationPolicy {
+  deposit: string;
+  tiers: { time: string; rate: string }[];
+}
+
 interface Tour {
   id: string;
   title: string;
@@ -51,9 +56,12 @@ interface Tour {
   itinerary: ItineraryDay[];
   inclusions: string[];
   exclusions: string[];
+  requirements: string[];
   gallery_urls: string[];
   faqs: Faq[];
   price_from: number | null;
+  price_currency: string | null;
+  cancellation_policy: CancellationPolicy | null;
   departure_note: string | null;
   max_group_size: number | null;
   video_url: string | null;
@@ -79,8 +87,10 @@ async function getTour(slug: string): Promise<Tour | null> {
     itinerary: Array.isArray(data.itinerary) ? (data.itinerary as unknown as ItineraryDay[]) : [],
     inclusions: Array.isArray(data.inclusions) ? data.inclusions : [],
     exclusions: Array.isArray(data.exclusions) ? data.exclusions : [],
+    requirements: Array.isArray(data.requirements) ? data.requirements : [],
     gallery_urls: Array.isArray(data.gallery_urls) ? data.gallery_urls : [],
     faqs: Array.isArray(data.faqs) ? (data.faqs as unknown as Faq[]) : [],
+    cancellation_policy: (data.cancellation_policy as unknown as CancellationPolicy) ?? null,
     related_story_slugs: Array.isArray(data.related_story_slugs) ? data.related_story_slugs : [],
   };
 }
@@ -203,7 +213,10 @@ export default async function TourPage({
   ]);
 
   const highlights = tour.inclusions.slice(0, 4);
+  const isSelfDrive = tour.requirements.length > 0;
 
+  // Offer.price theo schema.org phải là số thuần — bỏ hẳn khối offers khi chưa có giá thật
+  // (vd tour "Liên hệ") thay vì nhét chuỗi "Liên hệ" vào field số, dễ bị Rich Results từ chối.
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -213,11 +226,16 @@ export default async function TourPage({
       image,
       url: absoluteUrl(path),
       duration: tour.duration,
-      offers: {
-        "@type": "Offer",
-        price: tour.price || "Liên hệ",
-        priceCurrency: "VND",
-      },
+      ...(tour.price_from
+        ? {
+            offers: {
+              "@type": "Offer",
+              price: tour.price_from,
+              priceCurrency: tour.price_currency || "VND",
+              availability: "https://schema.org/LimitedAvailability",
+            },
+          }
+        : {}),
       itinerary:
         tour.itinerary.length > 0
           ? tour.itinerary.map((day) => ({
@@ -285,11 +303,27 @@ export default async function TourPage({
 
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
             <div className="container mx-auto max-w-6xl">
-              <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                <span className="text-white text-xs font-bold uppercase tracking-wide">
-                  Private 100% · Không shopping stop
-                </span>
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
+                  <span className="text-white text-xs font-bold uppercase tracking-wide">
+                    Private 100% · Không shopping stop
+                  </span>
+                </div>
+                {isSelfDrive && (
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/90 backdrop-blur-sm">
+                    <Car className="w-3.5 h-3.5 text-primary" />
+                    <span className="text-primary text-xs font-bold uppercase tracking-wide">Hành trình tự lái</span>
+                  </div>
+                )}
+                {tour.max_group_size !== null && tour.max_group_size <= 6 && (
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20">
+                    <Users className="w-3.5 h-3.5 text-white" />
+                    <span className="text-white text-xs font-bold uppercase tracking-wide">
+                      Giới hạn {tour.max_group_size} khách/đoàn
+                    </span>
+                  </div>
+                )}
               </div>
               {tour.tagline && (
                 <p className="text-secondary text-sm md:text-base font-semibold mb-2">
@@ -352,7 +386,9 @@ export default async function TourPage({
 
               {tour.price && (
                 <p className="text-muted-foreground text-xs mb-8 lg:hidden -mt-4">
-                  Giá tham khảo cho tối thiểu 4 khách, ngày thường — Vinh gửi báo giá chính xác sau khi kiểm tra vé và dịch vụ thực tế.
+                  {tour.cancellation_policy
+                    ? "Đặt cọc 50% khi ký hợp đồng — xem đầy đủ tiến độ thanh toán trong nội dung bên dưới."
+                    : "Giá tham khảo cho tối thiểu 4 khách, ngày thường — Vinh gửi báo giá chính xác sau khi kiểm tra vé và dịch vụ thực tế."}
                 </p>
               )}
 
@@ -563,6 +599,63 @@ export default async function TourPage({
                 </div>
               )}
 
+              {/* Yêu cầu tham gia — chỉ hiện với tour có yêu cầu riêng (vd tự lái) */}
+              {tour.requirements.length > 0 && (
+                <div className="glass-effect p-6 rounded-2xl border border-secondary/20 bg-secondary/5 mb-12">
+                  <div className="flex items-center gap-2.5 mb-4">
+                    <Car className="w-5 h-5 text-secondary" />
+                    <h3 className="font-display text-lg font-bold text-primary">Yêu cầu tham gia</h3>
+                  </div>
+                  <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
+                    {tour.requirements.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/80">
+                        <Check className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="text-muted-foreground text-xs mt-4">
+                    Đây là hành trình tự lái trải nghiệm, không phải tour truyền thống có tài xế phục vụ xuyên suốt.
+                  </p>
+                </div>
+              )}
+
+              {/* Chính sách cọc & hoàn hủy riêng của tour — chỉ hiện khi khác chính sách chung */}
+              {tour.cancellation_policy && (
+                <div className="glass-effect p-6 rounded-2xl border border-primary/10 mb-12">
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <ShieldCheck className="w-5 h-5 text-primary" />
+                    <h3 className="font-display text-lg font-bold text-primary">Đặt cọc &amp; chính sách hoàn hủy</h3>
+                  </div>
+                  <p className="text-sm text-foreground/70 mb-4">{tour.cancellation_policy.deposit}</p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm border-collapse">
+                      <thead>
+                        <tr className="border-b-2 border-primary/10">
+                          <th className="text-left py-2 pr-4 font-display text-primary">Thời điểm hủy</th>
+                          <th className="text-left py-2 font-display text-primary">Mức áp dụng</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {tour.cancellation_policy.tiers.map((row) => (
+                          <tr key={row.time} className="border-b border-primary/5">
+                            <td className="py-2.5 pr-4 text-foreground/80">{row.time}</td>
+                            <td className="py-2.5 text-foreground/70">{row.rate}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <p className="text-muted-foreground text-xs mt-3">
+                    Điều khoản riêng cho tour này — xem chính sách chung tại{" "}
+                    <Link href="/chinh-sach" className="text-secondary underline">
+                      trang Chính sách
+                    </Link>
+                    .
+                  </p>
+                </div>
+              )}
+
               {/* CTA giữa trang — sau khi khách đã rõ giá và điều kiện */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-12 p-5 rounded-2xl bg-secondary/10 border border-secondary/20">
                 <p className="text-primary/80 text-sm md:text-base font-medium text-center sm:text-left">
@@ -668,7 +761,9 @@ export default async function TourPage({
                     <p className="text-sm text-muted-foreground mb-1">Giá từ</p>
                     <p className="text-3xl font-bold text-secondary mb-1.5">{tour.price}</p>
                     <p className="text-xs text-muted-foreground mb-5">
-                      Tham khảo cho tối thiểu 4 khách, ngày thường
+                      {tour.cancellation_policy
+                        ? "Đặt cọc 50% khi ký hợp đồng — xem đầy đủ tiến độ thanh toán bên dưới"
+                        : "Tham khảo cho tối thiểu 4 khách, ngày thường"}
                     </p>
                   </>
                 )}

@@ -4,9 +4,9 @@ import { createPublicClient } from "@/lib/supabase/server";
 import { SITE_URL, absoluteUrl } from "@/lib/seo";
 import { PILLAR_CANADA } from "@/content/pillars";
 
-const TITLE = "Private Tour Canada Gia Đình - Rocky Mountains, Xe Riêng";
+const TITLE = "Tour Canada Mùa Thu - Trọn Gói & Tự Lái | Toronto, Banff, Lake Louise";
 const DESCRIPTION =
-  "Private tour Canada cho gia đình Việt — Banff, Rocky Mountains, hồ Peyto. Xe riêng, lịch trình tùy chỉnh cùng Vinh Around, không shopping stop.";
+  "Tour Canada mùa thu cùng Vinh Around: Toronto, Niagara Falls, Quebec City, Banff, Lake Louise. Chọn trọn gói có HDV đồng hành hoặc tự lái SUV theo phong cách road trip.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -69,25 +69,31 @@ export default async function CanadaMarketPage() {
       />
       <MarketLandingPage
         config={{
-          heroImage: "https://images.unsplash.com/photo-1609825488888-3a766db05542?w=1600&q=80",
-          heroHeadline: "Đi Canada cùng cả nhà — Rocky Mountains, hồ Peyto tận mắt",
+          heroImage:
+            "https://res.cloudinary.com/dvu2csvsg/image/upload/w_1600,q_auto,f_auto/v1784656696/vinharound/chuyen-di/canada-15-ngay-xuyen-ngang/canada-15-ngay-xuyen-ngang-7.jpg",
+          heroHeadline: "Canada mùa thu — Toronto tới Rocky Mountains, chọn kiểu đi của riêng bạn",
           heroSubtext:
-            "Banff, Rocky Mountains và những hồ nước xanh ngọc — Vinh đã tự mình đi qua, giờ dẫn cả gia đình bạn đi.",
+            "Niagara Falls, Quebec City cổ kính, Banff, Lake Louise mùa lá phong — trọn gói có hướng dẫn viên đồng hành, hoặc tự lái SUV road trip. Vinh đã tự mình đi cung này.",
           valueProps: [
             {
-              title: "Cảnh thiên nhiên hiếm có",
-              desc: "Rocky Mountains, hồ Peyto, Banff — những khung cảnh mà ảnh chụp không lột tả hết, cần tận mắt chứng kiến.",
+              title: "2 kiểu hành trình, 1 cung đường đẹp nhất mùa thu",
+              desc: "Trọn gói có HDV đồng hành xuyên suốt, hoặc tự lái SUV theo lộ trình dựng sẵn — chọn theo đúng gu và ngân sách nhà bạn.",
             },
             {
               title: "Không shopping stop",
-              desc: "Xe riêng, lịch trình theo nhịp gia đình bạn — tập trung trải nghiệm thiên nhiên, không ép vào cửa hàng.",
+              desc: "Lịch trình tập trung cảnh thiên nhiên và phố cổ thật — không ép vào cửa hàng, không hoa hồng mua sắm.",
             },
             {
-              title: "Hợp gia đình đa thế hệ",
-              desc: "Lịch trình cân bằng giữa ngắm cảnh và nghỉ ngơi — ông bà, bố mẹ, con nhỏ cùng đi vẫn khỏe.",
+              title: "Đúng mùa lá phong đẹp nhất",
+              desc: "Cuối tháng 9 – giữa tháng 10: Mont-Tremblant, Quebec, Rocky Mountains rực rỡ nhất năm.",
             },
           ],
           faqs: [
+            {
+              question: "Tour trọn gói và tour tự lái khác nhau chỗ nào?",
+              answer:
+                "Cùng một cung đường Toronto – Niagara – Ottawa – Montreal – Quebec City – Mont-Tremblant – Banff, nhưng tour trọn gói có hướng dẫn viên đồng hành xuyên suốt, đã gồm vé máy bay quốc tế và các bữa ăn, khởi hành giới hạn 6 khách. Tour tự lái là road trip thực thụ: Leader bàn giao xe SUV và hướng dẫn luật giao thông ngày đầu, sau đó bạn tự cầm lái, ở Airbnb riêng, chủ động lịch trình hơn nhưng cần có bằng lái quốc tế và kỹ năng lái tốt.",
+            },
             {
               question: "Visa Canada có khó hơn visa Mỹ không?",
               answer:
@@ -96,17 +102,10 @@ export default async function CanadaMarketPage() {
             {
               question: "Canada mùa nào đẹp nhất?",
               answer:
-                "Mùa thu (cuối tháng 9 – giữa tháng 10) lá vàng lá đỏ khắp Rocky Mountains — mùa đẹp nhất nhưng phải đặt trước 4-6 tháng. Mùa hè (6-8) hồ xanh ngọc, thời tiết dễ nhất cho ông bà. Mùa đông có thác Niagara đóng băng.",
-            },
-            {
-              question: "Có kết hợp Mỹ và Canada một chuyến được không?",
-              answer:
-                "Được và rất đáng — New York lên Niagara rồi qua Toronto chỉ vài tiếng lái. Cần cả visa Mỹ lẫn Canada, Vinh xếp lịch xin hai visa song song để không lỡ chuyến.",
+                "Mùa thu (cuối tháng 9 – giữa tháng 10) lá vàng lá đỏ khắp Rocky Mountains và Quebec — mùa đẹp nhất nhưng phải đặt trước 4-6 tháng vì khách sạn Banff, Mont-Tremblant cháy phòng. Mùa hè (6-8) hồ xanh ngọc, thời tiết dễ nhất cho ông bà.",
             },
           ],
-          // ContactForm chỉ hỗ trợ 4 giá trị destination có sẵn (usa/australia/europe/other) —
-          // Canada dùng "other" cho tới khi form được mở rộng thêm lựa chọn riêng.
-          leadDestination: "other",
+          leadDestination: "canada",
           tours: data ?? [],
           testimonials: testimonials ?? [],
           relatedPosts: relatedPosts ?? [],

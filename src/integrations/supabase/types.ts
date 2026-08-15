@@ -253,6 +253,7 @@ export type Database = {
       }
       tour_packages: {
         Row: {
+          cancellation_policy: Json | null
           created_at: string | null
           departure_note: string | null
           description: string | null
@@ -269,8 +270,10 @@ export type Database = {
           max_group_size: number | null
           order_index: number | null
           price: string | null
+          price_currency: string
           price_from: number | null
           related_story_slugs: string[] | null
+          requirements: string[] | null
           route: string | null
           slug: string | null
           stops: Json | null
@@ -280,6 +283,7 @@ export type Database = {
           video_url: string | null
         }
         Insert: {
+          cancellation_policy?: Json | null
           created_at?: string | null
           departure_note?: string | null
           description?: string | null
@@ -296,8 +300,10 @@ export type Database = {
           max_group_size?: number | null
           order_index?: number | null
           price?: string | null
+          price_currency?: string
           price_from?: number | null
           related_story_slugs?: string[] | null
+          requirements?: string[] | null
           route?: string | null
           slug?: string | null
           stops?: Json | null
@@ -307,6 +313,7 @@ export type Database = {
           video_url?: string | null
         }
         Update: {
+          cancellation_policy?: Json | null
           created_at?: string | null
           departure_note?: string | null
           description?: string | null
@@ -323,8 +330,10 @@ export type Database = {
           max_group_size?: number | null
           order_index?: number | null
           price?: string | null
+          price_currency?: string
           price_from?: number | null
           related_story_slugs?: string[] | null
+          requirements?: string[] | null
           route?: string | null
           slug?: string | null
           stops?: Json | null

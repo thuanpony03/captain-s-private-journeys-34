@@ -27,7 +27,7 @@ export interface MarketLandingConfig {
   valueProps: { title: string; desc: string }[];
   visaBlock?: { title: string; body: string };
   faqs: MarketFaq[];
-  leadDestination: "usa" | "australia" | "europe" | "other";
+  leadDestination: "usa" | "australia" | "europe" | "canada" | "other";
   tours: TourCardData[];
   testimonials?: TestimonialData[];
   relatedPosts?: BlogPostSummary[];

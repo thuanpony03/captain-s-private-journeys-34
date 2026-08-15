@@ -102,26 +102,12 @@ Vài chuyến Châu Âu Vinh đã dẫn hoặc trực tiếp trải nghiệm: [C
 `.trim();
 
 export const PILLAR_CANADA = `
-## Hai hành trình hay chạy nhất
+## Mùa thu Canada — chọn kiểu đi nào hợp nhà bạn
 
-### 1. Rocky Mountains 8-9 ngày (Vancouver – Calgary – Banff)
+Cùng một cung đường mùa lá phong đẹp nhất năm — Toronto, Niagara Falls, Ottawa, Montreal, Quebec City, Mont-Tremblant rồi bay sang Alberta chinh phục Rocky Mountains — Vinh có 2 kiểu hành trình đang chạy, tuỳ gu và ngân sách từng nhà:
 
-Canada cũng là điểm Vinh hay rủ các nhà "đi kèm" khi làm chuyến Mỹ — từ New York lái vài tiếng là chạm Niagara phía Canada, nơi nhìn thác đẹp hơn hẳn bờ Mỹ. Nhưng Canada cũng đáng một chuyến riêng: Rocky Mountains là cung đường Vinh từng tự lái cho gia đình mình và vẫn nhớ mãi.
-
-| Ngày | Chặng | Điểm nhấn |
-|---|---|---|
-| 1-2 | Vancouver | Stanley Park, Gastown, chợ Granville Island |
-| 3 | Calgary → Banff | Cung đường Calgary–Banff: núi tuyết, rừng thông, mây thấp ngang lưng núi |
-| 4-6 | Banff & Lake Louise | Hồ Louise xanh ngọc, Bow River, cáp treo Banff Gondola lên Sulphur Mountain |
-| 7-8 | Calgary | Quay lại Calgary, bay về |
-
-### 2. Mỹ + Canada một chuyến 12-14 ngày
-
-New York → Niagara (ngủ đêm phía Canada, ngắm thác lên đèn) → Toronto → bay về hoặc nối tiếp bờ Tây Mỹ. Cần cả visa Mỹ và Canada — Vinh xếp lịch xin hai visa song song.
-
-## Giá tour
-
-Giá phụ thuộc số ngày và mùa đi — nhắn Zalo để Vinh báo giá trọn gói theo đúng nhu cầu nhà bạn.
+- **[Trọn vẹn Canada mùa thu](/tour/canada-mua-thu-tron-goi)** — 14 ngày 13 đêm, trọn gói từ vé máy bay quốc tế tới bữa ăn, hướng dẫn viên đồng hành xuyên suốt, xe riêng 7-9 chỗ. Khởi hành giới hạn 6 khách/đoàn — hợp gia đình muốn "lên máy bay là có người lo hết", có ông bà hoặc trẻ nhỏ đi cùng.
+- **[Tour tự lái Canada mùa thu](/tour/canada-tu-lai-mua-thu)** — 12 ngày self-drive: Leader bàn giao xe SUV, hướng dẫn luật giao thông ngày đầu, sau đó chính bạn cầm lái qua từng chặng, nghỉ đêm tại Airbnb riêng. Hợp nhóm bạn/gia đình trẻ, có người biết lái xe, muốn chủ động dừng nghỉ theo ý mình.
 
 ## Visa Canada
 

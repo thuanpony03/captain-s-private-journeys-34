@@ -14,7 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getStoredUtm } from "@/lib/utm";
 interface ContactFormProps {
   /** Điền sẵn điểm đến khi nhúng ở landing page thị trường (P5.8). */
-  defaultDestination?: "usa" | "australia" | "europe" | "other";
+  defaultDestination?: "usa" | "australia" | "europe" | "canada" | "other";
 }
 
 const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
@@ -52,7 +52,7 @@ const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
     const params = new URLSearchParams(window.location.search);
     const tourTitle = params.get("tour");
     const dest = params.get("dest");
-    const destMap: Record<string, string> = { my: "usa", uc: "australia", "chau-au": "europe" };
+    const destMap: Record<string, string> = { my: "usa", uc: "australia", "chau-au": "europe", canada: "canada" };
     setFormData((prev) => ({
       ...prev,
       notes: tourTitle ? `Quan tâm: ${tourTitle}` : prev.notes,
@@ -186,6 +186,11 @@ const ContactForm = ({ defaultDestination }: ContactFormProps = {}) => {
     code: "EUR",
     city: "Paris • Rome • Zurich",
     image: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=400&h=300&fit=crop"
+  }, {
+    value: "canada",
+    code: "CAN",
+    city: "Banff • Lake Louise",
+    image: "https://res.cloudinary.com/dvu2csvsg/image/upload/w_400,h_300,c_fill,q_auto,f_auto/v1784656768/vinharound/chuyen-di/banff-5n4d-cung-gia-dinh/banff-5n4d-cung-gia-dinh-1.jpg"
   }, {
     value: "other",
     code: "KHÁC",
