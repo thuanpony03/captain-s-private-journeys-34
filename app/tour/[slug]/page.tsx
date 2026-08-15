@@ -444,7 +444,7 @@ export default async function TourPage({
                 </div>
               )}
 
-              {/* Lịch trình ngày-theo-ngày — dữ liệu mới, ưu tiên khi có */}
+              {/* Lịch trình ngày-theo-ngày — hiện đủ ngay, không cần bấm mở từng ngày */}
               {tour.itinerary.length > 0 && (
                 <div className="mb-12">
                   <div className="mb-8">
@@ -456,70 +456,72 @@ export default async function TourPage({
                     </p>
                   </div>
 
-                  <div className="relative">
-                    <div className="absolute left-[27px] top-2 bottom-2 w-px bg-primary/10" aria-hidden />
-                    <Accordion type="single" collapsible defaultValue="day-1" className="space-y-3">
-                      {tour.itinerary.map((day) => (
-                        <AccordionItem
+                  <div className="space-y-5 md:space-y-7">
+                    {tour.itinerary.map((day, idx) => {
+                      const flip = idx % 2 === 1;
+                      return (
+                        <div
                           key={day.day}
-                          value={`day-${day.day}`}
-                          className="relative bg-white rounded-2xl border border-primary/10 shadow-sm hover:shadow-md transition-shadow pl-4 pr-5 md:pl-5 md:pr-6"
+                          className="bg-white rounded-2xl md:rounded-3xl border border-primary/10 shadow-sm hover:shadow-lg transition-shadow overflow-hidden"
                         >
-                          <AccordionTrigger className="hover:no-underline py-4">
-                            <div className="flex items-center gap-4 text-left flex-1 min-w-0">
-                              <div className="relative z-10 w-10 h-10 flex-shrink-0 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center text-white font-bold ring-4 ring-background">
-                                {day.day}
-                              </div>
-                              {day.image_url && (
-                                <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-xl overflow-hidden flex-shrink-0 hidden sm:block">
-                                  <Image
-                                    src={day.image_url}
-                                    alt={day.title}
-                                    fill
-                                    sizes="56px"
-                                    className="object-cover"
-                                  />
-                                </div>
-                              )}
-                              <div className="min-w-0">
-                                <p className="text-xs text-muted-foreground font-medium">Ngày {day.day}</p>
-                                <h3 className="text-base md:text-lg font-bold text-foreground truncate">{day.title}</h3>
-                              </div>
-                            </div>
-                          </AccordionTrigger>
-                          <AccordionContent className="pb-6 pl-14">
-                            {day.image_url && (
-                              <div className="relative w-full h-48 md:h-64 rounded-xl overflow-hidden mb-4">
+                          <div className="md:grid md:grid-cols-2">
+                            <div
+                              className={`relative aspect-[16/10] md:aspect-auto md:min-h-[280px] ${
+                                flip ? "md:order-2" : "md:order-1"
+                              }`}
+                            >
+                              {day.image_url ? (
                                 <Image
                                   src={day.image_url}
                                   alt={day.title}
                                   fill
-                                  sizes="(max-width: 768px) 100vw, 800px"
+                                  sizes="(max-width: 768px) 100vw, 45vw"
                                   className="object-cover"
                                 />
+                              ) : (
+                                <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center">
+                                  <span className="font-display font-bold text-white/15 text-8xl">{day.day}</span>
+                                </div>
+                              )}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-transparent md:bg-gradient-to-t md:from-black/35 md:via-transparent" />
+                              <div className="absolute top-4 left-4 w-11 h-11 rounded-full bg-secondary text-primary font-display font-bold flex items-center justify-center shadow-lg text-lg">
+                                {day.day}
                               </div>
-                            )}
-                            {day.description && (
-                              <p className="text-foreground/80 leading-relaxed whitespace-pre-line mb-4">
-                                {day.description}
+                              <p className="absolute bottom-3 left-4 text-white text-xs font-bold uppercase tracking-widest md:hidden">
+                                Ngày {day.day}
                               </p>
-                            )}
-                            <div className="flex flex-wrap gap-2 text-xs">
-                              {day.meals && (
-                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/5 text-primary/70 font-medium">
-                                  <Utensils className="w-3 h-3" /> {day.meals}
-                                </span>
-                              )}
-                              {day.hotel && (
-                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/5 text-primary/70 font-medium">
-                                  <BedDouble className="w-3 h-3" /> {day.hotel}
-                                </span>
-                              )}
                             </div>
-                          </AccordionContent>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
+                            <div
+                              className={`p-6 md:p-8 flex flex-col justify-center ${flip ? "md:order-1" : "md:order-2"}`}
+                            >
+                              <p className="hidden md:block text-xs uppercase tracking-widest text-secondary font-bold mb-2">
+                                Ngày {day.day}
+                              </p>
+                              <h3 className="text-xl md:text-2xl font-display font-bold text-primary mb-3">
+                                {day.title}
+                              </h3>
+                              {day.description && (
+                                <p className="text-foreground/75 leading-relaxed whitespace-pre-line mb-4">
+                                  {day.description}
+                                </p>
+                              )}
+                              <div className="flex flex-wrap gap-2">
+                                {day.meals && (
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/5 text-primary/70 text-xs font-medium">
+                                    <Utensils className="w-3 h-3" /> {day.meals}
+                                  </span>
+                                )}
+                                {day.hotel && (
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/5 text-primary/70 text-xs font-medium">
+                                    <BedDouble className="w-3 h-3" /> {day.hotel}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
