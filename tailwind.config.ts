@@ -157,6 +157,10 @@ export default {
             backgroundPosition: "0% 50%",
           },
         },
+        "kenburns": {
+          "0%": { transform: "scale(1)" },
+          "100%": { transform: "scale(1.1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -175,6 +179,7 @@ export default {
         "morph": "morph 6s ease-in-out infinite",
         "particle-float": "particle-float 8s ease-in-out infinite",
         "gradient-shift": "gradient-shift 8s ease infinite",
+        "kenburns": "kenburns 18s ease-out forwards",
       },
     },
   },

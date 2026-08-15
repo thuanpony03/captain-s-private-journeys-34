@@ -2,7 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { MapPin, Clock, Users, CalendarClock, Check, X as XIcon, MessageCircle, Car, ShieldCheck } from "lucide-react";
+import {
+  MapPin,
+  Clock,
+  Users,
+  CalendarClock,
+  Check,
+  X as XIcon,
+  MessageCircle,
+  Car,
+  ShieldCheck,
+  Utensils,
+  BedDouble,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -14,6 +26,7 @@ import {
 } from "@/components/ui/accordion";
 import { ShareButton, BookingCta } from "@/components/tour/TourActions";
 import TourViewTracker from "@/components/tour/TourViewTracker";
+import TourJourneyRoute from "@/components/tour/TourJourneyRoute";
 import TestimonialGallery, { type TestimonialData } from "@/components/testimonials/TestimonialGallery";
 import BlogCard from "@/components/blog/BlogCard";
 import { createPublicClient } from "@/lib/supabase/server";
@@ -285,23 +298,24 @@ export default async function TourPage({
       <Navbar />
 
       <div className="min-h-screen bg-background">
-        {/* Hero Image */}
-        <div className="relative h-[50vh] md:h-[60vh] overflow-hidden">
+        {/* Hero — cinematic, ken-burns zoom, badges + tiêu đề */}
+        <div className="relative h-[64vh] md:h-[78vh] overflow-hidden">
           <Image
             src={image}
             alt={tour.title}
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            className="object-cover animate-kenburns"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/55 to-primary/10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-transparent" />
 
           <div className="absolute top-20 md:top-24 right-6 z-10">
             <ShareButton title={tour.title} description={tour.description ?? undefined} />
           </div>
 
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
+          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 pb-20 md:pb-28">
             <div className="container mx-auto max-w-6xl">
               <div className="flex flex-wrap items-center gap-2 mb-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20">
@@ -330,7 +344,7 @@ export default async function TourPage({
                   {tour.tagline}
                 </p>
               )}
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-3">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-3 leading-[1.05]">
                 {tour.title}
               </h1>
               {tour.route && (
@@ -340,67 +354,80 @@ export default async function TourPage({
           </div>
         </div>
 
+        {/* Thẻ nổi — thay cho ô "quick facts" cũ, hiện xuyên suốt mọi kích thước màn hình */}
+        <div className="relative z-20 -mt-14 md:-mt-16 px-4 md:px-6 mb-10 md:mb-14">
+          <div className="container mx-auto max-w-5xl">
+            <div className="bg-white rounded-2xl md:rounded-3xl shadow-2xl shadow-primary/10 border border-primary/5 px-5 py-5 md:px-10 md:py-6">
+              <div className="grid grid-cols-2 md:flex md:items-center md:justify-between gap-5 md:gap-6">
+                {tour.duration && (
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center flex-shrink-0">
+                      <Clock className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] text-muted-foreground">Thời gian</p>
+                      <p className="text-sm font-bold text-primary">{tour.duration}</p>
+                    </div>
+                  </div>
+                )}
+                <div className="hidden md:block w-px h-9 bg-primary/10" aria-hidden />
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] text-muted-foreground">Hành trình</p>
+                    <p className="text-sm font-bold text-primary">{tour.stops.length || tour.itinerary.length} chặng</p>
+                  </div>
+                </div>
+                <div className="hidden md:block w-px h-9 bg-primary/10" aria-hidden />
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center flex-shrink-0">
+                    <Users className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] text-muted-foreground">Quy mô</p>
+                    <p className="text-sm font-bold text-primary">
+                      {tour.max_group_size ? `Tối đa ${tour.max_group_size} khách` : "Riêng theo đoàn"}
+                    </p>
+                  </div>
+                </div>
+                {tour.price && (
+                  <>
+                    <div className="hidden md:block w-px h-9 bg-primary/10" aria-hidden />
+                    <div className="col-span-2 md:col-span-1 flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-t-0 border-primary/10">
+                      <p className="text-[11px] text-muted-foreground md:hidden">Giá từ</p>
+                      <p className="text-xl md:text-2xl font-display font-bold text-secondary whitespace-nowrap">
+                        {tour.price}
+                      </p>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Dải hành trình trực quan theo từng chặng */}
+        <TourJourneyRoute stops={tour.stops} />
+
         {/* Content + sidebar */}
-        <div className="container mx-auto max-w-6xl px-6 py-12 md:py-16">
+        <div className="container mx-auto max-w-6xl px-6 pt-12 md:pt-16 pb-12 md:pb-16">
           <div className="lg:grid lg:grid-cols-[1fr_320px] lg:gap-12 xl:gap-16 lg:items-start">
             {/* Cột nội dung chính */}
             <div className="max-w-4xl">
-              {/* Quick facts — chỉ hiện trên mobile, desktop đã có sidebar sticky */}
-              <div className="grid grid-cols-2 gap-3 mb-8 lg:hidden">
-                {tour.duration && (
-                  <div className="glass-effect p-4 rounded-xl border border-primary/20">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <Clock className="w-4 h-4 text-primary" />
-                      <p className="text-xs text-muted-foreground">Thời gian</p>
-                    </div>
-                    <p className="text-base font-bold text-primary">{tour.duration}</p>
-                  </div>
-                )}
-                {tour.price && (
-                  <div className="glass-effect p-4 rounded-xl border border-secondary/20">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <p className="text-xs text-muted-foreground">Giá từ</p>
-                    </div>
-                    <p className="text-base font-bold text-secondary">{tour.price}</p>
-                  </div>
-                )}
-                {tour.max_group_size && (
-                  <div className="glass-effect p-4 rounded-xl border border-primary/20">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <Users className="w-4 h-4 text-primary" />
-                      <p className="text-xs text-muted-foreground">Cỡ nhóm tối đa</p>
-                    </div>
-                    <p className="text-base font-bold text-primary">{tour.max_group_size} khách</p>
-                  </div>
-                )}
-                {tour.departure_note && (
-                  <div className="glass-effect p-4 rounded-xl border border-secondary/20">
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <CalendarClock className="w-4 h-4 text-secondary" />
-                      <p className="text-xs text-muted-foreground">Khởi hành</p>
-                    </div>
-                    <p className="text-sm font-bold text-secondary">{tour.departure_note}</p>
-                  </div>
-                )}
-              </div>
-
-              {tour.price && (
-                <p className="text-muted-foreground text-xs mb-8 lg:hidden -mt-4">
-                  {tour.cancellation_policy
-                    ? "Đặt cọc 50% khi ký hợp đồng — xem đầy đủ tiến độ thanh toán trong nội dung bên dưới."
-                    : "Giá tham khảo cho tối thiểu 4 khách, ngày thường — Vinh gửi báo giá chính xác sau khi kiểm tra vé và dịch vụ thực tế."}
-                </p>
-              )}
-
               {/* Điểm nổi bật — lấy từ chính danh sách "bao gồm", giúp lướt nhanh */}
               {highlights.length > 0 && (
-                <div className="flex flex-wrap gap-x-6 gap-y-3 mb-10 pb-8 border-b border-primary/10">
+                <div className="flex flex-wrap gap-2.5 mb-10">
                   {highlights.map((item, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-primary/80">
-                      <div className="w-5 h-5 rounded-full bg-secondary/15 flex items-center justify-center flex-shrink-0">
-                        <Check className="w-3 h-3 text-secondary" />
+                    <div
+                      key={i}
+                      className="flex items-center gap-2 pl-2 pr-4 py-2 rounded-full bg-secondary/10 border border-secondary/20"
+                    >
+                      <div className="w-5 h-5 rounded-full bg-secondary flex items-center justify-center flex-shrink-0">
+                        <Check className="w-3 h-3 text-primary" />
                       </div>
-                      <span className="font-medium">{item}</span>
+                      <span className="text-sm font-semibold text-primary">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -430,22 +457,33 @@ export default async function TourPage({
                   </div>
 
                   <div className="relative">
-                    <div className="absolute left-5 top-2 bottom-2 w-px bg-primary/10" aria-hidden />
+                    <div className="absolute left-[27px] top-2 bottom-2 w-px bg-primary/10" aria-hidden />
                     <Accordion type="single" collapsible defaultValue="day-1" className="space-y-3">
                       {tour.itinerary.map((day) => (
                         <AccordionItem
                           key={day.day}
                           value={`day-${day.day}`}
-                          className="relative glass-effect rounded-2xl border border-primary/10 pl-4 pr-5 md:pl-5 md:pr-6"
+                          className="relative bg-white rounded-2xl border border-primary/10 shadow-sm hover:shadow-md transition-shadow pl-4 pr-5 md:pl-5 md:pr-6"
                         >
-                          <AccordionTrigger className="hover:no-underline py-5">
-                            <div className="flex items-center gap-4 text-left">
+                          <AccordionTrigger className="hover:no-underline py-4">
+                            <div className="flex items-center gap-4 text-left flex-1 min-w-0">
                               <div className="relative z-10 w-10 h-10 flex-shrink-0 rounded-full bg-gradient-to-br from-secondary to-accent flex items-center justify-center text-white font-bold ring-4 ring-background">
                                 {day.day}
                               </div>
-                              <div>
+                              {day.image_url && (
+                                <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-xl overflow-hidden flex-shrink-0 hidden sm:block">
+                                  <Image
+                                    src={day.image_url}
+                                    alt={day.title}
+                                    fill
+                                    sizes="56px"
+                                    className="object-cover"
+                                  />
+                                </div>
+                              )}
+                              <div className="min-w-0">
                                 <p className="text-xs text-muted-foreground font-medium">Ngày {day.day}</p>
-                                <h3 className="text-base md:text-lg font-bold text-foreground">{day.title}</h3>
+                                <h3 className="text-base md:text-lg font-bold text-foreground truncate">{day.title}</h3>
                               </div>
                             </div>
                           </AccordionTrigger>
@@ -466,9 +504,17 @@ export default async function TourPage({
                                 {day.description}
                               </p>
                             )}
-                            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                              {day.meals && <span>🍽 {day.meals}</span>}
-                              {day.hotel && <span>🏨 {day.hotel}</span>}
+                            <div className="flex flex-wrap gap-2 text-xs">
+                              {day.meals && (
+                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/5 text-primary/70 font-medium">
+                                  <Utensils className="w-3 h-3" /> {day.meals}
+                                </span>
+                              )}
+                              {day.hotel && (
+                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/5 text-primary/70 font-medium">
+                                  <BedDouble className="w-3 h-3" /> {day.hotel}
+                                </span>
+                              )}
                             </div>
                           </AccordionContent>
                         </AccordionItem>
@@ -506,7 +552,7 @@ export default async function TourPage({
                         </div>
 
                         <div className="flex-1 pb-2">
-                          <div className="group glass-effect p-6 md:p-7 rounded-2xl border border-primary/10 hover:border-secondary/40 transition-all duration-300 hover:shadow-xl hover:shadow-secondary/10 hover:-translate-y-1">
+                          <div className="group bg-white p-6 md:p-7 rounded-2xl border border-primary/10 shadow-sm hover:border-secondary/40 transition-all duration-300 hover:shadow-xl hover:shadow-secondary/10 hover:-translate-y-1">
                             <div className="flex items-start gap-4">
                               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                                 <MapPin className="w-6 h-6 text-secondary" />
@@ -551,16 +597,24 @@ export default async function TourPage({
                   <p className="text-muted-foreground text-sm text-center max-w-xl mx-auto mb-6">
                     Ảnh chụp từ những gia đình và cung đường Vinh từng trực tiếp cầm lái — lịch trình của bạn sẽ được thiết kế riêng, không rập khuôn.
                   </p>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                  <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-3 md:gap-4 md:h-[420px]">
                     {tour.gallery_urls.map((url, i) => (
-                      <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden">
+                      <div
+                        key={i}
+                        className={`group relative rounded-xl overflow-hidden ${
+                          i === 0
+                            ? "col-span-2 row-span-2 aspect-square md:aspect-auto"
+                            : "aspect-[4/3] md:aspect-auto md:h-full"
+                        }`}
+                      >
                         <Image
                           src={url}
                           alt={`${tour.title} - ảnh ${i + 1}`}
                           fill
-                          sizes="(max-width: 768px) 50vw, 33vw"
-                          className="object-cover hover:scale-105 transition-transform duration-500"
+                          sizes="(max-width: 768px) 50vw, 25vw"
+                          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
                     ))}
                   </div>
@@ -571,12 +625,14 @@ export default async function TourPage({
               {(tour.inclusions.length > 0 || tour.exclusions.length > 0) && (
                 <div className="grid md:grid-cols-2 gap-6 mb-12">
                   {tour.inclusions.length > 0 && (
-                    <div className="glass-effect p-6 rounded-2xl border border-primary/10">
+                    <div className="bg-white p-6 rounded-2xl border border-primary/10 shadow-sm">
                       <h3 className="font-display text-lg font-bold text-primary mb-4">Bao gồm</h3>
-                      <ul className="space-y-2.5">
+                      <ul className="space-y-3">
                         {tour.inclusions.map((item, i) => (
-                          <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/80">
-                            <Check className="w-4 h-4 text-secondary flex-shrink-0 mt-0.5" />
+                          <li key={i} className="flex items-start gap-3 text-sm text-foreground/80">
+                            <div className="w-5 h-5 rounded-full bg-secondary/15 flex items-center justify-center flex-shrink-0 mt-0.5">
+                              <Check className="w-3 h-3 text-secondary" />
+                            </div>
                             <span>{item}</span>
                           </li>
                         ))}
@@ -584,12 +640,14 @@ export default async function TourPage({
                     </div>
                   )}
                   {tour.exclusions.length > 0 && (
-                    <div className="glass-effect p-6 rounded-2xl border border-primary/10">
+                    <div className="bg-white p-6 rounded-2xl border border-primary/10 shadow-sm">
                       <h3 className="font-display text-lg font-bold text-primary mb-4">Không bao gồm</h3>
-                      <ul className="space-y-2.5">
+                      <ul className="space-y-3">
                         {tour.exclusions.map((item, i) => (
-                          <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/80">
-                            <XIcon className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                          <li key={i} className="flex items-start gap-3 text-sm text-foreground/80">
+                            <div className="w-5 h-5 rounded-full bg-muted flex items-center justify-center flex-shrink-0 mt-0.5">
+                              <XIcon className="w-3 h-3 text-muted-foreground" />
+                            </div>
                             <span>{item}</span>
                           </li>
                         ))}
@@ -601,7 +659,7 @@ export default async function TourPage({
 
               {/* Yêu cầu tham gia — chỉ hiện với tour có yêu cầu riêng (vd tự lái) */}
               {tour.requirements.length > 0 && (
-                <div className="glass-effect p-6 rounded-2xl border border-secondary/20 bg-secondary/5 mb-12">
+                <div className="bg-secondary/5 p-6 rounded-2xl border border-secondary/20 mb-12">
                   <div className="flex items-center gap-2.5 mb-4">
                     <Car className="w-5 h-5 text-secondary" />
                     <h3 className="font-display text-lg font-bold text-primary">Yêu cầu tham gia</h3>
@@ -622,7 +680,7 @@ export default async function TourPage({
 
               {/* Chính sách cọc & hoàn hủy riêng của tour — chỉ hiện khi khác chính sách chung */}
               {tour.cancellation_policy && (
-                <div className="glass-effect p-6 rounded-2xl border border-primary/10 mb-12">
+                <div className="bg-white p-6 rounded-2xl border border-primary/10 shadow-sm mb-12">
                   <div className="flex items-center gap-2.5 mb-3">
                     <ShieldCheck className="w-5 h-5 text-primary" />
                     <h3 className="font-display text-lg font-bold text-primary">Đặt cọc &amp; chính sách hoàn hủy</h3>
@@ -675,7 +733,7 @@ export default async function TourPage({
                   <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-6 text-center">
                     Video chuyến đi thật
                   </h2>
-                  <div className="relative aspect-video rounded-2xl overflow-hidden max-w-3xl mx-auto glass-effect border border-primary/10">
+                  <div className="relative aspect-video rounded-2xl overflow-hidden max-w-3xl mx-auto bg-white border border-primary/10 shadow-sm">
                     <iframe
                       src={tour.video_url}
                       className="w-full h-full"
@@ -721,7 +779,7 @@ export default async function TourPage({
                       <AccordionItem
                         key={i}
                         value={`faq-${i}`}
-                        className="glass-effect rounded-xl border border-primary/10 px-5"
+                        className="bg-white rounded-xl border border-primary/10 shadow-sm px-5"
                       >
                         <AccordionTrigger className="hover:no-underline text-left font-semibold text-foreground">
                           {faq.question}
@@ -735,17 +793,25 @@ export default async function TourPage({
                 </div>
               )}
 
-              <div className="glass-effect p-8 rounded-2xl border border-secondary/20 text-center">
-                <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-3">
+              <div className="bg-gradient-to-br from-primary to-primary/90 p-8 rounded-2xl text-center">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-3">
                   Sẵn sàng khám phá?
                 </h2>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                <p className="text-white/70 mb-6 max-w-md mx-auto">
                   Liên hệ ngay để nhận tư vấn chi tiết và đặt lịch cho chuyến đi của bạn
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <BookingCta tourTitle={tour.title} destination={tour.destination} />
+                  <BookingCta
+                    tourTitle={tour.title}
+                    destination={tour.destination}
+                    className="bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold"
+                  />
                   <Link href="/tour">
-                    <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="w-full sm:w-auto bg-transparent border-white/30 text-white hover:bg-white/10 hover:text-white"
+                    >
                       Xem tour khác
                     </Button>
                   </Link>
@@ -755,51 +821,59 @@ export default async function TourPage({
 
             {/* Sidebar sticky — chỉ desktop, luôn hiện giá + nút liên hệ khi cuộn */}
             <aside className="hidden lg:block">
-              <div className="sticky top-24 glass-effect rounded-2xl border border-primary/10 p-6 shadow-lg shadow-primary/5">
-                {tour.price && (
-                  <>
-                    <p className="text-sm text-muted-foreground mb-1">Giá từ</p>
-                    <p className="text-3xl font-bold text-secondary mb-1.5">{tour.price}</p>
-                    <p className="text-xs text-muted-foreground mb-5">
-                      {tour.cancellation_policy
-                        ? "Đặt cọc 50% khi ký hợp đồng — xem đầy đủ tiến độ thanh toán bên dưới"
-                        : "Tham khảo cho tối thiểu 4 khách, ngày thường"}
-                    </p>
-                  </>
-                )}
+              <div className="sticky top-24 bg-white rounded-2xl border border-primary/10 shadow-xl shadow-primary/5 overflow-hidden">
+                <div className="p-6">
+                  {tour.price && (
+                    <>
+                      <p className="text-sm text-muted-foreground mb-1">Giá từ</p>
+                      <p className="text-3xl font-display font-bold text-secondary mb-1.5">{tour.price}</p>
+                      <p className="text-xs text-muted-foreground mb-5">
+                        {tour.cancellation_policy
+                          ? "Đặt cọc 50% khi ký hợp đồng — xem đầy đủ tiến độ thanh toán bên dưới"
+                          : "Tham khảo cho tối thiểu 4 khách, ngày thường"}
+                      </p>
+                    </>
+                  )}
 
-                <div className="space-y-3 mb-6 text-sm border-t border-primary/10 pt-5">
-                  {tour.duration && (
-                    <div className="flex items-center gap-2.5">
-                      <Clock className="w-4 h-4 text-primary/60 flex-shrink-0" />
-                      <span className="text-foreground/80">{tour.duration}</span>
-                    </div>
-                  )}
-                  {tour.max_group_size && (
-                    <div className="flex items-center gap-2.5">
-                      <Users className="w-4 h-4 text-primary/60 flex-shrink-0" />
-                      <span className="text-foreground/80">Tối đa {tour.max_group_size} khách/đoàn</span>
-                    </div>
-                  )}
-                  {tour.departure_note && (
-                    <div className="flex items-start gap-2.5">
-                      <CalendarClock className="w-4 h-4 text-primary/60 flex-shrink-0 mt-0.5" />
-                      <span className="text-foreground/80">{tour.departure_note}</span>
-                    </div>
-                  )}
+                  <div className="space-y-3 mb-6 text-sm border-t border-primary/10 pt-5">
+                    {tour.duration && (
+                      <div className="flex items-center gap-2.5">
+                        <Clock className="w-4 h-4 text-primary/60 flex-shrink-0" />
+                        <span className="text-foreground/80">{tour.duration}</span>
+                      </div>
+                    )}
+                    {tour.max_group_size && (
+                      <div className="flex items-center gap-2.5">
+                        <Users className="w-4 h-4 text-primary/60 flex-shrink-0" />
+                        <span className="text-foreground/80">Tối đa {tour.max_group_size} khách/đoàn</span>
+                      </div>
+                    )}
+                    {tour.departure_note && (
+                      <div className="flex items-start gap-2.5">
+                        <CalendarClock className="w-4 h-4 text-primary/60 flex-shrink-0 mt-0.5" />
+                        <span className="text-foreground/80">{tour.departure_note}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <BookingCta
+                    tourTitle={tour.title}
+                    destination={tour.destination}
+                    label="Đặt lịch ngay"
+                    className="w-full bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold shadow-lg shadow-secondary/30 animate-glow-pulse"
+                  />
+
+                  <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground mt-3">
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    Vinh trả lời Zalo trong ngày
+                  </p>
                 </div>
-
-                <BookingCta
-                  tourTitle={tour.title}
-                  destination={tour.destination}
-                  label="Đặt lịch ngay"
-                  className="w-full bg-gradient-to-r from-secondary via-accent to-secondary text-white font-bold"
-                />
-
-                <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground mt-3">
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  Vinh trả lời Zalo trong ngày
-                </p>
+                <div className="bg-primary/[0.03] px-6 py-4 border-t border-primary/10">
+                  <div className="flex items-center gap-2 text-xs text-primary/70">
+                    <ShieldCheck className="w-4 h-4 text-secondary flex-shrink-0" />
+                    <span>Bảo hiểm du lịch quốc tế đi kèm</span>
+                  </div>
+                </div>
               </div>
             </aside>
           </div>
