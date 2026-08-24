@@ -3,9 +3,9 @@ import MarketLandingPage from "@/components/tour/MarketLandingPage";
 import { createPublicClient } from "@/lib/supabase/server";
 import { SITE_URL, absoluteUrl } from "@/lib/seo";
 
-const TITLE = "Private Tour Úc Gia Đình - Great Ocean Road, Xe Riêng";
+const TITLE = "Tour Riêng Úc Cho Gia Đình — Sydney & Great Ocean Road";
 const DESCRIPTION =
-  "Private tour Úc cho gia đình Việt — gần, dễ xin visa, hợp cả ông bà lẫn trẻ nhỏ. Xe riêng, lịch trình tùy chỉnh cùng Vinh Around.";
+  "Tour riêng Úc: gần, không lệch múi giờ, hợp nhà có ông bà & trẻ nhỏ. Sydney, Melbourne, Great Ocean Road bằng xe riêng, hỗ trợ visa Úc.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -68,10 +68,11 @@ export default async function UcMarketPage() {
       />
       <MarketLandingPage
         config={{
-          heroImage: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=1600&q=80",
+          heroImage:
+            "https://res.cloudinary.com/dvu2csvsg/image/upload/w_1600,q_auto,f_auto/v1784657044/vinharound/chuyen-di/cau-chuyen-visa-uc/cau-chuyen-visa-uc-1.jpg",
           heroHeadline: "Đi Úc cùng cả nhà — gần, dễ, không mệt",
           heroSubtext:
-            "Great Ocean Road, Sydney, Melbourne — lịch trình nhẹ nhàng, hợp cả ông bà lẫn các bé.",
+            "Tour riêng Úc cho gia đình: **gần, dễ, không mệt** — bay đêm là tới, không lệch múi giờ nhiều, hợp nhà có ông bà và trẻ nhỏ. Sydney, Melbourne và cung đường biển Great Ocean Road bằng xe riêng, hỗ trợ visa Úc.",
           valueProps: [
             {
               title: "Visa dễ hơn Mỹ, Châu Âu",

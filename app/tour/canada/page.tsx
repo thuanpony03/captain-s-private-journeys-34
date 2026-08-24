@@ -4,9 +4,9 @@ import { createPublicClient } from "@/lib/supabase/server";
 import { SITE_URL, absoluteUrl } from "@/lib/seo";
 import { PILLAR_CANADA } from "@/content/pillars";
 
-const TITLE = "Tour Canada Mùa Thu - Trọn Gói & Caravan Tự Lái | Toronto, Banff, Lake Louise";
+const TITLE = "Tour Canada Mùa Lá Phong 2026 — Trọn Gói & Tự Lái Caravan";
 const DESCRIPTION =
-  "Tour Canada mùa thu cùng Vinh Around: Toronto, Niagara Falls, Quebec City, Banff, Lake Louise. Chọn trọn gói có HDV đồng hành hoặc tự lái SUV theo phong cách road trip.";
+  "Tour riêng Canada mùa thu cho gia đình: trọn gói 14 ngày 6 khách có Vinh đồng hành, hoặc caravan tự lái có Leader. Toronto – Niagara – Quebec – Rockies.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -73,7 +73,7 @@ export default async function CanadaMarketPage() {
             "https://res.cloudinary.com/dvu2csvsg/image/upload/w_1600,q_auto,f_auto/v1784656696/vinharound/chuyen-di/canada-15-ngay-xuyen-ngang/canada-15-ngay-xuyen-ngang-7.jpg",
           heroHeadline: "Canada mùa thu — Toronto tới Rocky Mountains, chọn kiểu đi của riêng bạn",
           heroSubtext:
-            "Niagara Falls, Quebec City cổ kính, Banff, Lake Louise mùa lá phong — trọn gói có hướng dẫn viên đồng hành, hoặc tự lái SUV road trip. Vinh đã tự mình đi cung này.",
+            "Tour Canada của Vinh Around có 2 kiểu: **trọn gói có Vinh đồng hành** (14 ngày, giới hạn 6 khách) và **caravan tự lái có Leader dẫn đoàn**. Mùa đẹp nhất là **mùa lá phong giữa tháng 9 – giữa tháng 10**: Toronto, Niagara, Quebec City tới Rocky Mountains.",
           valueProps: [
             {
               title: "2 kiểu hành trình, 1 cung đường đẹp nhất mùa thu",

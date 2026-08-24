@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { marked } from "marked";
 import {
   MapPin,
   Clock,
@@ -455,9 +456,12 @@ export default async function TourPage({
                   <h2 className="text-2xl md:text-3xl font-display font-bold text-primary mb-4">
                     Về chuyến đi này
                   </h2>
-                  <p className="text-lg text-foreground/80 leading-relaxed whitespace-pre-line">
-                    {tour.description}
-                  </p>
+                  <p
+                    className="text-lg text-foreground/80 leading-relaxed whitespace-pre-line [&_strong]:text-primary [&_strong]:font-semibold"
+                    dangerouslySetInnerHTML={{
+                      __html: marked.parseInline(tour.description, { async: false }) as string,
+                    }}
+                  />
                 </div>
               )}
 

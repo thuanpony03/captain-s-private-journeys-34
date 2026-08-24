@@ -4,9 +4,9 @@ import { createPublicClient } from "@/lib/supabase/server";
 import { SITE_URL, absoluteUrl } from "@/lib/seo";
 import { PILLAR_CHAU_AU } from "@/content/pillars";
 
-const TITLE = "Private Tour Châu Âu Gia Đình - Đa Quốc Gia, Xe Riêng";
+const TITLE = "Tour Riêng Châu Âu Cho Gia Đình & Nhóm Bạn — Thiết Kế 100%";
 const DESCRIPTION =
-  "Private tour Châu Âu cho gia đình Việt — Vinh lo hết logistics qua nhiều nước, xe riêng, lịch trình tùy chỉnh, không shopping stop.";
+  "Tour riêng Châu Âu nhiều nước một chuyến: Pháp, Ý, Thụy Sĩ... Xe riêng 7-9 chỗ, lịch thiết kế theo nhóm, hỗ trợ visa Schengen. Nhóm 6 người giá tối ưu nhất.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -69,10 +69,11 @@ export default async function ChauAuMarketPage() {
       />
       <MarketLandingPage
         config={{
-          heroImage: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=1600&q=80",
+          heroImage:
+            "https://res.cloudinary.com/dvu2csvsg/image/upload/w_1600,q_auto,f_auto/v1784657626/vinharound/chuyen-di/cinque-terre-y/cinque-terre-y-1.jpg",
           heroHeadline: "Đi Châu Âu nhiều nước — không lo lạc đường, đổi tiền, xin visa",
           heroSubtext:
-            "Paris, Rome, Zurich và hơn thế — Vinh lo hết logistics qua biên giới, bạn chỉ cần tận hưởng.",
+            "Tour riêng Châu Âu cho gia đình và nhóm bạn: **nhiều nước trong một chuyến** (Pháp – Ý – Thụy Sĩ và tùy chỉnh theo yêu cầu), xe riêng 7–9 chỗ, lịch thiết kế 100% theo nhóm của bạn, hỗ trợ visa Schengen.",
           valueProps: [
             {
               title: "Đa quốc gia, một hành trình",

@@ -69,10 +69,11 @@ export default async function MyMarketPage() {
       />
       <MarketLandingPage
         config={{
-          heroImage: "https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1600&q=80",
+          heroImage:
+            "https://res.cloudinary.com/dvu2csvsg/image/upload/w_1600,q_auto,f_auto/v1784657497/vinharound/chuyen-di/gia-dinh-chi-lan-ka-mua-dong-o-my/gia-dinh-chi-lan-ka-mua-dong-o-my-1.jpg",
           heroHeadline: "Đưa cả nhà đi Mỹ — như có người thân ở bên đó",
           heroSubtext:
-            "Visa, xe riêng, khách sạn, từng bữa ăn — Vinh lo hết. Bạn chỉ cần xách vali lên đường.",
+            "Tour riêng đi Mỹ cho gia đình Việt: **từ 85.000.000đ/khách** (nhóm tối thiểu 4), hành trình 12 ngày tùy chỉnh 7–16 ngày, trọn gói vé máy bay, khách sạn 3–4 sao, **xe riêng 7–9 chỗ suốt hành trình**, phí visa và bảo hiểm. Không ghép khách lạ, không shopping stop.",
           valueProps: [
             {
               title: "Hỗ trợ hồ sơ visa Mỹ",

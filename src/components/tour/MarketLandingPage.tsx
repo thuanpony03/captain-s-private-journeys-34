@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { marked } from "marked";
 import {
   Accordion,
   AccordionContent,
@@ -88,7 +89,15 @@ export default function MarketLandingPage({ config }: { config: MarketLandingCon
               <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-black text-white max-w-3xl leading-tight mb-4">
                 {heroHeadline}
               </h1>
-              <p className="text-white/85 text-base md:text-lg max-w-2xl">{heroSubtext}</p>
+              {/* heroSubtext là answer box — 40-60 từ trả lời thẳng câu hỏi chính của trang, số
+                  liệu in đậm để Google AI Overview dễ trích. Markdown bold nên render qua marked
+                  thay vì text thường (nội dung admin viết sẵn trong page.tsx, không phải input). */}
+              <p
+                className="text-white/85 text-base md:text-lg max-w-2xl [&_strong]:text-white [&_strong]:font-bold"
+                dangerouslySetInnerHTML={{
+                  __html: marked.parseInline(heroSubtext, { async: false }) as string,
+                }}
+              />
             </div>
           </div>
         </section>
