@@ -29,12 +29,13 @@ export default function VeVinhPage() {
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": `${SITE_URL}/ve-vinh#vinh`,
     name: "Vinh Around",
     jobTitle: "Founder, Passport Lounge",
     description: DESCRIPTION,
     url: absoluteUrl("/ve-vinh"),
     image: `${SITE_URL}/images/vinh-around-portrait.jpg`,
-    worksFor: { "@type": "TravelAgency", name: ORGANIZATION.name, url: SITE_URL },
+    worksFor: { "@id": ORGANIZATION["@id"] },
     sameAs: ORGANIZATION.sameAs,
   };
 

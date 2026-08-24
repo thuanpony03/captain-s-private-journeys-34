@@ -22,6 +22,7 @@ export type Database = {
           created_at: string | null
           destination: string | null
           excerpt: string | null
+          faq: Json | null
           featured_image: string | null
           id: string
           meta_description: string | null
@@ -41,6 +42,7 @@ export type Database = {
           created_at?: string | null
           destination?: string | null
           excerpt?: string | null
+          faq?: Json | null
           featured_image?: string | null
           id?: string
           meta_description?: string | null
@@ -60,6 +62,7 @@ export type Database = {
           created_at?: string | null
           destination?: string | null
           excerpt?: string | null
+          faq?: Json | null
           featured_image?: string | null
           id?: string
           meta_description?: string | null
@@ -268,6 +271,8 @@ export type Database = {
           is_active: boolean | null
           itinerary: Json | null
           max_group_size: number | null
+          meta_description: string | null
+          meta_title: string | null
           order_index: number | null
           price: string | null
           price_currency: string
@@ -298,6 +303,8 @@ export type Database = {
           is_active?: boolean | null
           itinerary?: Json | null
           max_group_size?: number | null
+          meta_description?: string | null
+          meta_title?: string | null
           order_index?: number | null
           price?: string | null
           price_currency?: string
@@ -328,6 +335,8 @@ export type Database = {
           is_active?: boolean | null
           itinerary?: Json | null
           max_group_size?: number | null
+          meta_description?: string | null
+          meta_title?: string | null
           order_index?: number | null
           price?: string | null
           price_currency?: string

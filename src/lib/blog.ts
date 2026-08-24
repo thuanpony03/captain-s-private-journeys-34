@@ -14,11 +14,18 @@ export interface BlogPostSummary {
   published_at: string | null;
 }
 
+export interface BlogPostFaqItem {
+  q: string;
+  a: string;
+}
+
 export interface BlogPost extends BlogPostSummary {
   content: string;
   tour_slug: string | null;
   meta_description: string | null;
   og_image: string | null;
+  faq: BlogPostFaqItem[] | null;
+  updated_at: string | null;
 }
 
 const SUMMARY_COLUMNS =

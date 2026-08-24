@@ -30,7 +30,7 @@ import TourJourneyRoute from "@/components/tour/TourJourneyRoute";
 import TestimonialGallery, { type TestimonialData } from "@/components/testimonials/TestimonialGallery";
 import BlogCard from "@/components/blog/BlogCard";
 import { createPublicClient } from "@/lib/supabase/server";
-import { ORGANIZATION, absoluteUrl } from "@/lib/seo";
+import { ORGANIZATION, absoluteUrl, truncateAtWord } from "@/lib/seo";
 import type { BlogPostSummary } from "@/lib/blog";
 
 const FALLBACK_IMAGE =
@@ -58,9 +58,12 @@ interface CancellationPolicy {
 interface Tour {
   id: string;
   title: string;
+  meta_title: string | null;
+  meta_description: string | null;
   tagline: string | null;
   route: string | null;
   description: string | null;
+  updated_at: string | null;
   duration: string | null;
   price: string | null;
   image_url: string | null;
@@ -178,10 +181,13 @@ export async function generateMetadata({
 
   // title đi qua template "%s | Vinh Around" của root layout — không tự thêm brand ở đây
   // kẻo bị lặp "Vinh Around" 2 lần. OG/Twitter không dùng template nên cần bản đầy đủ riêng.
-  const title = tour.title;
-  const ogTitle = `${tour.title} | Vinh Around Travel`;
+  // meta_title/meta_description (khi có) cho phép tối ưu thẻ <title>/description theo từ khoá
+  // mà không phải đổi luôn H1/mô tả hiển thị trên trang (tour.title/tour.description).
+  const title = tour.meta_title || tour.title;
+  const ogTitle = `${title} | Vinh Around Travel`;
   const description =
-    tour.description?.slice(0, 160) ||
+    tour.meta_description ||
+    (tour.description ? truncateAtWord(tour.description, 160) : null) ||
     `Khám phá ${tour.title} cùng Vinh Around - Private tour cao cấp với xe riêng và lịch trình tùy chỉnh.`;
   const path = `/tour/${tour.slug ?? slug}`;
 
@@ -227,6 +233,13 @@ export default async function TourPage({
 
   const highlights = tour.inclusions.slice(0, 4);
   const isSelfDrive = tour.requirements.length > 0;
+  const updatedLabel = tour.updated_at
+    ? new Date(tour.updated_at).toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+    : null;
 
   // Offer.price theo schema.org phải là số thuần — bỏ hẳn khối offers khi chưa có giá thật
   // (vd tour "Liên hệ") thay vì nhét chuỗi "Liên hệ" vào field số, dễ bị Rich Results từ chối.
@@ -239,6 +252,7 @@ export default async function TourPage({
       image,
       url: absoluteUrl(path),
       duration: tour.duration,
+      dateModified: tour.updated_at || undefined,
       ...(tour.price_from
         ? {
             offers: {
@@ -349,6 +363,9 @@ export default async function TourPage({
               </h1>
               {tour.route && (
                 <p className="text-white/80 text-lg md:text-xl">{tour.route}</p>
+              )}
+              {updatedLabel && (
+                <p className="text-white/50 text-xs mt-2">Cập nhật: {updatedLabel}</p>
               )}
             </div>
           </div>

@@ -6,8 +6,14 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ShareBar from "@/components/blog/ShareBar";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { createPublicClient } from "@/lib/supabase/server";
-import { absoluteUrl, SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { absoluteUrl, SITE_URL, DEFAULT_OG_IMAGE, buildFaqJsonLd } from "@/lib/seo";
 import type { BlogPost, BlogCategory } from "@/lib/blog";
 
 const FALLBACK_IMAGE =
@@ -41,6 +47,15 @@ export default async function BlogPostPage({
   const image = post.featured_image || FALLBACK_IMAGE;
   const relatedTour = await getRelatedTour(post.tour_slug);
   const contentHtml = marked.parse(post.content, { async: false }) as string;
+  const faqs = (post.faq ?? []).map((f) => ({ question: f.q, answer: f.a }));
+  const updatedLabel = post.updated_at
+    ? new Date(post.updated_at).toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      })
+    : null;
+  const faqJsonLd = buildFaqJsonLd(faqs);
 
   const jsonLd = [
     {
@@ -50,7 +65,8 @@ export default async function BlogPostPage({
       description: post.excerpt || post.meta_description || undefined,
       image: post.og_image || image,
       datePublished: post.published_at || undefined,
-      author: { "@type": "Person", name: "Vinh Around", url: absoluteUrl("/ve-vinh") },
+      dateModified: post.updated_at || post.published_at || undefined,
+      author: { "@type": "Person", "@id": `${SITE_URL}/ve-vinh#vinh`, name: "Vinh Around", url: absoluteUrl("/ve-vinh") },
       publisher: { "@type": "Organization", name: "Vinh Around", logo: `${SITE_URL}/logo.png` },
       mainEntityOfPage: absoluteUrl(path),
     },
@@ -63,6 +79,7 @@ export default async function BlogPostPage({
         { "@type": "ListItem", position: 3, name: post.title, item: absoluteUrl(path) },
       ],
     },
+    ...(faqJsonLd ? [faqJsonLd] : []),
   ];
 
   return (
@@ -89,10 +106,16 @@ export default async function BlogPostPage({
               <h1 className="text-2xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-3">
                 {post.title}
               </h1>
-              {post.reading_time && (
+              {(post.reading_time || updatedLabel) && (
                 <p className="flex items-center gap-2 text-white/70 text-sm">
-                  <Clock className="w-4 h-4" />
-                  {post.reading_time} phút đọc
+                  {post.reading_time && (
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="w-4 h-4" />
+                      {post.reading_time} phút đọc
+                    </span>
+                  )}
+                  {post.reading_time && updatedLabel && <span aria-hidden>·</span>}
+                  {updatedLabel && <span>Cập nhật: {updatedLabel}</span>}
                 </p>
               )}
             </div>
@@ -120,6 +143,30 @@ export default async function BlogPostPage({
             className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-primary prose-a:text-secondary"
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
+
+          {faqs.length > 0 && (
+            <div className="mt-12 pt-10 border-t border-primary/10">
+              <h2 className="font-display text-2xl font-bold text-primary mb-6">
+                Câu hỏi thường gặp
+              </h2>
+              <Accordion type="single" collapsible className="space-y-3">
+                {faqs.map((faq, i) => (
+                  <AccordionItem
+                    key={i}
+                    value={`faq-${i}`}
+                    className="rounded-xl border border-primary/10 px-5 bg-[#faf9f7]"
+                  >
+                    <AccordionTrigger className="hover:no-underline text-left font-semibold text-primary">
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-primary/70 leading-relaxed">
+                      {faq.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          )}
 
           {relatedTour && (
             <div className="mt-12 p-6 rounded-2xl bg-gradient-to-br from-primary to-primary/90 text-white text-center">
