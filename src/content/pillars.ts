@@ -107,7 +107,7 @@ export const PILLAR_CANADA = `
 Cùng một cung đường mùa lá phong đẹp nhất năm — Toronto, Niagara Falls, Ottawa, Montreal, Quebec City, Mont-Tremblant rồi bay sang Alberta chinh phục Rocky Mountains — Vinh có 2 kiểu hành trình đang chạy, tuỳ gu và ngân sách từng nhà:
 
 - **[Trọn vẹn Canada mùa thu](/tour/canada-mua-thu-tron-goi)** — 14 ngày 13 đêm, trọn gói từ vé máy bay quốc tế tới bữa ăn, hướng dẫn viên đồng hành xuyên suốt, xe riêng 7-9 chỗ. Khởi hành giới hạn 6 khách/đoàn — hợp gia đình muốn "lên máy bay là có người lo hết", có ông bà hoặc trẻ nhỏ đi cùng.
-- **[Tour tự lái Canada mùa thu](/tour/canada-tu-lai-mua-thu)** — 12 ngày self-drive: Leader bàn giao xe SUV, hướng dẫn luật giao thông ngày đầu, sau đó chính bạn cầm lái qua từng chặng, nghỉ đêm tại Airbnb riêng. Hợp nhóm bạn/gia đình trẻ, có người biết lái xe, muốn chủ động dừng nghỉ theo ý mình.
+- **[Tour caravan tự lái Canada mùa thu](/tour/canada-tu-lai-mua-thu)** — 12 ngày road trip theo đoàn: nhiều xe SUV cùng caravan, có xe Leader dẫn đường và hướng dẫn luật giao thông ngày đầu, sau đó chính bạn cầm lái qua từng chặng, nghỉ đêm tại Airbnb riêng. Hợp nhóm bạn/gia đình trẻ, có người biết lái xe, muốn chủ động dừng nghỉ theo ý mình.
 
 ## Visa Canada
 

@@ -327,7 +327,7 @@ export default async function TourPage({
                 {isSelfDrive && (
                   <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary/90 backdrop-blur-sm">
                     <Car className="w-3.5 h-3.5 text-primary" />
-                    <span className="text-primary text-xs font-bold uppercase tracking-wide">Hành trình tự lái</span>
+                    <span className="text-primary text-xs font-bold uppercase tracking-wide">Caravan tự lái</span>
                   </div>
                 )}
                 {tour.max_group_size !== null && tour.max_group_size <= 6 && (
@@ -675,7 +675,7 @@ export default async function TourPage({
                     ))}
                   </ul>
                   <p className="text-muted-foreground text-xs mt-4">
-                    Đây là hành trình tự lái trải nghiệm, không phải tour truyền thống có tài xế phục vụ xuyên suốt.
+                    Đây là hành trình caravan tự lái trải nghiệm — nhiều xe cùng đoàn, có xe Leader dẫn đường — không phải tour truyền thống có tài xế phục vụ xuyên suốt.
                   </p>
                 </div>
               )}

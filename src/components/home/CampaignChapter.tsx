@@ -70,7 +70,7 @@ export default function CampaignChapter({ tours }: { tours: CampaignTour[] }) {
                 <div className="absolute top-4 left-4 flex flex-wrap gap-2">
                   {tour.isSelfDrive && (
                     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-primary text-xs font-bold uppercase tracking-wide">
-                      <Car className="w-3.5 h-3.5" /> Tự lái
+                      <Car className="w-3.5 h-3.5" /> Caravan tự lái
                     </span>
                   )}
                   {!tour.isSelfDrive && (

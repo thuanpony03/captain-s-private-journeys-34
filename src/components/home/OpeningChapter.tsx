@@ -6,10 +6,10 @@ import { trackZaloClick } from "@/lib/analytics";
 
 /**
  * Chương I — bố cục split thay vì ảnh full-bleed. Ảnh chân dung thật của
- * Vinh (vinh-around-portrait.jpg, 687×1024 — chụp chuyên nghiệp, đứng cạnh
- * chiếc Land Cruiser) chỉ 687px ngang nên full-bleed trên màn hình rộng sẽ
- * bị vỡ nét; đặt trong khung dọc tự nhiên vừa giữ ảnh nét, vừa tạo bố cục
- * khối màu táo bạo — khác hẳn kiểu "ảnh nền tối + chữ trắng" phổ biến.
+ * Vinh (vinh-around-portrait.jpg — chụp tại Toronto trong một chuyến đi
+ * thật, không phải ảnh dựng bằng AI) đặt trong khung dọc tự nhiên vừa giữ
+ * ảnh nét, vừa tạo bố cục khối màu táo bạo — khác hẳn kiểu "ảnh nền tối +
+ * chữ trắng" phổ biến.
  */
 export default function OpeningChapter() {
   const [stage, setStage] = useState(0);
@@ -78,7 +78,7 @@ export default function OpeningChapter() {
       <div className="relative w-full h-[46vh] sm:h-[52vh] lg:h-auto lg:w-[42%] xl:w-[38%] order-1 lg:order-2 overflow-hidden">
         <Image
           src="/images/vinh-around-portrait.jpg"
-          alt="Vinh bên chiếc Land Cruiser"
+          alt="Vinh Around trong một chuyến đi thật tại Toronto"
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 42vw"

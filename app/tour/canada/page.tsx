@@ -4,7 +4,7 @@ import { createPublicClient } from "@/lib/supabase/server";
 import { SITE_URL, absoluteUrl } from "@/lib/seo";
 import { PILLAR_CANADA } from "@/content/pillars";
 
-const TITLE = "Tour Canada Mùa Thu - Trọn Gói & Tự Lái | Toronto, Banff, Lake Louise";
+const TITLE = "Tour Canada Mùa Thu - Trọn Gói & Caravan Tự Lái | Toronto, Banff, Lake Louise";
 const DESCRIPTION =
   "Tour Canada mùa thu cùng Vinh Around: Toronto, Niagara Falls, Quebec City, Banff, Lake Louise. Chọn trọn gói có HDV đồng hành hoặc tự lái SUV theo phong cách road trip.";
 
@@ -90,9 +90,9 @@ export default async function CanadaMarketPage() {
           ],
           faqs: [
             {
-              question: "Tour trọn gói và tour tự lái khác nhau chỗ nào?",
+              question: "Tour trọn gói và tour caravan tự lái khác nhau chỗ nào?",
               answer:
-                "Cùng một cung đường Toronto – Niagara – Ottawa – Montreal – Quebec City – Mont-Tremblant – Banff, nhưng tour trọn gói có hướng dẫn viên đồng hành xuyên suốt, đã gồm vé máy bay quốc tế và các bữa ăn, khởi hành giới hạn 6 khách. Tour tự lái là road trip thực thụ: Leader bàn giao xe SUV và hướng dẫn luật giao thông ngày đầu, sau đó bạn tự cầm lái, ở Airbnb riêng, chủ động lịch trình hơn nhưng cần có bằng lái quốc tế và kỹ năng lái tốt.",
+                "Cùng một cung đường Toronto – Niagara – Ottawa – Montreal – Quebec City – Mont-Tremblant – Banff, nhưng tour trọn gói có hướng dẫn viên đồng hành xuyên suốt, đã gồm vé máy bay quốc tế và các bữa ăn, khởi hành giới hạn 6 khách. Tour caravan tự lái là road trip thực thụ: nhiều xe SUV cùng đoàn, có xe Leader dẫn đường và hướng dẫn luật giao thông ngày đầu, sau đó bạn tự cầm lái, ở Airbnb riêng, chủ động lịch trình hơn nhưng cần có bằng lái quốc tế và kỹ năng lái tốt.",
             },
             {
               question: "Visa Canada có khó hơn visa Mỹ không?",
