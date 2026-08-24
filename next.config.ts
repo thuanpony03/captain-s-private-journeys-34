@@ -137,9 +137,13 @@ const nextConfig: NextConfig = {
       { source: "/hon-dao-miyako-hon-dao-phia-nam-dep-nhat-nhat-ban", destination: "/cam-nang", permanent: true },
 
       // ===== Wildcard — luôn đặt cuối =====
+      // ":slug*" (repeat modifier) cần ký tự "/" đứng ngay trước làm delimiter —
+      // 2 pattern dưới có param nối liền sau dấu "-" nên phải dùng regex tường
+      // minh "(.*)" thay vì modifier "*", nếu không next build lỗi ngay lúc build:
+      // "Can not repeat ... without a prefix and suffix".
       { source: "/tours/:slug*", destination: "/tour", permanent: true },
-      { source: "/dich-vu-xin-visa-:slug*", destination: "/lien-he", permanent: true },
-      { source: "/lich-khoi-hanh-tour-:slug*", destination: "/tour", permanent: true },
+      { source: "/dich-vu-xin-visa-:slug(.*)", destination: "/lien-he", permanent: true },
+      { source: "/lich-khoi-hanh-tour-:slug(.*)", destination: "/tour", permanent: true },
     ];
   },
 };
