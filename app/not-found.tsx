@@ -18,9 +18,17 @@ export default function NotFound() {
         <p className="mb-6 text-sm text-muted-foreground">
           Có thể tour này đã kết thúc hoặc đường dẫn bị sai.
         </p>
-        <Link href="/" className="text-primary underline hover:text-primary/90">
-          Về trang chủ
-        </Link>
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
+          <Link href="/" className="text-primary underline hover:text-primary/90">
+            Về trang chủ
+          </Link>
+          <Link href="/tour" className="text-primary underline hover:text-primary/90">
+            Xem các tour
+          </Link>
+          <Link href="/cam-nang" className="text-primary underline hover:text-primary/90">
+            Đọc cẩm nang
+          </Link>
+        </div>
       </div>
     </div>
   );
