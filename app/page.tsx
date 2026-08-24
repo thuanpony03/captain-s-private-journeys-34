@@ -4,6 +4,7 @@ import { SITE_URL } from "@/lib/seo";
 import { getPublishedPosts } from "@/lib/blog";
 import { createPublicClient } from "@/lib/supabase/server";
 import type { MarketCardData } from "@/components/MarketCards";
+import type { CampaignTour } from "@/components/home/CampaignChapter";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -31,7 +32,35 @@ const MARKET_META: { destination: string; href: string; label: string; image: st
     label: "Châu Âu",
     image: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=800&q=80",
   },
+  {
+    destination: "canada",
+    href: "/tour/canada",
+    label: "Canada",
+    image:
+      "https://res.cloudinary.com/dvu2csvsg/image/upload/w_800,q_auto,f_auto/v1784656696/vinharound/chuyen-di/canada-15-ngay-xuyen-ngang/canada-15-ngay-xuyen-ngang-6.jpg",
+  },
 ];
+
+async function getCampaignTours(): Promise<CampaignTour[]> {
+  const supabase = createPublicClient();
+  const { data } = await supabase
+    .from("tour_packages")
+    .select("slug, title, tagline, price, duration, max_group_size, requirements, image_url")
+    .eq("is_active", true)
+    .eq("destination", "canada")
+    .order("order_index", { ascending: true });
+
+  return (data ?? []).map((t) => ({
+    slug: t.slug as string,
+    title: t.title,
+    tagline: t.tagline,
+    price: t.price,
+    duration: t.duration,
+    maxGroupSize: t.max_group_size,
+    isSelfDrive: Array.isArray(t.requirements) && t.requirements.length > 0,
+    image: t.image_url,
+  }));
+}
 
 async function getMarketCards(): Promise<MarketCardData[]> {
   const supabase = createPublicClient();
@@ -54,9 +83,10 @@ async function getMarketCards(): Promise<MarketCardData[]> {
 }
 
 export default async function Page() {
-  const [latestPosts, marketCards] = await Promise.all([
+  const [latestPosts, marketCards, campaignTours] = await Promise.all([
     getPublishedPosts("chuyen-di", 3),
     getMarketCards(),
+    getCampaignTours(),
   ]);
   const breadcrumb = {
     "@context": "https://schema.org",
@@ -72,7 +102,7 @@ export default async function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
-      <HomePage latestPosts={latestPosts} marketCards={marketCards} />
+      <HomePage latestPosts={latestPosts} marketCards={marketCards} campaignTours={campaignTours} />
     </>
   );
 }

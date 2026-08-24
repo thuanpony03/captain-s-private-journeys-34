@@ -7,6 +7,7 @@ const HOOKS: Record<string, string> = {
   my: "Visa, xe riêng, lịch trình tuỳ chỉnh — tour gia đình đi Mỹ trọn gói",
   uc: "Gần, dễ, không mệt — tour gia đình đi Úc cùng Great Ocean Road",
   "chau-au": "Nhiều nước trong một chuyến — tour gia đình Châu Âu riêng tư",
+  canada: "Trọn gói hoặc tự lái — mùa lá phong Canada, Rocky Mountains",
 };
 
 /**
@@ -26,7 +27,7 @@ export default function RoutesChapter({ markets }: { markets: MarketCardData[] }
           Những cung đường
         </p>
         <h2 className="font-display text-2xl md:text-3xl text-primary font-medium mb-10 md:mb-14 max-w-lg">
-          Ba thị trường Vinh chạy nhiều nhất — mỗi nơi một kiểu tuỳ chỉnh riêng
+          Những thị trường Vinh chạy nhiều nhất — mỗi nơi một kiểu tuỳ chỉnh riêng
         </h2>
 
         <div className="border-t border-primary/10">

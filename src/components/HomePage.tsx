@@ -3,6 +3,7 @@
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import OpeningChapter from "@/components/home/OpeningChapter";
+import CampaignChapter, { type CampaignTour } from "@/components/home/CampaignChapter";
 import AboutChapter from "@/components/home/AboutChapter";
 import StoryChapter from "@/components/home/StoryChapter";
 import CompanionsChapter from "@/components/home/CompanionsChapter";
@@ -20,6 +21,7 @@ import type { MarketCardData } from "@/components/MarketCards";
 interface HomePageProps {
   latestPosts?: BlogPostSummary[];
   marketCards?: MarketCardData[];
+  campaignTours?: CampaignTour[];
 }
 
 /**
@@ -30,11 +32,12 @@ interface HomePageProps {
  * phải ngay khi vào trang) — vừa là CTA nổi bật xuất hiện đúng lúc, vừa giữ
  * kênh lead có gửi email qua Resend cho việc theo dõi nội bộ.
  */
-const HomePage = ({ latestPosts = [], marketCards = [] }: HomePageProps) => (
+const HomePage = ({ latestPosts = [], marketCards = [], campaignTours = [] }: HomePageProps) => (
   <SmoothScroll>
     <Navbar />
     <main className="min-h-screen">
       <OpeningChapter />
+      {campaignTours.length > 0 && <CampaignChapter tours={campaignTours} />}
       <RevealOnScroll><AboutChapter /></RevealOnScroll>
       <RevealOnScroll><StoryChapter /></RevealOnScroll>
       <RevealOnScroll><CompanionsChapter /></RevealOnScroll>
