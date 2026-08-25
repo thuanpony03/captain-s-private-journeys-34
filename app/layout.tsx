@@ -6,6 +6,7 @@ import { SITE_URL, SITE_NAME, ORGANIZATION } from "@/lib/seo";
 import Providers from "./providers";
 import UtmCapture from "@/components/UtmCapture";
 import StickyMobileBar from "@/components/StickyMobileBar";
+import FbPixelRouteTracker from "@/components/FbPixelRouteTracker";
 
 const inter = Inter({
   subsets: ["latin", "vietnamese"],
@@ -92,8 +93,14 @@ export const viewport: Viewport = {
 };
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+// 2 pixel chạy song song: ID cũ (đang gắn Custom Audience/chiến dịch cũ) +
+// ID mới "Pixel Vinharound - F01" (cùng BM với tài khoản ads đang chạy
+// C-TET/C-CANADA/C-DONGBAC) — không gỡ ID cũ, chỉ thêm ID mới.
+const FB_PIXEL_IDS = [
+  process.env.NEXT_PUBLIC_FB_PIXEL_ID,
+  process.env.NEXT_PUBLIC_FB_PIXEL_ID_2,
+].filter((id): id is string => Boolean(id));
 
 export default function RootLayout({
   children,
@@ -156,7 +163,7 @@ gtag('config', '${GA_ID}');`}
           </>
         )}
 
-        {FB_PIXEL_ID && (
+        {FB_PIXEL_IDS.length > 0 && (
           <>
             <Script id="fb-pixel" strategy="afterInteractive">
               {`!function(f,b,e,v,n,t,s)
@@ -167,18 +174,26 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '${FB_PIXEL_ID}');
+${FB_PIXEL_IDS.map((id) => `fbq('init', '${id}');`).join("\n")}
 fbq('track', 'PageView');`}
             </Script>
+            {/* Điều hướng trong app vẫn là client-side navigation (không reload
+                trang) nên PageView của lần chuyển route sau phải bắn thủ công —
+                xem FbPixelRouteTracker. Base script trên chỉ bắn đúng 1 lần lúc
+                tải trang đầu tiên. */}
+            <FbPixelRouteTracker />
             <noscript>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                height="1"
-                width="1"
-                style={{ display: "none" }}
-                alt=""
-                src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`}
-              />
+              {FB_PIXEL_IDS.map((id) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={id}
+                  height="1"
+                  width="1"
+                  style={{ display: "none" }}
+                  alt=""
+                  src={`https://www.facebook.com/tr?id=${id}&ev=PageView&noscript=1`}
+                />
+              ))}
             </noscript>
           </>
         )}
