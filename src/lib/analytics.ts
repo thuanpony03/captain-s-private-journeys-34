@@ -90,6 +90,16 @@ export const trackZaloClick = () => {
   }
 };
 
+// Track contact clicks trên landing page chiến dịch (content_name tuỳ theo campaign,
+// vd 'zalo_canada_0311') — khác trackZaloClick/trackPhoneClick vì cần content_name tuỳ biến
+// thay vì method cố định, để lọc riêng hiệu suất từng landing page trong Ads Manager.
+export const trackCampaignContact = (contentName: string) => {
+  trackEvent('contact_click', 'Campaign', contentName);
+  if (typeof window !== 'undefined' && window.fbq) {
+    window.fbq('track', 'Contact', { content_name: contentName });
+  }
+};
+
 // Track Facebook clicks
 export const trackFacebookClick = () => {
   trackEvent('facebook_click', 'Contact', 'Facebook Message');
@@ -139,6 +149,7 @@ export default {
   trackVideoPlay,
   trackPhoneClick,
   trackZaloClick,
+  trackCampaignContact,
   trackFacebookClick,
   trackTourView,
   trackScrollToSection,

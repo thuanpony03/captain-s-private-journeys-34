@@ -13,6 +13,7 @@ import TourCard, { type TourCardData } from "@/components/tour/TourCard";
 import BlogCard from "@/components/blog/BlogCard";
 import TestimonialGallery, { type TestimonialData } from "@/components/testimonials/TestimonialGallery";
 import PillarContent from "@/components/tour/PillarContent";
+import CanadaCampaignNotice from "@/components/CanadaCampaignNotice";
 import { ShieldCheck } from "lucide-react";
 import type { BlogPostSummary } from "@/lib/blog";
 
@@ -34,6 +35,8 @@ export interface MarketLandingConfig {
   relatedPosts?: BlogPostSummary[];
   /** Nội dung dài dạng markdown (xem src/content/pillars.ts) — render giữa value props và tour grid. */
   pillarContent?: string;
+  /** Dòng liên kết nổi bật đầu trang cho landing page campaign đang chạy (vd đoàn Canada 03/11). */
+  showCampaignNotice?: boolean;
 }
 
 export default function MarketLandingPage({ config }: { config: MarketLandingConfig }) {
@@ -49,6 +52,7 @@ export default function MarketLandingPage({ config }: { config: MarketLandingCon
     testimonials = [],
     relatedPosts = [],
     pillarContent,
+    showCampaignNotice,
   } = config;
 
   const faqJsonLd =
@@ -78,6 +82,7 @@ export default function MarketLandingPage({ config }: { config: MarketLandingCon
         <section className="relative h-[55vh] md:h-[65vh] overflow-hidden">
           <Image src={heroImage} alt={heroHeadline} fill priority sizes="100vw" className="object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-primary/20" />
+          {showCampaignNotice && <CanadaCampaignNotice />}
           <div className="absolute inset-0 flex items-end">
             <div className="container mx-auto px-4 pb-12 md:pb-16">
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20">

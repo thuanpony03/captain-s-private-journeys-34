@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { Clock, ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import CanadaCTABox from "@/components/CanadaCTABox";
 import ShareBar from "@/components/blog/ShareBar";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +24,14 @@ const CATEGORY_LABEL: Record<BlogCategory, string> = {
   "chuyen-di": "Chuyến đi",
   "cam-nang": "Cẩm nang",
 };
+
+// 4 bài gắn CTA đoàn Canada 03/11 — theo đúng danh sách trong brief campaign.
+const CANADA_0311_CTA_SLUGS = new Set([
+  "canada-15-ngay-xuyen-ngang",
+  "banff-5n4d-cung-gia-dinh",
+  "canada-thang-8-2024",
+  "visa-canada-co-kho-khong",
+]);
 
 async function getRelatedTour(tourSlug: string | null) {
   if (!tourSlug) return null;
@@ -179,6 +188,9 @@ export default async function BlogPostPage({
               </Link>
             </div>
           )}
+
+          {/* Campaign đoàn Canada 03/11 — chỉ 4 bài liên quan trực tiếp, tự ẩn sau 02/11/2026 */}
+          {CANADA_0311_CTA_SLUGS.has(post.slug) && <CanadaCTABox />}
         </div>
       </main>
       <Footer />

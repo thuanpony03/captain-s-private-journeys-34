@@ -6,7 +6,9 @@ import Link from "next/link";
 import { Phone, MessageCircle, Send } from "lucide-react";
 import { trackZaloClick, trackPhoneClick, trackButtonClick } from "@/lib/analytics";
 
-const HIDDEN_PREFIXES = ["/admin", "/auth"];
+// /tour/canada-mua-thu tự có thanh sticky Zalo/Messenger riêng của campaign
+// (CanadaCampaignStickyBar) — ẩn thanh chung ở đây để khỏi chồng 2 thanh cùng lúc.
+const HIDDEN_PREFIXES = ["/admin", "/auth", "/tour/canada-mua-thu"];
 
 /** Thanh CTA cố định đáy màn hình trên mobile — nơi khách Việt chốt qua Zalo. */
 export default function StickyMobileBar() {

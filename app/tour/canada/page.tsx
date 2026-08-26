@@ -110,6 +110,7 @@ export default async function CanadaMarketPage() {
           testimonials: testimonials ?? [],
           relatedPosts: relatedPosts ?? [],
           pillarContent: PILLAR_CANADA,
+          showCampaignNotice: true,
         }}
       />
     </>
