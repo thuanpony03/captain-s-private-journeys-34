@@ -15,7 +15,7 @@ export default function CanadaCampaignStickyBar() {
         href={ZALO_HREF_0311}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => trackCampaignContact("zalo_canada_0311")}
+        onClick={() => trackCampaignContact("zalo_canada_2doan")}
         className="flex items-center justify-center gap-2 py-3.5 text-primary font-bold text-sm bg-secondary active:opacity-80"
       >
         <MessageCircle className="w-4 h-4" /> Nhắn Zalo
@@ -24,7 +24,7 @@ export default function CanadaCampaignStickyBar() {
         href={MESSENGER_HREF_0311}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => trackCampaignContact("messenger_canada_0311")}
+        onClick={() => trackCampaignContact("messenger_canada_2doan")}
         className="flex items-center justify-center gap-2 py-3.5 text-primary font-bold text-sm border-l border-primary/10 active:bg-primary/5"
       >
         <Send className="w-4 h-4" /> Messenger

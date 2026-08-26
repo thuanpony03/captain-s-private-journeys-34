@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
 
-const DISMISS_KEY = "hide-banner-canada-0311";
-// Sau ngày này banner tự ẩn hẳn (đoàn 03/11 đã khởi hành, campaign kết thúc).
+// Đổi key khi đổi nội dung banner (1 đoàn → 2 đoàn) để không bị giấu vĩnh viễn
+// với người đã lỡ đóng bản banner cũ trước đó.
+const DISMISS_KEY = "hide-banner-canada-2doan";
+// Sau ngày này banner tự ẩn hẳn (đoàn 03/11 — đoàn cuối — đã khởi hành, campaign kết thúc).
 const HIDE_AFTER = "2026-11-02";
 
 /**
@@ -50,7 +52,8 @@ export default function TopBanner() {
         href="/tour/canada-mua-thu?utm_source=web&utm_medium=banner&utm_campaign=canada-0311"
         className="text-xs md:text-sm font-semibold text-white hover:underline"
       >
-        🍁 Đoàn Canada 30/10 đã khóa sổ — còn 1 đoàn 03/11 (6 khách). Xem chi tiết →
+        🍁 Còn 2 đoàn Canada cuối mùa thu: 10/10 (đỉnh lá phong) & 03/11 — mỗi đoàn 6 khách. Xem
+        chi tiết →
       </Link>
       <button
         type="button"

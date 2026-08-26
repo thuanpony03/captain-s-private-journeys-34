@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, Users, DollarSign, Percent } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import {
@@ -12,13 +11,15 @@ import {
 } from "@/components/ui/accordion";
 import CanadaCampaignButtons from "@/components/CanadaCampaignButtons";
 import CanadaCampaignStickyBar from "@/components/CanadaCampaignStickyBar";
+import CanadaDepartureCard from "@/components/CanadaDepartureCard";
 import { SITE_URL, absoluteUrl, buildFaqJsonLd } from "@/lib/seo";
 
-// Campaign 1 đoàn — copy nguyên văn theo brief marketing (WEB-CANADA-0311-INSTRUCTIONS.md),
-// không viết lại, không thêm số liệu/chi tiết ngoài file gốc.
-const TITLE = "Tour Canada mùa lá phong 03/11 — đoàn riêng 6 khách";
+// Campaign 2 đoàn cuối (10/10 & 03/11) — copy nguyên văn theo brief marketing
+// (WEB-CANADA-0311-INSTRUCTIONS.md + patch WEB-CANADA-UPDATE-2DOAN.md), không
+// viết lại, không thêm số liệu/chi tiết ngoài 2 file gốc.
+const TITLE = "Tour Canada mùa lá phong — 2 đoàn cuối 10/10 & 03/11";
 const DESCRIPTION =
-  "Đoàn 30/10 đã khóa sổ. Còn đúng 1 đoàn Canada mùa thu khởi hành 03/11/2026 — giới hạn 6 khách, Vinh trực tiếp cầm lái và đồng hành. 6.000 USD/khách trọn gói.";
+  "Đoàn 19/10 đã khóa sổ. Mùa thu này còn đúng 2 đoàn cuối: 10/10 — đúng đỉnh lá phong, và 03/11 — chuyến cuối mùa. Mỗi đoàn 6 khách, Vinh trực tiếp cầm lái. 6.000 USD/khách trọn gói.";
 const OG_IMAGE =
   "https://res.cloudinary.com/dvu2csvsg/image/upload/w_1200,q_auto,f_auto/v1784656678/vinharound/chuyen-di/canada-15-ngay-xuyen-ngang/canada-15-ngay-xuyen-ngang-1.jpg";
 const PATH = "/tour/canada-mua-thu";
@@ -42,13 +43,6 @@ export const metadata: Metadata = {
     images: [OG_IMAGE],
   },
 };
-
-const INFO_STRIP = [
-  { icon: Calendar, label: "Khởi hành", value: "03/11/2026" },
-  { icon: Users, label: "Quy mô", value: "Đoàn giới hạn 6 khách" },
-  { icon: DollarSign, label: "Chi phí", value: "6.000 USD/khách trọn gói" },
-  { icon: Percent, label: "Ưu đãi nhóm", value: "Giảm 10tr nhóm 2 · 15tr nhóm 3 · 20tr nhóm 4" },
-];
 
 const GALLERY = [
   {
@@ -87,6 +81,11 @@ const GALLERY = [
 
 const FAQS = [
   {
+    question: "Nên chọn đoàn 10/10 hay 03/11?",
+    answer:
+      "Đoàn 10/10 đi đúng tuần lá phong rực nhất — chuyến 10/2025 của Vinh đi đúng dịp này và lá vàng rực suốt cung miền Đông. Đoàn 03/11 là chuyến cuối mùa, hợp với nhà cần thêm thời gian thu xếp công việc, và tùy năm nhiều vùng như Quebec vẫn giữ mảng vàng đỏ. Đi được sớm thì chọn 10/10; cần thêm thời gian thì 03/11 — cả hai cùng lịch trình, cùng giá, Vinh đều trực tiếp cầm lái.",
+  },
+  {
     question: "Đầu tháng 11 đi Canada còn lá vàng không?",
     answer:
       "Đầu tháng 11 là cuối mùa lá phong ở Đông Canada. Tùy năm và tùy vùng, nhiều nơi như Quebec hay các cung rừng quanh Montreal vẫn giữ những mảng vàng đỏ, thời tiết se lạnh đúng chất thu. Vinh là người cầm lái nên lịch từng ngày sẽ được chọn theo thực tế lá và thời tiết của từng vùng — đó là lợi thế của đoàn nhỏ đi xe riêng: đẹp đâu, dừng đó.",
@@ -112,9 +111,9 @@ export default function CanadaMuaThuPage() {
   const touristTripJsonLd = {
     "@context": "https://schema.org",
     "@type": "TouristTrip",
-    name: "Tour Canada mùa lá phong 03/11/2026 — đoàn riêng 6 khách",
+    name: "Tour Canada mùa lá phong 2026 — 2 đoàn cuối 10/10 & 03/11, đoàn riêng 6 khách",
     description:
-      "Đoàn Canada mùa thu khởi hành 03/11/2026, giới hạn 6 khách, Vinh trực tiếp cầm lái và đồng hành. Cung đường đã được Vinh đi thật tháng 10/2025.",
+      "Đoàn Canada mùa thu 2026, giới hạn 6 khách/đoàn — còn 2 đoàn cuối: 10/10 (đúng đỉnh lá phong) và 03/11 (chuyến cuối mùa). Vinh trực tiếp cầm lái và đồng hành. Cung đường đã được Vinh đi thật tháng 10/2025.",
     touristType: "Gia đình, nhóm bạn",
     provider: {
       "@type": "TravelAgency",
@@ -128,14 +127,26 @@ export default function CanadaMuaThuPage() {
         addressCountry: "VN",
       },
     },
-    offers: {
-      "@type": "Offer",
-      price: "6000",
-      priceCurrency: "USD",
-      availability: "https://schema.org/LimitedAvailability",
-      validThrough: "2026-11-02",
-      url: "https://vinharound.com/tour/canada-mua-thu",
-    },
+    offers: [
+      {
+        "@type": "Offer",
+        name: "Đoàn 10/10/2026",
+        price: "6000",
+        priceCurrency: "USD",
+        availability: "https://schema.org/LimitedAvailability",
+        validThrough: "2026-10-09",
+        url: "https://vinharound.com/tour/canada-mua-thu",
+      },
+      {
+        "@type": "Offer",
+        name: "Đoàn 03/11/2026",
+        price: "6000",
+        priceCurrency: "USD",
+        availability: "https://schema.org/LimitedAvailability",
+        validThrough: "2026-11-02",
+        url: "https://vinharound.com/tour/canada-mua-thu",
+      },
+    ],
   };
 
   const faqJsonLd = buildFaqJsonLd(FAQS);
@@ -186,38 +197,50 @@ export default function CanadaMuaThuPage() {
               <div className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20">
                 <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
                 <span className="text-white text-xs font-bold uppercase tracking-wide">
-                  Đoàn 30/10 đã khóa sổ đủ 6 khách
+                  Đoàn 19/10 đã khóa sổ đủ 6 khách
                 </span>
               </div>
               <h1 className="font-display text-3xl md:text-5xl lg:text-6xl font-black text-white max-w-3xl leading-tight mb-4">
-                Canada mùa lá phong — còn đúng 1 đoàn 03/11
+                Canada mùa lá phong — còn đúng 2 đoàn cuối
               </h1>
               <p className="text-white/85 text-base md:text-lg max-w-2xl mb-8">
-                Cùng lịch trình, cùng cung đường lá phong. Vinh vẫn là người cầm lái và đồng hành
-                cùng cả đoàn.
+                10/10 đi đúng đỉnh lá phong · 03/11 chuyến cuối mùa. Cùng lịch trình, Vinh vẫn là
+                người cầm lái và đồng hành.
               </p>
               <CanadaCampaignButtons />
             </div>
           </div>
         </section>
 
-        {/* Section 2 — Dải thông tin */}
+        {/* Section 2 — Chọn đoàn */}
         <section className="py-10 md:py-12 bg-white border-b border-primary/10">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-              {INFO_STRIP.map(({ icon: Icon, label, value }) => (
-                <div
-                  key={label}
-                  className="flex flex-col items-center text-center gap-2 p-4 rounded-2xl bg-[#faf9f7] border border-primary/10"
-                >
-                  <Icon className="w-5 h-5 text-secondary" />
-                  <p className="text-primary/50 text-xs font-semibold uppercase tracking-wide">
-                    {label}
-                  </p>
-                  <p className="text-primary font-bold text-sm md:text-base">{value}</p>
-                </div>
-              ))}
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+              <CanadaDepartureCard
+                badge="Đỉnh lá phong"
+                title="Đoàn 10/10"
+                date="10/10/2026"
+                highlight="Đi đúng tuần lá rực nhất"
+                spots="Còn 6 chỗ"
+                utmContent="doan-1010"
+                contentName="zalo_canada_1010"
+                buttonLabel="Chọn đoàn 10/10"
+              />
+              <CanadaDepartureCard
+                badge="Cuối mùa"
+                title="Đoàn 03/11"
+                date="03/11/2026"
+                highlight="Cho nhà cần thêm thời gian thu xếp"
+                spots="Còn 6 chỗ"
+                utmContent="doan-0311"
+                contentName="zalo_canada_0311"
+                buttonLabel="Chọn đoàn 03/11"
+              />
             </div>
+            <p className="text-primary/60 text-sm text-center mt-6">
+              Mỗi đoàn giới hạn 6 khách · 6.000 USD/khách trọn gói · Giảm 10tr nhóm 2 / 15tr nhóm 3
+              / 20tr nhóm 4
+            </p>
           </div>
         </section>
 
@@ -309,14 +332,13 @@ export default function CanadaMuaThuPage() {
         <section className="py-14 md:py-20 bg-primary/5">
           <div className="container mx-auto px-4 max-w-3xl">
             <h2 className="font-display text-2xl md:text-4xl font-black text-primary text-center mb-8">
-              Đoàn 03/11 phù hợp với ai?
+              Hai đoàn cuối phù hợp với ai?
             </h2>
             <div className="space-y-4 text-primary/80 text-base md:text-lg leading-relaxed">
               <p>
-                Vì ngày khởi hành đã gần, đoàn 03/11 phù hợp với nhà{" "}
+                Vì ngày khởi hành đã gần, cả hai đoàn phù hợp với nhà{" "}
                 <strong className="text-primary">đã có visa Canada còn hạn</strong> (hoặc hồ sơ
-                đang xét, sắp có kết quả). Cả nhà sắp xếp được lịch trong 9 tuần tới là lên đường
-                được.
+                đang xét, sắp có kết quả). Đoàn 10/10 cần chốt sớm hơn để kịp vé và chuẩn bị.
               </p>
               <p>
                 Chưa có visa? Đừng bỏ qua trang này — nhắn Vinh một câu, Vinh xếp cho nhà mình lộ
